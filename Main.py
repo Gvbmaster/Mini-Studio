@@ -36,8 +36,8 @@ imageHeight=105.5
 clock = pygame.time.Clock()
 
 #Chargement des images
-image = pygame.image.load("Mini-Studio/img/ShipTest.png").convert_alpha() #convert_alpha permet de garder la transparence d'un .png
-logo = pygame.image.load("Mini-Studio/img/LogoTest.png").convert()
+image = pygame.image.load("img/ShipTest.png").convert_alpha() #convert_alpha permet de garder la transparence d'un .png
+logo = pygame.image.load("img/LogoTest.png").convert()
 #resize des images
 logo = pygame.transform.scale(logo, (32, 32))
 image = pygame.transform.scale(image, (imageWidth, imageHeight)) 
