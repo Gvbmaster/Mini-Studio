@@ -52,7 +52,7 @@ while running: #tant que running égal True on reste dans cette boucle
 
     pygame.display.flip() #maj du display
 
-    clock.tick(1000)
+    clock.tick(60)#limite les fps du programme
 
 pygame.quit() #fermeture de pygame
 
