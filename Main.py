@@ -14,12 +14,12 @@ clock = pygame.time.Clock()
 
 image = pygame.image.load("img/ShipTest.png").convert() #definition de image avec le fichier ShipTest.png
 
-while running: #tant que running égal True on reste dans cette boucle
+while running: #tant que running ï¿½gal True on reste dans cette boucle
     for event in pygame.event.get(): 
-        if event.type == pygame.QUIT:#si l'event est égal à QUIT(alt+f4 ou fermeture)
+        if event.type == pygame.QUIT:#si l'event est ï¿½gal ï¿½ QUIT(alt+f4 ou fermeture)
             running = False #alors running devient False et on sors de la boucle
 
-    #ATTENTION la méthode si dessous détecte l'input seulement une fois (au moment ou l'un appuie sur la touche) donc inutilsable pour le deplacement
+    #ATTENTION la mï¿½thode si dessous dï¿½tecte l'input seulement une fois (au moment ou l'un appuie sur la touche) donc inutilsable pour le deplacement
         #if event.type == pygame.KEYDOWN:
             #if event.key == pygame.K_LEFT:
                 #print("Gauche !")
@@ -32,19 +32,15 @@ while running: #tant que running égal True on reste dans cette boucle
 
     
     pressed = pygame.key.get_pressed()
-    #Ici tant que nous appuyer sur la touche l'input est détecter
+    #Ici tant que nous appuyer sur la touche l'input est dï¿½tecter
     if pressed[pygame.K_LEFT]:
-        print("Gauche !")
-        x -= 1
+        x -= 10
     if pressed[pygame.K_RIGHT]:
-        print("Droite")
-        x += 1
+        x += 10
     if pressed[pygame.K_UP]:
-        print("Haut !")
-        y -= 1
+        y -= 10
     if pressed[pygame.K_DOWN]:
-       print("Bas !")
-       y += 1
+       y += 10
 
     screen.fill((0, 0, 0,))#remplie de noir (code RGB) le screen
 
