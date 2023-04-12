@@ -1,42 +1,57 @@
 from cProfile import run
 import pygame
 
-pygame.init() #initialisation de pygame
+#initialisation de pygame
+pygame.init() 
 
+#taille de la fenetre
 screenWidth=1280
 screenHeight=720
 
-color=(0,255,0)
+#couleur du background (R,G,B) (rouge,vert,bleu)
+color=(0,0,0)
 
+#vitesse de déplacement du vaisseau
 speed=5
 
-screen = pygame.display.set_mode((screenWidth,screenHeight))#definition de screen avec un display de 1280 pixel sur 720
+#creation de la fenetre
+screen = pygame.display.set_mode((screenWidth,screenHeight))
 screen.fill(color)
+#update de la fenetre
 pygame.display.flip()  
 
-running = True #boolean running
+#boolean running
+running = True 
 
+#initialisation des coordonnees de spawn du vaisseau
 x = 0
 y = 0
 
-#Originale image size : Width=422 Height=405
+#taille originale de l'image : Width=422 Height=405
+#définition de la tailles de l'image
 imageWidth=101.25
 imageHeight=105.5
+
+#initialisation de l'horloge interne
 clock = pygame.time.Clock()
 
-image = pygame.image.load("Mini-Studio/img/ShipTest.png").convert_alpha() #definition de image avec le fichier ShipTest.png
+#Chargement des images
+image = pygame.image.load("Mini-Studio/img/ShipTest.png").convert_alpha() #convert_alpha permet de garder la transparence d'un .png
 logo = pygame.image.load("Mini-Studio/img/LogoTest.png").convert()
+#resize des images
 logo = pygame.transform.scale(logo, (32, 32))
 image = pygame.transform.scale(image, (imageWidth, imageHeight)) 
+#initialisation du logo (image en haut a gauche de la fenetre)
 pygame.display.set_icon(logo)
+#initialisation du titre de la fenetre
 pygame.display.set_caption("Astra")
 
-while running: #tant que running �gal True on reste dans cette boucle
+while running: #tant que running egal True on reste dans cette boucle
     for event in pygame.event.get(): 
-        if event.type == pygame.QUIT:#si l'event est �gal � QUIT(alt+f4 ou fermeture)
+        if event.type == pygame.QUIT:#si l'event est egal a QUIT(alt+f4 ou fermeture)
             running = False #alors running devient False et on sors de la boucle
 
-    #ATTENTION la m�thode si dessous d�tecte l'input seulement une fois (au moment ou l'un appuie sur la touche) donc inutilsable pour le deplacement
+    #ATTENTION la methode si dessous detecte l'input seulement une fois (au moment ou l'un appuie sur la touche) donc inutilsable pour le deplacement
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_q or event.key == pygame.K_LEFT:
                 print("Gauche !")
@@ -49,9 +64,11 @@ while running: #tant que running �gal True on reste dans cette boucle
 
     
     pressed = pygame.key.get_pressed()
-    #Ici tant que nous appuyer sur la touche l'input est d�tecter
-    if pressed[pygame.K_q] or pressed[pygame.K_LEFT]:
+    #Ici tant que nous appuyons sur la touche l'input est detecter
+    if pressed[pygame.K_q] or pressed[pygame.K_LEFT]:#par exemple ici les input possible sont la touche q ou la touche fleche de gauche
+        #verification de collision avec la bordure de la fenetre
         if (x>0):
+            #decrementation de la vitesse sur x afin de faire aller le vaisseau vers la gauche
             x -= speed
     if pressed[pygame.K_d] or pressed[pygame.K_RIGHT]:
         if (x<screenWidth-imageWidth):
@@ -62,14 +79,19 @@ while running: #tant que running �gal True on reste dans cette boucle
     if pressed[pygame.K_s] or pressed[pygame.K_DOWN]:
        if (y<screenHeight-imageHeight):
             y += speed
+            
+    #remplie le bachground avec la couleur choisi plus haut
+    screen.fill((color))
+    
+    #affichage de l'image en x et y  ( donc x=,y=0(haut gauche)) sur le screen
+    screen.blit(image, (x,y)) 
+    
+    #update de la fenetre
+    pygame.display.flip() 
 
-    screen.fill((color))#remplie de noir (code RGB) le screen
-
-    screen.blit(image, (x,y)) #affichage de image en x et y  ( donc 0 0(haut gauche)) sur le screen
-
-    pygame.display.flip() #maj du display
-
-    clock.tick(60)#limite les fps du programme
-
-pygame.quit() #fermeture de pygame
+    #limite les fps du programme
+    clock.tick(60)
+    
+#fermeture de pygame
+pygame.quit() 
 
