@@ -1,4 +1,3 @@
-from cProfile import run
 import pygame
 
 #initialisation de pygame
@@ -11,7 +10,7 @@ screenHeight=720
 #couleur du background (R,G,B) (rouge,vert,bleu)
 color=(0,0,0)
 
-#vitesse de dÃ©placement du vaisseau
+#vitesse de déplacement du vaisseau
 speed=5
 
 #creation de la fenetre
@@ -28,7 +27,7 @@ x = 0
 y = 0
 
 #taille originale de l'image : Width=422 Height=405
-#dÃ©finition de la tailles de l'image
+#définition de la tailles de l'image
 imageWidth=101.25
 imageHeight=105.5
 
@@ -97,5 +96,4 @@ while running: #tant que running egal True on reste dans cette boucle
     clock.tick(60)
     
 #fermeture de pygame
-pygame.quit() 
-
+pygame.quit()
