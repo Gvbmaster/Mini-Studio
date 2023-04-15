@@ -1,6 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Astra",
+    "\\Astra\\Astra"
   ],
+  "SelectedNode": "\\Astra\\Astra\\Astra.py",
   "PreviewInSolutionExplorer": false
 }

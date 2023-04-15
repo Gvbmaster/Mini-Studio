@@ -1,3 +1,7 @@
+import pygame
+from Entity import Entity
+from values import *
+
 class Player(Entity):
     def __init__(self, x, y, speed, image_path):
         super().__init__(x, y, speed, image_path)
@@ -16,12 +20,12 @@ class Player(Entity):
         if keys[pygame.K_DOWN]:
             self.rect.y += self.speed
 
-        # On l'empêche de sortir de l'écran
+        # On l'empï¿½che de sortir de l'ï¿½cran
         if self.rect.left < 0:
             self.rect.left = 0
-        if self.rect.right > SCREEN_WIDTH:
-            self.rect.right = SCREEN_WIDTH
+        if self.rect.right > Param.screenWidth:
+            self.rect.right = Param.screenWidth
         if self.rect.top < 0:
             self.rect.top = 0
-        if self.rect.bottom > SCREEN_HEIGHT:
-            self.rect.bottom = SCREEN_HEIGHT
+        if self.rect.bottom > Param.screenHeight:
+            self.rect.bottom = Param.screenHeight

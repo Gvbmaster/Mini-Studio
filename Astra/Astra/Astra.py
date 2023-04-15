@@ -10,7 +10,7 @@ screenHeight=720
 #couleur du background (R,G,B) (rouge,vert,bleu)
 color=(0,0,0)
 
-#vitesse de déplacement du vaisseau
+#vitesse de deplacement du vaisseau
 speed=5
 
 #creation de la fenetre
@@ -27,7 +27,7 @@ x = 0
 y = 0
 
 #taille originale de l'image : Width=422 Height=405
-#définition de la tailles de l'image
+#dï¿½finition de la tailles de l'image
 imageWidth=101.25
 imageHeight=105.5
 
