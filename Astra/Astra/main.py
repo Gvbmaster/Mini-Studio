@@ -27,7 +27,11 @@ x = 0
 y = 0
 
 #taille originale de l'image : Width=422 Height=405
+<<<<<<< Updated upstream:Astra/Astra/Astra.py
 #d�finition de la tailles de l'image
+=======
+#definition de la tailles de l'image
+>>>>>>> Stashed changes:Astra/Astra/main.py
 imageWidth=101.25
 imageHeight=105.5
 

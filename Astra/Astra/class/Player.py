@@ -1,6 +1,10 @@
 import pygame
 from Entity import Entity
+<<<<<<< Updated upstream
 from values import *
+=======
+
+>>>>>>> Stashed changes
 
 class Player(Entity):
     def __init__(self, x, y, speed, image_path):
