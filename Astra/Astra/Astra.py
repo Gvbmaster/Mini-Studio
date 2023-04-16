@@ -32,6 +32,7 @@ patternx=[pattern0x]
 patterny=[pattern0y]
 positionx=[patternx[0][0],patternx[0][1],patternx[0][2],patternx[0][3],patternx[0][4]]
 positiony=[patterny[0][0],patterny[0][1],patterny[0][2],patterny[0][3],patterny[0][4]]
+speedEnnemy=[2]
 
 #couleur du background (R,G,B) (rouge,vert,bleu)
 color=(0,0,0)
@@ -120,24 +121,9 @@ while running: #tant que running egal True on reste dans cette boucle
     screen.blit(image, (x,y)) 
     
     for i in range (5):
-        ennemy0=Entity(positionx[i],positiony[i],2,'img/ennemyTest.png')
-        positionx[i]-=2
-        Entity.draw(ennemy0,screen)
-    #ennemy0=Entity(position0x,position0y,2,'img/ennemyTest.png')
-    #ennemy1=Entity(position1x,position1y,2,'img/ennemyTest.png')
-    #ennemy2=Entity(position2x,position2y,2,'img/ennemyTest.png')
-    #ennemy3=Entity(position3x,position3y,2,'img/ennemyTest.png')
-    #ennemy4=Entity(position4x,position4y,2,'img/ennemyTest.png')
-    #position0x-=2
-    #position1x-=2
-    #position2x-=2
-    #position3x-=2
-    #position4x-=2
-    #Entity.draw(ennemy0,screen)
-    #Entity.draw(ennemy1,screen)
-    #Entity.draw(ennemy2,screen)
-    #Entity.draw(ennemy3,screen)
-    #Entity.draw(ennemy4,screen)
+        ennemy=Entity(positionx[i],positiony[i],speedEnnemy[0],'img/ennemyTest.png')
+        positionx[i]-=speedEnnemy[0]
+        Entity.draw(ennemy,screen)
 
     #update de la fenetre
     pygame.display.flip() 
