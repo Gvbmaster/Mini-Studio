@@ -42,6 +42,7 @@ class Game:
             self.area_color = "red"
 
         if self.buff.collide_rect(self.player.rect):
+            
             self.buff.kill()
 
     def display(self):

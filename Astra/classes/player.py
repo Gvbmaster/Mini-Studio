@@ -19,5 +19,3 @@ class Player(pygame.sprite.Sprite):
         screen.blit(self.image, self.rect)
 
     
-
-        
