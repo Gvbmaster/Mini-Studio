@@ -1,6 +1,6 @@
 import pygame
-from method.Player import Player
-from method.buff import Buff
+from classes.player import Player
+from classes.buff import Buff
 
 class Game:
     def __init__(self, screen):

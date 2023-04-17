@@ -1,7 +1,5 @@
 import pygame
 
-
-
 class Player(pygame.sprite.Sprite): 
     def __init__(self, x, y):
         super().__init__()
@@ -17,3 +15,7 @@ class Player(pygame.sprite.Sprite):
 
     def draw(self, screen):
         screen.blit(self.image, self.rect)
+
+    
+
+        
