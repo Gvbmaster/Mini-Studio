@@ -1,6 +1,8 @@
 import pygame
 
 from classes.player import *
+from classes.enemy import *
+from pattern.patternone import *
 from classes.values import Param
 
 #initialisation de pygame
@@ -31,6 +33,7 @@ running = True
 clock = pygame.time.Clock()
 player = Player(0, 0, 10, "Astra/img/ShipTest.png", (100,100))
 
+
 while running:
     
     for event in pygame.event.get():
@@ -38,6 +41,11 @@ while running:
             running = False
 
     player.update()
+
+    #for i in range (5):
+     #   enemy=Entity(positionx[i],positiony[i],speedEnnemy[0],'img/ennemyTest.png')
+     #   positionx[i]-=speedEnnemy[0]
+     #   Entity.draw(ennemy,screen)
   
     screen.fill((0, 0, 0))  
     screen.blit(player.image, player.rect)
