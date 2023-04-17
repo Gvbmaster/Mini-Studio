@@ -1,39 +1,18 @@
 import pygame
-
+import random
+from classe.Entity import *
 #initialisation de pygame
 pygame.init() 
-
-import pygame
-from pygame.locals import *
-
-class Entity:
-    def __init__(self, x, y, speed, image_path):
-        self.image = pygame.image.load(image_path).convert()
-        self.image = pygame.transform.scale(self.image, (75.5, 40.9))
-        self.image = pygame.transform.rotate(self.image, 90)
-        self.rect = self.image.get_rect()
-        self.rect.x = x
-        self.rect.y = y
-        self.speed = speed
-    
-    def update(self):
-        pass
-    
-    def draw(self, screen):
-        screen.blit(self.image, self.rect)
 
 #taille de la fenetre
 screenWidth=1280
 screenHeight=720
 
-pattern0x=[1480,1380,1280,1380,1480]
-pattern0y=[522,422,322,222,122]
-patternx=[pattern0x]
-patterny=[pattern0y]
-positionx=[patternx[0][0],patternx[0][1],patternx[0][2],patternx[0][3],patternx[0][4]]
-positiony=[patterny[0][0],patterny[0][1],patterny[0][2],patterny[0][3],patterny[0][4]]
-speedEnnemy=[2]
-
+patternx=[[1480,1380,1280,1380,1480],[1280,1380,1480,1380,1280]]
+patterny=[[522,422,322,222,122],[522,422,322,222,122]]
+speedEnnemy=[2,2]
+numeroPattern=None
+runPattern=False
 #couleur du background (R,G,B) (rouge,vert,bleu)
 color=(0,0,0)
 
@@ -64,10 +43,10 @@ imageHeight=105.5
 clock = pygame.time.Clock()
 
 #Chargement des images
-image = pygame.image.load("img/ShipTest.png").convert_alpha() #convert_alpha permet de garder la transparence d'un .png
+image = pygame.image.load("Astra/img/ShipTest.png").convert_alpha() #convert_alpha permet de garder la transparence d'un .png
 
-logo = pygame.image.load("img/LogoTest.png").convert()
-ennemySprite = pygame.image.load("img/ennemyTest.png").convert_alpha()
+logo = pygame.image.load("Astra/img/LogoTest.png").convert()
+ennemySprite = pygame.image.load("Astra/img/ennemyTest.png").convert_alpha()
 #resize des images
 logo = pygame.transform.scale(logo, (32, 32))
 image = pygame.transform.scale(image, (imageWidth, imageHeight))
@@ -120,16 +99,22 @@ while running: #tant que running egal True on reste dans cette boucle
     #affichage de l'image en x et y  ( donc x=,y=0(haut gauche)) sur le screen
     screen.blit(image, (x,y)) 
     
+    if runPattern==False:
+        numeroPattern=random.randint(0,len(patternx)-1)
+        runPattern=True
     for i in range (5):
-        ennemy=Entity(positionx[i],positiony[i],speedEnnemy[0],'img/ennemyTest.png')
-        positionx[i]-=speedEnnemy[0]
+        ennemy=Entity(patternx[numeroPattern][i],patterny[numeroPattern][i],speedEnnemy[numeroPattern],'Astra/img/ennemyTest.png')
+        patternx[numeroPattern][i]-=speedEnnemy[numeroPattern]
         Entity.draw(ennemy,screen)
+    if ((max(patternx[numeroPattern]))<500):#(0-41)):
+        patternx=[[1480,1380,1280,1380,1480],[1280,1380,1480,1380,1280]]
+        patterny=[[522,422,322,222,122],[522,422,322,222,122]]
+        runPattern=False
+        print(patternx)
 
     #update de la fenetre
     pygame.display.flip() 
-
     #limite les fps du programme
     clock.tick(60)
-    
 #fermeture de pygame
 pygame.quit()
