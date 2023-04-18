@@ -11,6 +11,7 @@ class Player(pygame.sprite.Sprite):
         self.speed = 5
         self.velocity = [0, 0]
         self._kill = False
+        self.has_buff = False
 
     def move(self):
         self.rect.move_ip(self.velocity[0] * self.speed, self.velocity[1] * self.speed)
@@ -18,4 +19,7 @@ class Player(pygame.sprite.Sprite):
     def draw(self, screen):
         screen.blit(self.image, self.rect)
 
-    
+        if self.has_buff:
+            shield_image = pygame.image.load("img/Shield.png").convert_alpha()
+            shield_rect = shield_image.get_rect(center=self.rect.center)
+            screen.blit(shield_image, shield_rect)
