@@ -1,6 +1,8 @@
 import pygame
 from classes.player import Player
 from classes.buff import Buff
+from classes.lifesystem import LifeSystem
+from classes.values import *
 
 class Game:
     def __init__(self, screen):
@@ -38,11 +40,18 @@ class Game:
         self.player.move()
         if self.area.colliderect(self.player.rect):
             self.area_color = "blue"
+            LifeSystem.healthEnemyUpdate(self)
+            print(EnnemieStats.currentHealth)
         else:
             self.area_color = "red"
 
         if self.buff.collide_rect(self.player.rect):
-            self.buff.kill()
+            LifeSystem.healthEnemyUpdate(self)
+            print(EnnemieStats.currentHealth)
+            self.buff._kill = True
+
+        if self.buff._kill:
+            self.all_sprites.remove(self.buff)
 
     def display(self):
         self.screen.fill("black")

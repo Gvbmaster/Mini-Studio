@@ -14,4 +14,8 @@ class Buff(pygame.sprite.Sprite):
         screen.blit(self.image, self.rect)
 
     def collide_rect(self, rect):
-        return self.rect.colliderect(rect)
+        if self.rect.colliderect(rect):
+            self.kill()
+            return True
+        else:
+            return False
