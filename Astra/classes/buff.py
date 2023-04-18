@@ -1,6 +1,7 @@
 import pygame
 from classes.effect.shield import Shield
 from classes.effect.heal import Heal
+from classes.effect.damage import Damage
 
 class Buff(pygame.sprite.Sprite):
     def __init__(self,x,y,idEffect):
@@ -17,6 +18,8 @@ class Buff(pygame.sprite.Sprite):
             return Shield().image
         elif idEffect == 1:
             return Heal().image
+        elif idEffect == 3:
+            return Damage().image
         
     def draw(self, screen):
         screen.blit(self.image, self.rect)

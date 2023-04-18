@@ -1,6 +1,7 @@
 import pygame
 from classes.player import Player
 from classes.buff import Buff
+from classes.lifesystem import *
 
 class Game:
     def __init__(self, screen):
@@ -10,10 +11,11 @@ class Game:
         self.player = Player(0,0)
         self.buff = Buff(750,450,2)
         self.buff1 = Buff(850,550,1)
+        self.buff2 = Buff(750,250,3)
         self.area = pygame.Rect(300,150,300,300)
         self.area_color = "red"
         self.all_sprites = pygame.sprite.Group()
-        self.all_sprites.add(self.player, self.buff, self.buff1)
+        self.all_sprites.add(self.player, self.buff, self.buff1,self.buff2)
 
     def handling_events(self):
         for event in pygame.event.get():
@@ -51,8 +53,16 @@ class Game:
         if self.buff1.collide_rect(self.player.rect):
             self.buff1.kill()
             self.all_sprites.remove(self.buff1)
-            self.player.has_buff = True
+            LifeSystem.healthPlayerUpdate(self,2)
             print("Buff catch and del")
+            print(PlayerStats.currentHealth)
+
+        if self.buff2.collide_rect(self.player.rect):
+            self.buff2.kill()
+            self.all_sprites.remove(self.buff2)
+            LifeSystem.healthPlayerUpdate(self,self.buff2)
+            print("Buff catch and del")
+            print(PlayerStats.currentHealth)
     
 
     def display(self):
