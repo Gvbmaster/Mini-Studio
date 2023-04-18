@@ -1,11 +1,13 @@
 import pygame
 from classes.entity import *
 from classes.values import *
+from classes.projectile import*
 
 class Player(Entity):
     def __init__(self, x, y, speed, image_path, image_size):
         super().__init__(x, y, speed, image_path, image_size)
         
+
     def update(self):
         # les mouvements
         keys = pygame.key.get_pressed()
@@ -29,3 +31,5 @@ class Player(Entity):
             self.rect.top = 0
         if self.rect.bottom > Param.screenHeight:
             self.rect.bottom = Param.screenHeight
+
+    
