@@ -42,8 +42,10 @@ class Game:
             self.area_color = "red"
 
         if self.buff.collide_rect(self.player.rect):
-            
             self.buff.kill()
+            self.all_sprites.remove(self.buff)
+            print("Buff catch and del")
+    
 
     def display(self):
         self.screen.fill("black")
@@ -57,7 +59,6 @@ class Game:
             self.update()
             self.display()
             self.clock.tick(60)
-
 
 pygame.init()
 screen = pygame.display.set_mode((1920, 1080))

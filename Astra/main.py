@@ -45,9 +45,6 @@ pygame.display.set_icon(logo)
 #initialisation du titre de la fenetre
 pygame.display.set_caption("Astra")
 
-eightbit_song = pygame.mixer.Sound("song/8bit.ogg")
-eightbit_song.play()
-
 
 while running: #tant que running egal True on reste dans cette boucle
     for event in pygame.event.get(): 
