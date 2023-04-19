@@ -2,6 +2,10 @@ import pygame
 from classes.player import Player
 from classes.buff import Buff
 from classes.lifesystem import *
+from classes.obstacle import Obstacle
+from classes.values import *
+
+obstacleX = 1280
 
 class Game:
     def __init__(self, screen):
@@ -9,13 +13,14 @@ class Game:
         self.running = True
         self.clock = pygame.time.Clock()
         self.player = Player(0,0)
-        self.buff = Buff(750,450,2)
-        self.buff1 = Buff(850,550,1)
-        self.buff2 = Buff(750,250,3)
+        self.buff = Buff(750,450,2) #bouclier
+        self.buff1 = Buff(850,550,1) #heal
+        self.buff2 = Buff(750,250,3) #damage
+        self.obstacle = Obstacle(obstacleX,600)
         self.area = pygame.Rect(300,150,300,300)
         self.area_color = "red"
         self.all_sprites = pygame.sprite.Group()
-        self.all_sprites.add(self.player, self.buff, self.buff1,self.buff2)
+        self.all_sprites.add(self.player, self.buff, self.buff1,self.buff2,self.obstacle)
 
     def handling_events(self):
         for event in pygame.event.get():
@@ -63,6 +68,18 @@ class Game:
             LifeSystem.healthPlayerUpdate(self,self.buff2)
             print("Buff catch and del")
             print(PlayerStats.currentHealth)
+        
+        # if self.obstacle.collide_rect(self.player.rect):
+        #     LifeSystem.healthPlayerUpdate(self, self.buff2)
+        #     print("Player take hit")
+        #     print(PlayerStats.currentHealth)
+
+        self.obstacle.move()
+        print(self.obstacle.x)
+        if self.obstacle.x == 200 - self.obstacle.imageWidth:
+            self.obstacle.kill()
+            self.all_sprites.remove(self.obstacle)
+            print("obstacle hors jeu = deleted")
     
 
     def display(self):
