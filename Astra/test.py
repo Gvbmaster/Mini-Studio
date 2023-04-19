@@ -74,16 +74,23 @@ class Game:
     def gameover(self):
         self.screen.fill("black")
         self.area_color = "white"
-        self.casePlayer = pygame.image.load("img/player.png").convert_alpha()
+
         self.imageWidth = 395
         self.imageHeight = 475
+        self.casePlayer = pygame.image.load("img/player.png").convert_alpha()
         self.casePlayer = pygame.transform.scale(self.casePlayer,(int(self.imageWidth), int(self.imageHeight)))
-        # self.playerArea = pygame.draw.rect(screen, self.area_color, pygame.Rect(200,200,400,480), 5)
-        # self.playerArea = self.casePlayer.get_rect()
-        self.rect = self.casePlayer.get_rect(left=(200), top=(200))
-        self.screen.blit(self.casePlayer, self.rect)
+        self.rectPlayer = self.casePlayer.get_rect(left=(200), top=(200))
+
+        self.imageWidth2 = 495
+        self.imageHeight2 = 95
+        self.caseRetry = pygame.image.load("img/retry.png").convert_alpha()
+        self.caseRetry = pygame.transform.scale(self.caseRetry,(int(self.imageWidth2), int(self.imageHeight2)))
+        self.rectRetry = pygame.draw.rect(screen, self.area_color, pygame.Rect(700,800,500,100), 5)
+
         self.textArea = pygame.draw.rect(screen, self.area_color, pygame.Rect(600,200,1120,480), 5)
-        self.replayButton = pygame.draw.rect(screen, self.area_color, pygame.Rect(700,800,500,100), 5)
+        
+        self.screen.blit(self.casePlayer, self.rectPlayer)
+        self.screen.blit(self.caseRetry, self.rectRetry)
         pygame.display.flip()
 
     def display(self):
