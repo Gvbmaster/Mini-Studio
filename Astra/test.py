@@ -2,7 +2,8 @@ import pygame
 from classes.player import Player
 from classes.buff import Buff
 from classes.lifesystem import *
-from classes.obstacle import Obstacle
+from classes.obstacle import *
+from classes.enemy import *
 from classes.values import *
 
 
@@ -15,11 +16,12 @@ class Game:
         self.buff = Buff(750,450,2) #bouclier
         self.buff1 = Buff(850,550,1) #heal
         self.buff2 = Buff(750,250,3) #damage
+        self.enemy=[Enemy(1380,160),Enemy(1280,260),Enemy(1180,360),Enemy(1280,460),Enemy(1380,560)]
         self.obstacle = Obstacle(1280,600)
         self.area = pygame.Rect(300,150,300,300)
         self.area_color = "red"
         self.all_sprites = pygame.sprite.Group()
-        self.all_sprites.add(self.player, self.buff, self.buff1,self.buff2,self.obstacle)
+        self.all_sprites.add(self.player, self.buff, self.buff1,self.buff2,self.obstacle,self.enemy)
 
     def handling_events(self):
         for event in pygame.event.get():
@@ -58,31 +60,46 @@ class Game:
             self.buff1.kill()
             self.all_sprites.remove(self.buff1)
             LifeSystem.healthPlayerUpdate(self,2)
-            print("Buff catch and del")
+            print("Buff catch and del1")
             print(PlayerStats.currentHealth)
 
         if self.buff2.collide_rect(self.player.rect):
             self.buff2.kill()
             self.all_sprites.remove(self.buff2)
-            LifeSystem.healthPlayerUpdate(self,self.buff2)
+            LifeSystem.healthPlayerUpdate(self,3)
             print("Buff catch and del")
             print(PlayerStats.currentHealth)
         
-        # if self.obstacle.collide_rect(self.player.rect):
-        #     LifeSystem.healthPlayerUpdate(self, self.buff2)
-        #     print("Player take hit")
-        #     print(PlayerStats.currentHealth)
+        
+        
+            
+        if self.obstacle.collide_rect(self.player.rect):
+            LifeSystem.healthPlayerUpdate(self, self.obstacle)
+            print("Player take hit")
+            print(PlayerStats.currentHealth)
 
-
-        # self.obstacle.move()
-        # print(self.obstacle.rect.x)
+        
         if self.obstacle.rect.x <= 0 - self.obstacle.imageWidth:
             self.obstacle.kill()
             self.all_sprites.remove(self.obstacle)
-            print("obstacle hors jeu = deleted")
         else:
             self.obstacle.move()
-            print(self.obstacle.rect.x)
+            
+        
+        for i in range (5):
+            if self.enemy[i].collide_rect(self.player.rect):
+                self.enemy[i].kill()
+                self.all_sprites.remove(self.enemy[i])
+                LifeSystem.healthPlayerUpdate(self,3)
+                print(PlayerStats.currentHealth)
+                #self.player.has_buff = True
+                print("ennemy hit")
+                
+            if self.enemy[i].rect.x <= 200 - self.enemy[i].imageWidth:
+                self.enemy[i].kill()
+                self.all_sprites.remove(self.enemy[i])
+            else:
+                self.enemy[i].move()
     
 
     def display(self):
@@ -98,10 +115,11 @@ class Game:
             self.update()
             self.display()
             self.clock.tick(60)
+            
+
 
 pygame.init()
-screen = pygame.display.set_mode((1920, 1080))
-
+screen = pygame.display.set_mode((1080, 720))
 game = Game(screen)
 game.run()
 
