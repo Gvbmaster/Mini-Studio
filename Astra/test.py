@@ -21,7 +21,7 @@ class Game:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
-
+        
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT]:
             self.player.velocity[0] = -1
@@ -37,12 +37,19 @@ class Game:
         else:
             self.player.velocity[1] = 0
 
+        if keys[pygame.K_m]:
+            self.screen.fill("black")
+            pygame.draw.rect(self.screen, (0,0,0), (0,0,1920,1080))
+            self.area_color = "white"
+            self.area = pygame.draw.rect(screen, self.area_color, pygame.Rect(400,150,300,300), 2)
+
+        
     def update(self):
         self.player.move()
         if self.area.colliderect(self.player.rect):
             self.area_color = "blue"
         else:
-            self.area_color = "red"
+            self.area_color = self.area_color
 
         if self.buff.collide_rect(self.player.rect):
             self.buff.kill()
@@ -64,6 +71,20 @@ class Game:
             print("Buff catch and del")
             print(PlayerStats.currentHealth)
     
+    def gameover(self):
+        self.screen.fill("black")
+        self.area_color = "white"
+        self.casePlayer = pygame.image.load("img/player.png").convert_alpha()
+        self.imageWidth = 395
+        self.imageHeight = 475
+        self.casePlayer = pygame.transform.scale(self.casePlayer,(int(self.imageWidth), int(self.imageHeight)))
+        # self.playerArea = pygame.draw.rect(screen, self.area_color, pygame.Rect(200,200,400,480), 5)
+        # self.playerArea = self.casePlayer.get_rect()
+        self.rect = self.casePlayer.get_rect(left=(200), top=(200))
+        self.screen.blit(self.casePlayer, self.rect)
+        self.textArea = pygame.draw.rect(screen, self.area_color, pygame.Rect(600,200,1120,480), 5)
+        self.replayButton = pygame.draw.rect(screen, self.area_color, pygame.Rect(700,800,500,100), 5)
+        pygame.display.flip()
 
     def display(self):
         self.screen.fill("black")
@@ -76,8 +97,10 @@ class Game:
         while self.running:
             self.handling_events()
             self.update()
-            self.display()
+            # self.display()
+            self.gameover()
             self.clock.tick(60)
+            
 
 pygame.init()
 screen = pygame.display.set_mode((1920, 1080))
