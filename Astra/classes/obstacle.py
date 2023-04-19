@@ -13,8 +13,6 @@ class Obstacle(pygame.sprite.Sprite):
         self.velocity = [-1, 0]
         self._kill = False
         self.has_buff = False
-        self.x = x
-        self.y = y
 
     def move(self):
         self.rect.move_ip(self.velocity[0] * self.speed, self.velocity[1] * self.speed)
