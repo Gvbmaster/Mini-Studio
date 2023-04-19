@@ -73,6 +73,9 @@ class Game:
         #     print("Player take hit")
         #     print(PlayerStats.currentHealth)
 
+
+        # self.obstacle.move()
+        # print(self.obstacle.rect.x)
         if self.obstacle.rect.x <= 0 - self.obstacle.imageWidth:
             self.obstacle.kill()
             self.all_sprites.remove(self.obstacle)
