@@ -1,35 +1,29 @@
 import pygame
-from classes.entity import *
 from classes.values import *
-from classes.projectile import*
 
-class Player(Entity):
-    def __init__(self, x, y, speed, image_path, image_size):
-        super().__init__(x, y, speed, image_path, image_size)
-        
+class Player(pygame.sprite.Sprite): 
+    def __init__(self, x, y,):
+        super().__init__()
+        self.image = pygame.image.load("img/ShipTest.png").convert_alpha()
+        self.imageWidth = 101.25
+        self.imageHeight = 105.5
+        self.image = pygame.transform.scale(self.image,(int(self.imageWidth), int(self.imageHeight)))
+        self.rect = self.image.get_rect(x=x, y=y)
+        self.currentHealth = PlayerStats.currentHealth
+        self.speed = PlayerStats.speed
+        self.attack = PlayerStats.attackDamage
+        self.attackSpeed = PlayerStats.attackSpeed
+        self.velocity = [0, 0]
+        self._kill = False
+        self.has_buff = False
 
-    def update(self):
-        # les mouvements
-        keys = pygame.key.get_pressed()
-        
-        
-        if keys[pygame.K_LEFT]:
-            self.rect.x -= self.speed
-        if keys[pygame.K_RIGHT]:
-            self.rect.x += self.speed
-        if keys[pygame.K_UP]:
-            self.rect.y -= self.speed
-        if keys[pygame.K_DOWN]:
-            self.rect.y += self.speed
+    def move(self):
+        self.rect.move_ip(self.velocity[0] * self.speed, self.velocity[1] * self.speed)
 
-        # On l'emp�che de sortir de l'�cran
-        if self.rect.left < 0:
-            self.rect.left = 0
-        if self.rect.right > Param.screenWidth:
-            self.rect.right = Param.screenWidth
-        if self.rect.top < 0:
-            self.rect.top = 0
-        if self.rect.bottom > Param.screenHeight:
-            self.rect.bottom = Param.screenHeight
+    def draw(self, screen):
+        screen.blit(self.image, self.rect)
 
-    
+        if self.has_buff:
+            shield_image = pygame.image.load("img/Shield.png").convert_alpha()
+            shield_rect = shield_image.get_rect(center=self.rect.center)
+            screen.blit(shield_image, shield_rect)
