@@ -1,4 +1,5 @@
 import pygame
+import random
 from classes.player import Player
 from classes.buff import Buff
 from classes.lifesystem import *
@@ -15,7 +16,7 @@ class Game:
         self.buff = Buff(750,450,2) #bouclier
         self.buff1 = Buff(850,550,1) #heal
         self.buff2 = Buff(750,250,3) #damage
-        self.obstacle = Obstacle(1280,600)
+        self.obstacle = Obstacle(1280, random.randint (0, 800))
         self.area = pygame.Rect(300,150,300,300)
         self.area_color = "red"
         self.all_sprites = pygame.sprite.Group()
