@@ -47,7 +47,7 @@ class Game:
         if self.buff.collide_rect(self.player.rect):
             self.buff.kill()
             self.all_sprites.remove(self.buff)
-            self.player.has_buff = True
+            self.player.has_shield = True
             print("Buff catch and del")
         
         if self.buff1.collide_rect(self.player.rect):

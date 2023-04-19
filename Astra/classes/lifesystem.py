@@ -1,6 +1,7 @@
 import pygame
 from classes.values import *
 from classes.buff import *
+from classes.player import *
 
 class LifeSystem :
     def __init__(self, game):
@@ -15,7 +16,11 @@ class LifeSystem :
             elif PlayerStats.currentHealth == PlayerStats.maxHealth:
                 print("Vie maximale atteinte !")
         else:
-            if PlayerStats.currentHealth <= PlayerStats.maxHealth & PlayerStats.currentHealth > 0:
+            if PlayerStats.shield == True:
+                PlayerStats.shield = False
+                Player.has_shield = False
+
+            elif PlayerStats.currentHealth <= PlayerStats.maxHealth & PlayerStats.currentHealth > 0:
                 PlayerStats.currentHealth = PlayerStats.currentHealth -1
                 if PlayerStats.currentHealth == 0:
                     #kill player
