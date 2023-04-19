@@ -13,7 +13,7 @@ pygame.init()
 screen = pygame.display.set_mode((Param.screenWidth,Param.screenHeight))
 
 #Chargement des images
-logo = pygame.image.load("Astra/img/LogoTest.png").convert()
+logo = pygame.image.load("img/LogoTest.png").convert()
 
 #resize des images
 logo = pygame.transform.scale(logo, (32, 32))
@@ -31,7 +31,7 @@ running = True
 #initialisation de l'horloge interne
 clock = pygame.time.Clock()
 projectiles = pygame.sprite.Group()
-player = Player(0, 0, 10, "Astra/img/ShipTest.png", (100,100))
+player = Player(0, 0, 10, "img/ShipTest.png", (100,100))
 
 
 while running:
@@ -43,7 +43,7 @@ while running:
             if event.key == pygame.K_SPACE:
                 print("Espace pressé")
             # Créer une instance de Projectile à la position du joueur
-                projectile = Projectile(player.rect.centerx, player.rect.top, 10, "Astra/img/pixel_laser_yellow.png", (100,90))
+                projectile = Projectile(player.rect.centerx, player.rect.top, 10, "img/pixel_laser_yellow.png", (100,90))
                 projectiles.add(projectile)
 
     player.update()
