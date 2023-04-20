@@ -3,6 +3,8 @@ from classes.player import Player
 from classes.buff import Buff
 from classes.lifesystem import *
 from classes.button import *
+from classes.gameover import *
+from classes.text import *
 
 class Game:
     def __init__(self, screen):
@@ -73,33 +75,7 @@ class Game:
             print(PlayerStats.currentHealth)
 
     def gameover(self):
-        font = pygame.font.SysFont('Playfair Display Noir', 28)
-        self.screen.fill("black")
-        self.area_color = "white"
-
-        playMousePos = pygame.mouse.get_pos()
-        self.imageWidth = 395
-        self.imageHeight = 475
-        self.casePlayer = pygame.image.load("img/player.png").convert_alpha()
-        self.casePlayer = pygame.transform.scale(self.casePlayer,(int(self.imageWidth), int(self.imageHeight)))
-        self.rectPlayer = self.casePlayer.get_rect(left=(200), top=(202))
-
-        self.textArea = pygame.draw.rect(screen, self.area_color, pygame.Rect(600,200,1120,480), 5)
-        
-        self.screen.blit(self.casePlayer, self.rectPlayer)
-
-        retryIMG = pygame.image.load("img/retry.png")
-        retry = Button(retryIMG, 700, 800)
-        retry.update(screen)
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if retry.checkingInput(playMousePos):
-                    print("Passed Successfully !")
-                        
-        pygame.display.update()
+        Gameover.__init__(self)
 
     def display(self):
         self.screen.fill("black")
