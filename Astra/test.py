@@ -25,10 +25,13 @@ class Game:
         self.obstacle_spawn_event = pygame.USEREVENT + 0
         pygame.time.set_timer(self.obstacle_spawn_event, 2000)
         self.laser = Laser(0, random.randint(0,1080))
+        # self.laser = None
+        # self.laser_spawn_event = pygame.USEREVENT + 0
+        # pygame.time.set_timer(self.laser_spawn_event, 15000)
         self.area = pygame.Rect(300,150,300,300)
         self.area_color = "red"
         self.all_sprites = pygame.sprite.Group()
-        self.all_sprites.add(self.buff, self.buff1, self.buff2, self.laser, self.enemy)
+        self.all_sprites.add(self.buff, self.buff1, self.buff2, self.enemy)
 
     def handling_events(self):
         for event in pygame.event.get():
@@ -39,6 +42,10 @@ class Game:
                 obstacle = Obstacle(1920, random.randint(0, 1080))
                 self.obstacles.append(obstacle)
                 self.all_sprites.add(obstacle) 
+
+            # if event.type == self.laser_spawn_event:
+            #     self.laser = Laser(0, random.randint(0, 1080))
+            #     self.all_sprites.add(self.laser)
 
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT] or keys[pygame.K_q]:
