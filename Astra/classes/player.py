@@ -15,15 +15,24 @@ class Player(pygame.sprite.Sprite):
         self.attackSpeed = PlayerStats.attackSpeed
         self.velocity = [0, 0]
         self._kill = False
-        self.has_buff = False
+        self.has_shield = False
+        self.shield_images = []
 
     def move(self):
         self.rect.move_ip(self.velocity[0] * self.speed, self.velocity[1] * self.speed)
 
     def draw(self, screen):
         screen.blit(self.image, self.rect)
+        
 
-        if self.has_buff:
+
+        if PlayerStats.shield == True:
             shield_image = pygame.image.load("img/Shield.png").convert_alpha()
             shield_rect = shield_image.get_rect(center=self.rect.center)
             screen.blit(shield_image, shield_rect)
+            self.shield_images.append(shield_image)
+        elif PlayerStats.shield == False:
+            if self.shield_images and not PlayerStats.shield:
+                for image in self.shield_images:
+                    self.shield_images.remove(image)
+       

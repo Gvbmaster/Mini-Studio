@@ -16,7 +16,7 @@ class PlayerStats:
     #maxAttackDamage = 6
     attackSpeed = 1
     MaxAttackSpeed = 2
-    
+    shield = False
 
 class EnnemieStats:
     currentHealth = 6
