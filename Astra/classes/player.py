@@ -28,6 +28,7 @@ class Player(pygame.sprite.Sprite):
 
         if PlayerStats.shield == True:
             shield_image = pygame.image.load("img/Shield.png").convert_alpha()
+            shield_image = pygame.transform.scale(shield_image,(150,150))
             shield_rect = shield_image.get_rect(center=self.rect.center)
             screen.blit(shield_image, shield_rect)
             self.shield_images.append(shield_image)

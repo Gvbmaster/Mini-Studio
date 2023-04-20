@@ -2,15 +2,19 @@ import pygame
 from classes.player import Player
 from classes.buff import Buff
 from classes.lifesystem import *
+from classes.ath import ATH
+from classes.backgroundPixel import Background
 
 class Game:
     def __init__(self, screen):
         self.screen = screen
         self.running = True
         self.clock = pygame.time.Clock()
+        self.background = Background()
+        self.ath = ATH()
         self.player = Player(0,0)
-        self.buff = Buff(750,450,2)
-        self.buff1 = Buff(850,550,1)
+        self.buff = [Buff(750,450,2),Buff(850,450,2),Buff(950,450,2),Buff(1050,450,2)]
+        self.buff1 =[Buff(750,550,1),Buff(850,550,1),Buff(950,550,1),Buff(1050,550,1)]
         self.buff2=[Buff(750,250,3),Buff(850,250,3),Buff(950,250,3),Buff(1050,250,3)]
         self.area = pygame.Rect(300,150,300,300)
         self.area_color = "red"
@@ -44,19 +48,21 @@ class Game:
         else:
             self.area_color = "red"
 
-        if self.buff.collide_rect(self.player.rect):
-            self.buff.kill()
-            self.all_sprites.remove(self.buff)
-            PlayerStats.shield = True
-            print("Buff catch and del")
-            print(PlayerStats.shield)
+        for buff in self.buff:
+            if buff.collide_rect(self.player.rect):
+                buff.kill()
+                self.all_sprites.remove(buff)
+                PlayerStats.shield = True
+                print("Buff catch and del")
+                print(PlayerStats.shield)
         
-        if self.buff1.collide_rect(self.player.rect):
-            self.buff1.kill()
-            self.all_sprites.remove(self.buff1)
-            LifeSystem.healthPlayerUpdate(self,2)
-            print("Buff catch and del")
-            print(PlayerStats.currentHealth)
+        for buff in self.buff1:
+            if buff.collide_rect(self.player.rect):
+                buff.kill()
+                self.all_sprites.remove(buff)
+                LifeSystem.healthPlayerUpdate(self,2)
+                print("Buff catch and del")
+                print(PlayerStats.currentHealth)
 
         for buff in self.buff2:
             if buff.collide_rect(self.player.rect):
@@ -68,10 +74,13 @@ class Game:
     
 
     def display(self):
+        self.background.update()
         self.screen.fill("black")
-        pygame.draw.rect(self.screen, self.area_color, self.area)
+        self.background.draw(self.screen)
+        #pygame.draw.rect(self.screen, self.area_color, self.area)
         self.all_sprites.draw(self.screen)
         self.player.draw(self.screen)
+        self.ath.draw(self.screen)
         pygame.display.flip()
 
     def run(self):
