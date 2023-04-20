@@ -2,6 +2,7 @@ import pygame
 from classes.player import Player
 from classes.buff import Buff
 from classes.lifesystem import *
+from classes.button import *
 
 class Game:
     def __init__(self, screen):
@@ -70,28 +71,35 @@ class Game:
             LifeSystem.healthPlayerUpdate(self,self.buff2)
             print("Buff catch and del")
             print(PlayerStats.currentHealth)
-    
+
     def gameover(self):
+        font = pygame.font.SysFont('Playfair Display Noir', 28)
         self.screen.fill("black")
         self.area_color = "white"
 
+        playMousePos = pygame.mouse.get_pos()
         self.imageWidth = 395
         self.imageHeight = 475
         self.casePlayer = pygame.image.load("img/player.png").convert_alpha()
         self.casePlayer = pygame.transform.scale(self.casePlayer,(int(self.imageWidth), int(self.imageHeight)))
-        self.rectPlayer = self.casePlayer.get_rect(left=(200), top=(200))
-
-        self.imageWidth2 = 495
-        self.imageHeight2 = 95
-        self.caseRetry = pygame.image.load("img/retry.png").convert_alpha()
-        self.caseRetry = pygame.transform.scale(self.caseRetry,(int(self.imageWidth2), int(self.imageHeight2)))
-        self.rectRetry = pygame.draw.rect(screen, self.area_color, pygame.Rect(700,800,500,100), 5)
+        self.rectPlayer = self.casePlayer.get_rect(left=(200), top=(202))
 
         self.textArea = pygame.draw.rect(screen, self.area_color, pygame.Rect(600,200,1120,480), 5)
         
         self.screen.blit(self.casePlayer, self.rectPlayer)
-        self.screen.blit(self.caseRetry, self.rectRetry)
-        pygame.display.flip()
+
+        retryIMG = pygame.image.load("img/retry.png")
+        retry = Button(retryIMG, 700, 800)
+        retry.update(screen)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if retry.checkingInput(playMousePos):
+                    print("Passed Successfully !")
+                        
+        pygame.display.update()
 
     def display(self):
         self.screen.fill("black")
