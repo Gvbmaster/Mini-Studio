@@ -25,6 +25,8 @@ class Obstacle(pygame.sprite.Sprite):
     def move(self):
         self.rect.move_ip(self.velocity[0] * self.speed, self.velocity[1] * self.speed)
 
+    def collide_rect(self, rect):
+        return self.rect.colliderect(rect)
 
     def draw(self, screen):
         screen.blit(self.image, self.rect)

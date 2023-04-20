@@ -69,21 +69,17 @@ class Game:
             print("Buff catch and del")
             print(PlayerStats.currentHealth)
         
-        # if self.obstacle.collide_rect(self.player.rect):
-        #     LifeSystem.healthPlayerUpdate(self, self.buff2)
-        #     print("Player take hit")
-        #     print(PlayerStats.currentHealth)
+        if self.obstacle.collide_rect(self.player.rect):
+            LifeSystem.healthPlayerUpdate(self, self.buff2)
+            print("Player take hit")
+            print(PlayerStats.currentHealth)
 
 
-        # self.obstacle.move()
-        # print(self.obstacle.rect.x)
         if self.obstacle.rect.x <= 0 - self.obstacle.imageWidth:
             self.obstacle.kill()
             self.all_sprites.remove(self.obstacle)
-            print("obstacle hors jeu = deleted")
         else:
             self.obstacle.move()
-            print(self.obstacle.rect.x)
     
 
     def display(self):
