@@ -1,4 +1,5 @@
 import pygame
+import random
 from classes.player import Player
 from classes.buff import Buff
 from classes.lifesystem import *
@@ -17,7 +18,7 @@ class Game:
         self.buff1 = Buff(850,550,1) #heal
         self.buff2 = Buff(750,250,3) #damage
         self.enemy=[Enemy(1380,160),Enemy(1280,260),Enemy(1180,360),Enemy(1280,460),Enemy(1380,560)]
-        self.obstacle = Obstacle(1280,600)
+        self.obstacle = Obstacle(1280, random.randint (0, 800))
         self.area = pygame.Rect(300,150,300,300)
         self.area_color = "red"
         self.all_sprites = pygame.sprite.Group()
@@ -29,16 +30,16 @@ class Game:
                 self.running = False
 
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_LEFT]:
+        if keys[pygame.K_LEFT] or keys[pygame.K_q]:
             self.player.velocity[0] = -1
-        elif keys[pygame.K_RIGHT]:
+        elif keys[pygame.K_RIGHT] or keys[pygame.K_d]:
             self.player.velocity[0] = 1
         else:
             self.player.velocity[0] = 0
 
-        if keys[pygame.K_UP]:
+        if keys[pygame.K_UP] or keys[pygame.K_z]:
             self.player.velocity[1] = -1
-        elif keys[pygame.K_DOWN]:
+        elif keys[pygame.K_DOWN] or keys[pygame.K_s]:
             self.player.velocity[1] = 1
         else:
             self.player.velocity[1] = 0

@@ -1,11 +1,18 @@
 import pygame
+import random
 
 from classes.values import *
 
 class Obstacle(pygame.sprite.Sprite): 
     def __init__(self, x, y,):
         super().__init__()
-        self.image = pygame.image.load("img/immeuble.png").convert_alpha()
+        self.image_list = [
+            pygame.image.load("img/banana.png").convert_alpha(),
+            pygame.image.load("img/piece.png").convert_alpha(),
+            pygame.image.load("img/Damage.png").convert_alpha(),
+            pygame.image.load("img/Life.png").convert_alpha(),
+        ]
+        self.image = random.choice(self.image_list)
         self.imageWidth = 100
         self.imageHeight = 80
         self.image = pygame.transform.scale(self.image,(int(self.imageWidth), int(self.imageHeight)))
