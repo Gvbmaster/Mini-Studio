@@ -24,7 +24,7 @@ class Game:
         self.obstacle = None
         self.obstacles = []
         self.obstacle_spawn_event = pygame.USEREVENT + 1
-        pygame.time.set_timer(self.obstacle_spawn_event, 1000)
+        pygame.time.set_timer(self.obstacle_spawn_event, 2000)
         self.laser = Laser(0, random.randint(0,1080))
         self.area = pygame.Rect(300,150,300,300)
         self.area_color = "red"
@@ -89,12 +89,14 @@ class Game:
                 LifeSystem.healthPlayerUpdate(self, obstacle)
                 print("Player take hit")
                 print(PlayerStats.currentHealth)
-            if obstacle.rect.x <= 0 - obstacle.imageWidth:
-                obstacle.kill()
-                self.all_sprites.remove(obstacle)
-                self.obstacles.remove(obstacle)
-            else:
-                obstacle.move()
+            # if obstacle.rect.x <= 0 - obstacle.imageWidth:
+            #     obstacle.kill()
+            #     self.all_sprites.remove(obstacle)
+            #     self.obstacles.remove(obstacle)
+            # else:
+            obstacle.move()
+        self.obstacles = self.obstacles[-5:]
+        self.obstacles = [obs for obs in self.obstacles if obs.rect.x >-obs.imageWidth]
             
         if self.laser.collide_rect(self.player.rect):
             LifeSystem.healthPlayerUpdate(self, self.laser)
