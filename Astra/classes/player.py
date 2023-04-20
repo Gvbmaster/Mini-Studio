@@ -23,18 +23,16 @@ class Player(pygame.sprite.Sprite):
 
     def draw(self, screen):
         screen.blit(self.image, self.rect)
+        
+
 
         if PlayerStats.shield == True:
             shield_image = pygame.image.load("img/Shield.png").convert_alpha()
             shield_rect = shield_image.get_rect(center=self.rect.center)
             screen.blit(shield_image, shield_rect)
             self.shield_images.append(shield_image)
-
-        if self.has_shield==True:
-            PlayerStats.shield=True
-            
-        else: 
-            PlayerStats.shield = False
-            if self.shield_images:
+        elif PlayerStats.shield == False:
+            if self.shield_images and not PlayerStats.shield:
                 for image in self.shield_images:
                     self.shield_images.remove(image)
+       

@@ -28,7 +28,7 @@ class LifeSystem :
                     print("Game Over !")
                 else :
                     pass
-            else : 
+            else :
                 pass
 
     def healthEnemyUpdate(self):

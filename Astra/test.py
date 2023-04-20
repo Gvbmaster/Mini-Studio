@@ -11,7 +11,7 @@ class Game:
         self.player = Player(0,0)
         self.buff = Buff(750,450,2)
         self.buff1 = Buff(850,550,1)
-        self.buff2 = Buff(750,250,3)
+        self.buff2=[Buff(750,250,3),Buff(850,250,3),Buff(950,250,3),Buff(1050,250,3)]
         self.area = pygame.Rect(300,150,300,300)
         self.area_color = "red"
         self.all_sprites = pygame.sprite.Group()
@@ -47,8 +47,9 @@ class Game:
         if self.buff.collide_rect(self.player.rect):
             self.buff.kill()
             self.all_sprites.remove(self.buff)
-            self.player.has_shield = True
+            PlayerStats.shield = True
             print("Buff catch and del")
+            print(PlayerStats.shield)
         
         if self.buff1.collide_rect(self.player.rect):
             self.buff1.kill()
@@ -57,12 +58,13 @@ class Game:
             print("Buff catch and del")
             print(PlayerStats.currentHealth)
 
-        if self.buff2.collide_rect(self.player.rect):
-            self.buff2.kill()
-            self.all_sprites.remove(self.buff2)
-            LifeSystem.healthPlayerUpdate(self,self.buff2)
-            print("Buff catch and del")
-            print(PlayerStats.currentHealth)
+        for buff in self.buff2:
+            if buff.collide_rect(self.player.rect):
+                buff.kill()
+                self.all_sprites.remove(buff)
+                LifeSystem.healthPlayerUpdate(self,buff)
+                print("Buff catch and del")
+                print(PlayerStats.currentHealth)
     
 
     def display(self):
