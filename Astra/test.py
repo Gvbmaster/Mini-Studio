@@ -20,16 +20,15 @@ class Game:
         self.buff1 = Buff(850,550,1) #heal
         self.buff2 = Buff(750,250,3) #damage
         self.enemy=[Enemy(1380,160),Enemy(1280,260),Enemy(1180,360),Enemy(1280,460),Enemy(1380,560)]
-        # self.obstacle = Obstacle(1920, random.randint (0, 1080))
         self.obstacle = None
         self.obstacles = []
-        self.obstacle_spawn_event = pygame.USEREVENT + 1
+        self.obstacle_spawn_event = pygame.USEREVENT + 0
         pygame.time.set_timer(self.obstacle_spawn_event, 2000)
         self.laser = Laser(0, random.randint(0,1080))
         self.area = pygame.Rect(300,150,300,300)
         self.area_color = "red"
         self.all_sprites = pygame.sprite.Group()
-        self.all_sprites.add(self.buff, self.buff1, self.buff2, self.laser, self.enemy) #add [self.player, ] in all_sprites
+        self.all_sprites.add(self.buff, self.buff1, self.buff2, self.laser, self.enemy)
 
     def handling_events(self):
         for event in pygame.event.get():
@@ -89,11 +88,6 @@ class Game:
                 LifeSystem.healthPlayerUpdate(self, obstacle)
                 print("Player take hit")
                 print(PlayerStats.currentHealth)
-            # if obstacle.rect.x <= 0 - obstacle.imageWidth:
-            #     obstacle.kill()
-            #     self.all_sprites.remove(obstacle)
-            #     self.obstacles.remove(obstacle)
-            # else:
             obstacle.move()
         self.obstacles = self.obstacles[-5:]
         self.obstacles = [obs for obs in self.obstacles if obs.rect.x >-obs.imageWidth]
@@ -125,8 +119,6 @@ class Game:
         pygame.draw.rect(self.screen, self.area_color, self.area)
         self.all_sprites.draw(self.screen)
         self.player.draw(self.screen)
-        # event = self.obstacle.draw(self.screen)
-        # pygame.time.set_timer(pygame.USEREVENT + 1, 1000)
         pygame.display.flip()
 
     def run(self):
