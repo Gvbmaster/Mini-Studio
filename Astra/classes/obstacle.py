@@ -6,15 +6,6 @@ from classes.values import *
 class Obstacle(pygame.sprite.Sprite): 
     def __init__(self, x, y,):
         super().__init__()
-        # self.imageList = [
-        #     pygame.image.load("img/Asteroid-001.png").convert_alpha(),
-        #     pygame.image.load("img/Asteroid-002.png").convert_alpha(),
-        #     pygame.image.load("img/Asteroid-003.png").convert_alpha(),
-        #     pygame.image.load("img/Asteroid-004.png").convert_alpha(),
-        #     pygame.image.load("img/Asteroid-005.png").convert_alpha(),
-        #     pygame.image.load("img/Asteroid-006.png").convert_alpha(),
-        # ]
-        # self.image = random.choice(self.imageList)
         self.image = pygame.image.load("img/Asteroid-00{}.png".format(random.randint(1, 6))).convert_alpha()
         self.imageWidth = 100
         self.imageHeight = 80
