@@ -2,9 +2,9 @@ import pygame
 from pygame.locals import *
 
 class Entity:
-    def __init__(self, x, y, speed, image_path):
+    def __init__(self, x, y, speed, image_path, image_size):
         self.image = pygame.image.load(image_path)
-        self.image = pygame.transform.scale(self.image,(75.5,40.9))
+        self.image = pygame.transform.scale(self.image, image_size)
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
