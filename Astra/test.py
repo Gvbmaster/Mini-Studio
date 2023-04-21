@@ -117,48 +117,50 @@ class Game:
             print("Buff catch and del1")
             print(PlayerStats.currentHealth)
 
-        if self.buff2.collide_rect(self.player.rect):
-            self.buff2.kill()
-            self.all_sprites.remove(self.buff2)
-            LifeSystem.healthPlayerUpdate(self,3)
-            print("Buff catch and del")
-            print(PlayerStats.currentHealth) 
-            
+
+        if PlayerStats.isPlayerHitable == True:
+            if self.buff2.collide_rect(self.player.rect):
+                self.buff2.kill()
+                self.all_sprites.remove(self.buff2)
+                LifeSystem.healthPlayerUpdate(self,3)
+                print("Buff catch and del")
+                print(PlayerStats.currentHealth) 
+                
 #chaque obstacle provoque des dégâts et disparait une fois sorti de l'écran
-        for obstacle in self.obstacles:
-            if obstacle.collide_rect(self.player.rect):
-                LifeSystem.healthPlayerUpdate(self, obstacle)
-                print("Player take hit")
-                print(PlayerStats.currentHealth)
-            if obstacle.rect.x <= 0 - obstacle.imageWidth:
-                obstacle.kill()
-                self.all_sprites.remove(obstacle)
-                self.obstacles.remove(obstacle)
-            else:
-                obstacle.move()
+            for obstacle in self.obstacles:
+                if obstacle.collide_rect(self.player.rect):
+                    LifeSystem.healthPlayerUpdate(self, obstacle)
+                    print("Player take hit")
+                    print(PlayerStats.currentHealth)
+                if obstacle.rect.x <= 0 - obstacle.imageWidth:
+                    obstacle.kill()
+                    self.all_sprites.remove(obstacle)
+                    self.obstacles.remove(obstacle)
+                else:
+                    obstacle.move()
 
 #chaque laser provoque des dégâts
-        for laser in self.lasers:
-            if laser.collide_rect(self.player.rect):
-                LifeSystem.healthPlayerUpdate(self, laser)
-                print("Player take hit")
-                print(PlayerStats.currentHealth)
+            for laser in self.lasers:
+                if laser.collide_rect(self.player.rect):
+                    LifeSystem.healthPlayerUpdate(self, laser)
+                    print("Player take hit")
+                    print(PlayerStats.currentHealth)
 
 
-        for i in range (5):
-            if self.enemy[i].collide_rect(self.player.rect):
-                self.enemy[i].kill()
-                self.all_sprites.remove(self.enemy[i])
-                LifeSystem.healthPlayerUpdate(self,3)
-                print(PlayerStats.currentHealth)
-                print("ennemy hit")
-                
-            if self.enemy[i].rect.x <= 0 - self.enemy[i].imageWidth:
-                self.enemy[i].kill()
-                self.all_sprites.remove(self.enemy[i])
-            else:
-                self.enemy[i].move()
-    
+            for i in range (5):
+                if self.enemy[i].collide_rect(self.player.rect):
+                    self.enemy[i].kill()
+                    self.all_sprites.remove(self.enemy[i])
+                    LifeSystem.healthPlayerUpdate(self,3)
+                    print(PlayerStats.currentHealth)
+                    print("ennemy hit")
+                    
+                if self.enemy[i].rect.x <= 0 - self.enemy[i].imageWidth:
+                    self.enemy[i].kill()
+                    self.all_sprites.remove(self.enemy[i])
+                else:
+                    self.enemy[i].move()
+        
 
     def display(self):
         self.screen.fill("black")

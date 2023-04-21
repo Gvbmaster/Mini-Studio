@@ -16,6 +16,7 @@ class PlayerStats:
     #maxAttackDamage = 6
     attackSpeed = 1
     MaxAttackSpeed = 2
+    isPlayerHitable = True
     
 
 class EnnemieStats:
