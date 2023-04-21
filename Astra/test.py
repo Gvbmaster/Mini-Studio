@@ -31,7 +31,7 @@ class Game:
         self.area = pygame.Rect(300,150,300,300)
         self.area_color = "red"
         self.all_sprites = pygame.sprite.Group()
-        self.all_sprites.add(self.buff, self.buff1, self.buff2, self.enemy)
+        self.all_sprites.add(self.buff, self.buff1, self.buff2, self.laser, self.enemy)
 
     def handling_events(self):
         for event in pygame.event.get():
@@ -95,9 +95,12 @@ class Game:
                 LifeSystem.healthPlayerUpdate(self, obstacle)
                 print("Player take hit")
                 print(PlayerStats.currentHealth)
-            obstacle.move()
-        self.obstacles = self.obstacles[-5:]
-        self.obstacles = [obs for obs in self.obstacles if obs.rect.x >-obs.imageWidth]
+            if obstacle.rect.x <= 0 - obstacle.imageWidth:
+                obstacle.kill()
+                self.all_sprites.remove(obstacle)
+                self.obstacles.remove(obstacle)
+            else:
+                obstacle.move()
             
         if self.laser.collide_rect(self.player.rect):
             LifeSystem.healthPlayerUpdate(self, self.laser)
