@@ -2,6 +2,7 @@ import pygame
 from classes.player import Player
 from classes.buff import Buff
 from classes.lifesystem import *
+from classes.pyvidplayer import *
 
 class Game:
     def __init__(self, screen):
@@ -78,11 +79,30 @@ class Game:
             self.update()
             self.display()
             self.clock.tick(60)
+        pygame.quit()
+
+    vid = Video("video/intro.mp4")
+    vid.set_size((Param.screenWidth, Param.screenHeight))
+
+    def intro():
+        end_video_event = pygame.USEREVENT + 1
+        pygame.time.set_timer(end_video_event, 8000)
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    print('passed1')
+                    pygame.quit()
+                    
+                if event.type == end_video_event:
+                    Game.vid.close()
+                    game.run()
+            Game.vid.draw(screen, (0,0))
+            pygame.display.update()
 
 pygame.init()
-screen = pygame.display.set_mode((1920, 1080))
+screen = pygame.display.set_mode((Param.screenWidth, Param.screenHeight))
 
 game = Game(screen)
-game.run()
+Game.intro()
+# game.run()
 
-pygame.quit()
