@@ -21,19 +21,19 @@ class Game:
         self.buff1 = Buff(850,550,1) #heal
         self.buff2 = Buff(750,250,3) #damage
         self.enemy=[Enemy(1380,160),Enemy(1280,260),Enemy(1180,360),Enemy(1280,460),Enemy(1380,560)]
-        self.obstacle = None
-        self.obstacles = []
-        self.obstacle_spawn_event = pygame.USEREVENT + 1
-        pygame.time.set_timer(self.obstacle_spawn_event, 2000)
-        self.laser_position = [10, 280, 550, 820]
-        self.laserPosition1 = None
-        self.laserPosition2 = None
-        self.laser = None
-        self.warning1 = None
-        self.warning2 = None
-        self.lasers = []
-        self.laser_spawn_event = pygame.USEREVENT + 2
-        pygame.time.set_timer(self.laser_spawn_event, 15000)
+        self.obstacle = None                                    #|
+        self.obstacles = []                                     #|
+        self.obstacle_spawn_event = pygame.USEREVENT + 1        #|
+        pygame.time.set_timer(self.obstacle_spawn_event, 2000)  #|innitialisation des obstacle et de leur event d'apparition
+        self.laser_position = [10, 280, 550, 820]               #|
+        self.laserPosition1 = None                              #|
+        self.laserPosition2 = None                              #|
+        self.laser = None                                       #|
+        self.warning1 = None                                    #|
+        self.warning2 = None                                    #|
+        self.lasers = []                                        #|
+        self.laser_spawn_event = pygame.USEREVENT + 2           #|
+        pygame.time.set_timer(self.laser_spawn_event, 15000)    #|initialisation des events de laser et de warning
         self.area = pygame.Rect(300,150,300,300)
         self.area_color = "red"
         self.all_sprites = pygame.sprite.Group()
@@ -44,11 +44,14 @@ class Game:
             if event.type == pygame.QUIT:
                 self.running = False
 
+#évènement d'apparition d'obtacle à des coordonées y aléatoire toutes les 2 sec
             if event.type == self.obstacle_spawn_event:
                 obstacle = Obstacle(1920, random.randint(0, 1080))
                 self.obstacles.append(obstacle)
                 self.all_sprites.add(obstacle) 
 
+#évènement d'apparition de laser avec warning avant
+    #apparition des warnings
             if event.type == self.laser_spawn_event:
                 self.laserPosition1 = random.choice(self.laser_position)
                 self.laserPosition2 = random.choice(self.laser_position) 
@@ -58,7 +61,7 @@ class Game:
                 self.warning2 = WarningLogo(1825, self.laserPosition2 + 110)
                 self.all_sprites.add(self.warning1, self.warning2)
                 pygame.time.set_timer(pygame.USEREVENT + 3, 2000)
-
+    #disparition des warnings après 2 sec et apparition des laser aux mêmes positions
             if event.type == pygame.USEREVENT + 3:
                 pygame.time.set_timer(pygame.USEREVENT + 3, 0)
                 self.warning1.kill()
@@ -71,7 +74,7 @@ class Game:
                 self.lasers.append(laser2)
                 self.all_sprites.add(laser1, laser2)
                 pygame.time.set_timer(pygame.USEREVENT + 4, 3000)
-            
+    #disparition des lasers après 3 sec
             if event.type == pygame.USEREVENT + 4:
                 pygame.time.set_timer(pygame.USEREVENT + 4, 0)
                 for sprite in self.all_sprites:
@@ -121,7 +124,7 @@ class Game:
             print("Buff catch and del")
             print(PlayerStats.currentHealth) 
             
-
+#chaque obstacle provoque des dégâts et disparait une fois sorti de l'écran
         for obstacle in self.obstacles:
             if obstacle.collide_rect(self.player.rect):
                 LifeSystem.healthPlayerUpdate(self, obstacle)
@@ -133,7 +136,8 @@ class Game:
                 self.obstacles.remove(obstacle)
             else:
                 obstacle.move()
-            
+
+#chaque laser provoque des dégâts
         for laser in self.lasers:
             if laser.collide_rect(self.player.rect):
                 LifeSystem.healthPlayerUpdate(self, laser)

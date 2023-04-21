@@ -13,11 +13,6 @@ class WarningLogo(pygame.sprite.Sprite):
         self._kill = False
         self.has_buff = False
 
-    def collide_rect(self, rect):
-        if self._kill:
-            return False
-        return self.rect.colliderect(rect)
-
     def draw(self, screen):
         screen.blit(self.image, self.rect)
         
