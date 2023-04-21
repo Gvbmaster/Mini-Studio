@@ -26,7 +26,7 @@ class EnnemieStats:
     attackDamage = 1
     maxAttackDamage = 2
     attackSpeed = 1
-    axAttackSpeed = 2
+    maxAttackSpeed = 2
     pattern=[(1000,350),(750,600),(500,350),(750,100)]
     killCount=0
 

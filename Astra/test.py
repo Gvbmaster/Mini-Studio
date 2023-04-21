@@ -104,9 +104,7 @@ class Game:
     
 
     def display(self):
-        self.screen.fill("white")
-        self.image = pygame.image.load("img/test.png").convert_alpha()
-        screen.blit(self.image, (538,120))
+        self.screen.fill("black")
         #pygame.draw.rect(self.screen, self.area_color, self.area)
         self.all_sprites.draw(self.screen)
         self.player.draw(self.screen)
