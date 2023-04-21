@@ -6,7 +6,7 @@ from classes.values import *
 class Obstacle(pygame.sprite.Sprite): 
     def __init__(self, x, y,):
         super().__init__()
-        self.image = pygame.image.load("img/Asteroid-00{}.png".format(random.randint(1, 6))).convert_alpha()
+        self.image = pygame.image.load("img/Asteroid-{}.png".format(random.randint(1, 20))).convert_alpha()
         self.imageWidth = 100
         self.imageHeight = 80
         self.image = pygame.transform.scale(self.image,(int(self.imageWidth), int(self.imageHeight)))

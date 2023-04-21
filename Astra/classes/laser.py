@@ -7,7 +7,7 @@ class Laser(pygame.sprite.Sprite):
         super().__init__()
         self.image = pygame.image.load("img/big-laser-samere.png").convert_alpha()
         self.imageWidth = 1920
-        self.imageHeight = 80
+        self.imageHeight = 260
         self.image = pygame.transform.scale(self.image,(int(self.imageWidth), int(self.imageHeight)))
         self.rect = self.image.get_rect(x=x, y=y)
         self._kill = False

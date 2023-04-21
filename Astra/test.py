@@ -6,6 +6,7 @@ from classes.buff import Buff
 from classes.lifesystem import *
 from classes.obstacle import *
 from classes.laser import *
+from classes.warning import *
 from classes.enemy import *
 from classes.values import *
 
@@ -22,16 +23,21 @@ class Game:
         self.enemy=[Enemy(1380,160),Enemy(1280,260),Enemy(1180,360),Enemy(1280,460),Enemy(1380,560)]
         self.obstacle = None
         self.obstacles = []
-        self.obstacle_spawn_event = pygame.USEREVENT + 0
+        self.obstacle_spawn_event = pygame.USEREVENT + 1
         pygame.time.set_timer(self.obstacle_spawn_event, 2000)
-        self.laser = Laser(0, random.randint(0,1080))
-        # self.laser = None
-        # self.laser_spawn_event = pygame.USEREVENT + 0
-        # pygame.time.set_timer(self.laser_spawn_event, 15000)
+        self.laser_position = [10, 280, 550, 820]
+        self.laserPosition1 = None
+        self.laserPosition2 = None
+        self.laser = None
+        self.warning1 = None
+        self.warning2 = None
+        self.lasers = []
+        self.laser_spawn_event = pygame.USEREVENT + 2
+        pygame.time.set_timer(self.laser_spawn_event, 15000)
         self.area = pygame.Rect(300,150,300,300)
         self.area_color = "red"
         self.all_sprites = pygame.sprite.Group()
-        self.all_sprites.add(self.buff, self.buff1, self.buff2, self.laser, self.enemy)
+        self.all_sprites.add(self.buff, self.buff1, self.buff2, self.enemy)
 
     def handling_events(self):
         for event in pygame.event.get():
@@ -43,9 +49,35 @@ class Game:
                 self.obstacles.append(obstacle)
                 self.all_sprites.add(obstacle) 
 
-            # if event.type == self.laser_spawn_event:
-            #     self.laser = Laser(0, random.randint(0, 1080))
-            #     self.all_sprites.add(self.laser)
+            if event.type == self.laser_spawn_event:
+                self.laserPosition1 = random.choice(self.laser_position)
+                self.laserPosition2 = random.choice(self.laser_position) 
+                while self.laserPosition2 == self.laserPosition1:
+                    self.laserPosition2 = random.choice(self.laser_position)
+                self.warning1 = WarningLogo(1825, self.laserPosition1 + 110)
+                self.warning2 = WarningLogo(1825, self.laserPosition2 + 110)
+                self.all_sprites.add(self.warning1, self.warning2)
+                pygame.time.set_timer(pygame.USEREVENT + 3, 2000)
+
+            if event.type == pygame.USEREVENT + 3:
+                pygame.time.set_timer(pygame.USEREVENT + 3, 0)
+                self.warning1.kill()
+                self.warning2.kill()
+                self.all_sprites.remove(self.warning1)
+                self.all_sprites.remove(self.warning2)
+                laser1 = Laser(0, self.laserPosition1)
+                laser2 = Laser(0, self.laserPosition2)
+                self.lasers.append(laser1)
+                self.lasers.append(laser2)
+                self.all_sprites.add(laser1, laser2)
+                pygame.time.set_timer(pygame.USEREVENT + 4, 3000)
+            
+            if event.type == pygame.USEREVENT + 4:
+                pygame.time.set_timer(pygame.USEREVENT + 4, 0)
+                for sprite in self.all_sprites:
+                    if isinstance(sprite, Laser):
+                        sprite.kill()
+                        self.lasers.remove(sprite)
 
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT] or keys[pygame.K_q]:
@@ -102,10 +134,11 @@ class Game:
             else:
                 obstacle.move()
             
-        if self.laser.collide_rect(self.player.rect):
-            LifeSystem.healthPlayerUpdate(self, self.laser)
-            print("Player take hit")
-            print(PlayerStats.currentHealth)
+        for laser in self.lasers:
+            if laser.collide_rect(self.player.rect):
+                LifeSystem.healthPlayerUpdate(self, laser)
+                print("Player take hit")
+                print(PlayerStats.currentHealth)
 
 
         for i in range (5):
@@ -114,7 +147,6 @@ class Game:
                 self.all_sprites.remove(self.enemy[i])
                 LifeSystem.healthPlayerUpdate(self,3)
                 print(PlayerStats.currentHealth)
-                #self.player.has_buff = True
                 print("ennemy hit")
                 
             if self.enemy[i].rect.x <= 0 - self.enemy[i].imageWidth:
