@@ -16,11 +16,14 @@ class Game:
         self.area_color = "red"
         self.all_sprites = pygame.sprite.Group()
         self.all_sprites.add(self.player, self.buff, self.buff1,self.buff2)
+        self.space_pressed = False # Pour le tir auto
+        self.last_shot_time = 0  # Initialiser à 0 pour le tir auto
 
     def handling_events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
+                
 
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT]:
