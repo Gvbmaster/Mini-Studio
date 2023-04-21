@@ -1,13 +1,27 @@
-import pygame
+class Text:
+    def __init__(self, font, text, width):
+        self.font = font
+        self.width = width
+        self.text = text
+        self.lines = []
 
-class Text(pygame.sprite.Sprite):
-    def __init__(self, text, size, color, name, **kwargs):
-        super(Text, self).__init__()
-        self.color = color
-        self.font = pygame.font.SysFont(name, size)
-        self.kwargs = kwargs
-        self.set(text)
+        words = self.text.split()
 
-    def set(self, text):
-        self.image = self.font.render(str(text), 1, self.color)
-        self.rect = self.image.get_rect(**self.kwargs)
+        line = words[0]
+
+        for word in words[1:]:
+            test_line = line + ' ' + word
+
+            if self.font.size(test_line)[0] > self.width:
+                self.lines.append(line)
+
+                line = word
+            else:
+                line = test_line
+
+        self.lines.append(line)
+
+    def draw(self, surface, x, y):
+        for i, line in enumerate(self.lines):
+            text_surface = self.font.render(line, True, (255, 255, 255))
+            surface.blit(text_surface, (x, y + i * self.font.get_height()))

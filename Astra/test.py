@@ -39,13 +39,6 @@ class Game:
             self.player.velocity[1] = 1
         else:
             self.player.velocity[1] = 0
-
-        if keys[pygame.K_m]:
-            self.screen.fill("black")
-            pygame.draw.rect(self.screen, (0,0,0), (0,0,1920,1080))
-            self.area_color = "white"
-            self.area = pygame.draw.rect(screen, self.area_color, pygame.Rect(400,150,300,300), 2)
-
         
     def update(self):
         self.player.move()
