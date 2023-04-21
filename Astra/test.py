@@ -1,4 +1,5 @@
 import pygame
+from pygame.locals import *
 from classes.player import Player
 from classes.buff import Buff
 from classes.lifesystem import *
@@ -81,10 +82,7 @@ class Game:
             self.all_sprites.add(projectile)
             self.last_shot_time = current_time  # Mettre à jour le temps du dernier tir
 #################################################################################################################################################
-
-        
-
-     
+   
 
     def update(self):
         self.player.move()
@@ -136,7 +134,7 @@ class Game:
             self.clock.tick(60)
 
 pygame.init()
-screen = pygame.display.set_mode((1920, 1080))
+screen = pygame.display.set_mode((0, 0),FULLSCREEN)
 
 game = Game(screen)
 game.run()
