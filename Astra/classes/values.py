@@ -17,6 +17,8 @@ class PlayerStats:
     attackSpeed = 1
     MaxAttackSpeed = 2
     shield = False
+    isPlayerHitable = True
+    
 
 class EnnemieStats:
     currentHealth = 6
