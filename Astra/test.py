@@ -7,6 +7,11 @@ from classes.ath import ATH
 from classes.backgroundPixel import Background
 from classes.projectile import *
 
+from classes.obstacle import *
+from classes.values import *
+from classes.warning import *
+from classes.laser import *
+
 class Game:
     def __init__(self, screen):
         self.screen = screen
@@ -18,8 +23,21 @@ class Game:
         self.buff = [Buff(750,450,2),Buff(850,450,2),Buff(950,450,2),Buff(1050,450,2)]
         self.buff1 =[Buff(750,550,1),Buff(850,550,1),Buff(950,550,1),Buff(1050,550,1)]
         self.buff2=[Buff(750,250,3),Buff(850,250,3),Buff(950,250,3),Buff(1050,250,3)]
+        self.obstacle = None                                    #|
+        self.obstacles = []                                     #|
+        self.obstacle_spawn_event = pygame.USEREVENT + 1        #|
+        pygame.time.set_timer(self.obstacle_spawn_event, 2000)  #|innitialisation des obstacle et de leur event d'apparition
+        self.laser_position = [10, 280, 550, 820]               #|
+        self.laserPosition1 = None                              #|
+        self.laserPosition2 = None                              #|
+        self.laser = None                                       #|
+        self.warning1 = None                                    #|
+        self.warning2 = None                                    #|
+        self.lasers = []                                        #|
+        self.laser_spawn_event = pygame.USEREVENT + 2           #|
+        pygame.time.set_timer(self.laser_spawn_event, 15000)    #|initialisation des events de laser et de warning
         self.area = pygame.Rect(300,150,300,300)
-        self.area_color = "red"
+        
         self.all_sprites = pygame.sprite.Group()
         self.all_sprites.add(self.player, self.buff, self.buff1,self.buff2)
         self.space_pressed = False # Pour le tir auto
@@ -29,6 +47,43 @@ class Game:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
+#évènement d'apparition d'obtacle à des coordonées y aléatoire toutes les 2 sec
+            if event.type == self.obstacle_spawn_event:
+                obstacle = Obstacle(1920, random.randint(0, 1080))
+                self.obstacles.append(obstacle)
+                self.all_sprites.add(obstacle) 
+
+#évènement d'apparition de laser avec warning avant
+    #apparition des warnings
+            if event.type == self.laser_spawn_event:
+                self.laserPosition1 = random.choice(self.laser_position)
+                self.laserPosition2 = random.choice(self.laser_position) 
+                while self.laserPosition2 == self.laserPosition1:
+                    self.laserPosition2 = random.choice(self.laser_position)
+                self.warning1 = WarningLogo(1825, self.laserPosition1 + 110)
+                self.warning2 = WarningLogo(1825, self.laserPosition2 + 110)
+                self.all_sprites.add(self.warning1, self.warning2)
+                pygame.time.set_timer(pygame.USEREVENT + 3, 2000)
+    #disparition des warnings après 2 sec et apparition des laser aux mêmes positions
+            if event.type == pygame.USEREVENT + 3:
+                pygame.time.set_timer(pygame.USEREVENT + 3, 0)
+                self.warning1.kill()
+                self.warning2.kill()
+                self.all_sprites.remove(self.warning1)
+                self.all_sprites.remove(self.warning2)
+                laser1 = Laser(0, self.laserPosition1)
+                laser2 = Laser(0, self.laserPosition2)
+                self.lasers.append(laser1)
+                self.lasers.append(laser2)
+                self.all_sprites.add(laser1, laser2)
+                pygame.time.set_timer(pygame.USEREVENT + 4, 3000)
+    #disparition des lasers après 3 sec
+            if event.type == pygame.USEREVENT + 4:
+                pygame.time.set_timer(pygame.USEREVENT + 4, 0)
+                for sprite in self.all_sprites:
+                    if isinstance(sprite, Laser):
+                        sprite.kill()
+                        self.lasers.remove(sprite)
 
 ########################### Touches de mouvement ############################################################################################            
             keys = pygame.key.get_pressed() # Appel de la détection de touche préssé
@@ -73,14 +128,8 @@ class Game:
             self.all_sprites.add(projectile)
             self.last_shot_time = current_time  # Mettre à jour le temps du dernier tir
 #################################################################################################################################################
-   
-
     def update(self):
         self.player.move()
-        if self.area.colliderect(self.player.rect):
-            self.area_color = "blue"
-        else:
-            self.area_color = "red"
 
         for buff in self.buff:
             if buff.collide_rect(self.player.rect):
@@ -105,6 +154,26 @@ class Game:
                 LifeSystem.healthPlayerUpdate(self,buff)
                 print("Buff catch and del")
                 print(PlayerStats.currentHealth)
+
+        #chaque obstacle provoque des dégâts et disparait une fois sorti de l'écran
+            for obstacle in self.obstacles:
+                if obstacle.collide_rect(self.player.rect):
+                    LifeSystem.healthPlayerUpdate(self, obstacle)
+                    print("Player take hit")
+                    print(PlayerStats.currentHealth)
+                if obstacle.rect.x <= 0 - obstacle.imageWidth:
+                    obstacle.kill()
+                    self.all_sprites.remove(obstacle)
+                    self.obstacles.remove(obstacle)
+                else:
+                    obstacle.move()
+
+        #chaque laser provoque des dégâts
+            for laser in self.lasers:
+                if laser.collide_rect(self.player.rect):
+                    LifeSystem.healthPlayerUpdate(self, laser)
+                    print("Player take hit")
+                    print(PlayerStats.currentHealth)
     
 
     def display(self):

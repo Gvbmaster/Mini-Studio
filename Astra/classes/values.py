@@ -39,6 +39,9 @@ class BossStats:
     maxAttackDamage = 2
     attackSpeed = 1
     MaxAttackSpeed = 2
-
+    
+class ObstacleStats:
+    speed = 7
+    #maxSpeed = 14
 
 
