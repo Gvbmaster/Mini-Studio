@@ -14,9 +14,10 @@ class PlayerStats:
     #maxSpeed = 10
     attackDamage = 3
     #maxAttackDamage = 6
-    attackSpeed = 1
+    attackSpeed = 100 # cadence de tir
     MaxAttackSpeed = 2
-    
+    attackVelocity = 20 #speed bullet
+    shield = False
 
 class EnnemieStats:
     currentHealth = 6
@@ -38,6 +39,9 @@ class BossStats:
     maxAttackDamage = 2
     attackSpeed = 1
     MaxAttackSpeed = 2
-
+    
+class ObstacleStats:
+    speed = 7
+    #maxSpeed = 14
 
 
