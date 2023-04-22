@@ -27,8 +27,12 @@ class EnnemieStats:
     maxAttackDamage = 2
     attackSpeed = 1
     maxAttackSpeed = 2
-    pattern=[(1000,350),(750,600),(500,350),(750,100)]
+    pattern1=[(1000,350),(750,600),(500,350),(750,100)]
+    pattern2=[(1000,350),(750,600),(500,350),(750,100)]
+    patternSpawn=[pattern1,pattern2]
     killCount=0
+    enemyAlive=0
+    pattern=0
 
 
 class BossStats:
