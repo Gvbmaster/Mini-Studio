@@ -2,6 +2,7 @@ import pygame
 from classes.values import *
 from classes.buff import *
 from classes.player import *
+from classes.gameover import *
 
 class LifeSystem :
     def __init__(self, game):
@@ -25,6 +26,7 @@ class LifeSystem :
                 if PlayerStats.currentHealth == 0:
                     #kill player
                     #game over
+                    Gameover.update(self)
                     print("Game Over !")
                 else :
                     pass

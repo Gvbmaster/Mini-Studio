@@ -6,7 +6,7 @@ from classes.lifesystem import *
 from classes.ath import ATH
 from classes.backgroundPixel import Background
 from classes.projectile import *
-
+from classes.gameover import *
 from classes.obstacle import *
 from classes.values import *
 from classes.warning import *
@@ -19,6 +19,7 @@ class Game:
         self.clock = pygame.time.Clock()
         self.background = Background()
         self.ath = ATH()
+        # self.gameover= Gameover(screen)
         self.player = Player(0,0)
         self.buff = [Buff(750,450,2),Buff(850,450,2),Buff(950,450,2),Buff(1050,450,2)]
         self.buff1 =[Buff(750,550,1),Buff(850,550,1),Buff(950,550,1),Buff(1050,550,1)]

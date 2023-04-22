@@ -1,0 +1,44 @@
+import pygame
+import random
+from classes.button import *
+from classes.text import *
+from pygame.locals import *
+
+
+class Gameover():
+    def __init__(self, screen):
+        screen.fill("black")
+        self.screen = screen
+        self.casePlayer = pygame.image.load("img/player.png").convert_alpha()
+        self.casePlayer = pygame.transform.scale(self.casePlayer, (395, 470))
+        self.rectPlayer = self.casePlayer.get_rect(left=(202), top=(202))
+        self.area_color = "white"
+
+        self.txtDeathScreen = [0, 1, 2, 3, 4]
+        self.txtDeathScreen[0] = "Je n'aurais peut-être pas dû voler ce vaisseau… Mais je n'avais d'autres choix pour m'échapper."
+        self.txtDeathScreen[1] = "Si seulement le transmutateur n'était pas endommagé… Quel était donc cet univers ? J'aurais dû être téléporté sur Avesia"
+        self.txtDeathScreen[2] = "J'aurais pu les sauver… Je ne sais pas comment ils pourront survivre s'ils se font attaquer."
+        self.txtDeathScreen[3] = "Ils comptaient tous sur moi. J'étais censé revenir avec assez d'informations pour nous permettre de survivre à leurs attaques."
+        self.txtDeathScreen[4] = "Qui va pouvoir sauver Avesia ? Ils vont prendre tous nos cristaux de zorgonites et détruire la planète."
+                
+    def update(self, screen):
+        self.playerAreaRect = pygame.draw.rect(screen, self.area_color, pygame.Rect(200,200,405,480), 5)
+        screen.blit(self.casePlayer, self.rectPlayer)
+        self.textAreaRect = pygame.draw.rect(screen, self.area_color, pygame.Rect(600,200,1120,480), 5)
+        font = pygame.font.SysFont('Playfair Display', 80)
+        text = self.txtDeathScreen[random.randint(0, 4)]
+        self.textArea = Text(font, text, 900)
+        self.textArea.drawText(screen, 700, 300)
+        retryIMG = pygame.image.load("img/retry.png")
+        retry = Button(retryIMG, 1000, 800)
+        retry.update(screen)
+        playMousePos = pygame.mouse.get_pos()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if retry.checkingInput(playMousePos):
+                    print("Passed Successfully !")
+        # pygame.display.update()
+    def draw(screen):
+        pass
