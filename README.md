@@ -1,3 +1,4 @@
 # Mini-Studio
 Version 3.0 du git
-Les mask fonctionnent mtn
+LA TETE DE MA MERE
+UTILISEZ VISUAL STUDIO CODE
