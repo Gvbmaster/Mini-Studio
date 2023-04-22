@@ -31,39 +31,30 @@ class Game:
                 self.running = False
 
 ########################### Touches de mouvement ############################################################################################            
-            if event.type == pygame.KEYDOWN: # Appel de la constante KEYDOWN
-                if event.key == pygame.K_LEFT : 
-                    self.player.velocity[0] = -1 
-                    PlayerStats.attackSpeed = 75 # Regulation de la cadence de tir par rapport au fait qu'on recul
-                    print("left press")
-                elif event.key == pygame.K_RIGHT : 
-                    self.player.velocity[0] = 1
-                    PlayerStats.attackSpeed = 175 # Regulation de la cadence de tir par rapport au fait qu'on avance
-                    print("right press")
-                elif event.key == pygame.K_UP : 
-                    self.player.velocity[1] = -1
-                    PlayerStats.attackSpeed = 100 # Regulation de la cadence de tir a la base 10 tirs/s
-                    print("up press")
-                elif event.key == pygame.K_DOWN :
-                    self.player.velocity[1] = 1
-                    PlayerStats.attackSpeed = 100 # Regulation de la cadence de tir a la base 10 tirs/s
-                    print("down press")
-        
-            elif event.type == pygame.KEYUP: # Appel de la constante KEYUP
-                if event.key == pygame.K_LEFT and self.player.velocity[0] == -1:
-                    self.player.velocity[0] = 0
-                    PlayerStats.attackSpeed = 100 # Regulation de la cadence de tir a la base 10 tirs/s
-                    print("left up")
-                elif event.key == pygame.K_RIGHT and self.player.velocity[0] == 1:
-                    self.player.velocity[0] = 0
-                    PlayerStats.attackSpeed = 100 # Regulation de la cadence de tir a la base 10 tirs/s
-                    print("right up")
-                elif event.key == pygame.K_UP and self.player.velocity[1] == -1:
-                    self.player.velocity[1] = 0
-                    print("up up")
-                elif event.key == pygame.K_DOWN and self.player.velocity[1] == 1:
-                    self.player.velocity[1] = 0
-                    print("down up")
+            keys = pygame.key.get_pressed() # Appel de la détection de touche préssé
+            if keys[pygame.K_LEFT] or keys[pygame.K_q]:
+                self.player.velocity[0] = -1 
+                PlayerStats.attackSpeed = 75 # Regulation de la cadence de tir par rapport au fait qu'on recul
+                print("left press")
+            elif keys[pygame.K_RIGHT] or keys[pygame.K_d]: 
+                self.player.velocity[0] = 1
+                PlayerStats.attackSpeed = 175 # Regulation de la cadence de tir par rapport au fait qu'on avance
+                print("right press")
+            else:
+                self.player.velocity[0] = 0
+                PlayerStats.attackSpeed = 100
+                
+            if keys[pygame.K_UP] or keys[pygame.K_z]:
+                self.player.velocity[1] = -1
+                PlayerStats.attackSpeed = 100 # Regulation de la cadence de tir a la base 10 tirs/s
+                print("up press")
+            elif keys[pygame.K_DOWN] or keys[pygame.K_s]:
+                self.player.velocity[1] = 1
+                PlayerStats.attackSpeed = 100 # Regulation de la cadence de tir a la base 10 tirs/s
+                print("down press")
+            else:
+                self.player.velocity[1] = 0
+                PlayerStats.attackSpeed = 100
             
 ############################ Tir automatique du vaisseau ######################################################################################
             if event.type == pygame.KEYDOWN:
