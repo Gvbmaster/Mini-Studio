@@ -12,6 +12,8 @@ from classes.values import *
 from classes.warning import *
 from classes.laser import *
 
+from classes.enemy import *
+
 class Game:
     def __init__(self, screen):
         self.screen = screen
@@ -23,6 +25,7 @@ class Game:
         self.buff = [Buff(750,450,2),Buff(850,450,2),Buff(950,450,2),Buff(1050,450,2)]
         self.buff1 =[Buff(750,550,1),Buff(850,550,1),Buff(950,550,1),Buff(1050,550,1)]
         self.buff2=[Buff(750,250,3),Buff(850,250,3),Buff(950,250,3),Buff(1050,250,3)]
+        #####INTEGRATION LASER ET OBSTACLES###########
         self.obstacle = None                                    #|
         self.obstacles = []                                     #|
         self.obstacle_spawn_event = pygame.USEREVENT + 1        #|
@@ -36,10 +39,19 @@ class Game:
         self.lasers = []                                        #|
         self.laser_spawn_event = pygame.USEREVENT + 2           #|
         pygame.time.set_timer(self.laser_spawn_event, 15000)    #|initialisation des events de laser et de warning
-        self.area = pygame.Rect(300,150,300,300)
+        #####INTEGRATION ENNEMIS###########
+        if EnnemieStats.enemyAlive==0:
+            EnnemieStats.pattern=0
+            EnnemieStats.pattern=random.randint(0,1)
+            self.enemy=[Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][0][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][0][1]),
+                        Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][1][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][1][1]),
+                        Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][2][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][2][1]),
+                        Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][3][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][3][1])]
         
+        EnnemieStats.enemyAlive=len(self.enemy)
+        ###################################
         self.all_sprites = pygame.sprite.Group()
-        self.all_sprites.add(self.player, self.buff, self.buff1,self.buff2)
+        self.all_sprites.add(self.player, self.buff, self.buff1,self.buff2, self.enemy)
         self.space_pressed = False # Pour le tir auto
         self.last_shot_time = 0  # Initialiser à 0 pour le tir auto
 
@@ -174,6 +186,28 @@ class Game:
                     LifeSystem.healthPlayerUpdate(self, laser)
                     print("Player take hit")
                     print(PlayerStats.currentHealth)
+
+        if EnnemieStats.enemyAlive==0:
+            EnnemieStats.pattern=0
+            EnnemieStats.pattern=random.randint(0,1)
+            self.enemy=[Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][0][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][0][1]),
+                        Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][1][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][1][1]),
+                        Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][2][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][2][1]),
+                        Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][3][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][3][1])]
+            self.all_sprites.add(self.enemy)
+            EnnemieStats.enemyAlive=len(self.enemy)
+        
+        for i in range (len(self.enemy)):
+            if self.enemy[i].collide_rect(self.player.rect):
+                self.enemy[i].kill()
+                self.all_sprites.remove(self.enemy[i])
+                LifeSystem.healthPlayerUpdate(self,3)
+            if self.enemy[i].rect.x <= 200 - self.enemy[i].imageWidth:
+                self.enemy[i].kill()
+                self.all_sprites.remove(self.enemy[i])
+            else:
+                self.enemy[i].move()
+            # print(EnnemieStats.enemyAlive)
     
 
     def display(self):
