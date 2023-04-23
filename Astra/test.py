@@ -11,6 +11,7 @@ from classes.obstacle import *
 from classes.values import *
 from classes.warning import *
 from classes.laser import *
+from classes.effect.invicibility import *
 
 class Game:
     def __init__(self, screen):
@@ -158,8 +159,10 @@ class Game:
         #chaque obstacle provoque des dégâts et disparait une fois sorti de l'écran
             for obstacle in self.obstacles:
                 if obstacle.collide_rect(self.player.rect):
+                    Invicibility.update(self)
                     LifeSystem.healthPlayerUpdate(self, obstacle)
                     print("Player take hit")
+                    # Invicibility.update()
                     print(PlayerStats.currentHealth)
                 if obstacle.rect.x <= 0 - obstacle.imageWidth:
                     obstacle.kill()
@@ -171,6 +174,7 @@ class Game:
         #chaque laser provoque des dégâts
             for laser in self.lasers:
                 if laser.collide_rect(self.player.rect):
+                    Invicibility.update(self)
                     LifeSystem.healthPlayerUpdate(self, laser)
                     print("Player take hit")
                     print(PlayerStats.currentHealth)

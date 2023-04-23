@@ -15,17 +15,21 @@ class LifeSystem :
                 #update le sprite de vie
             elif PlayerStats.currentHealth == PlayerStats.maxHealth:
                 print("Vie maximale atteinte !")
-        else:
-            if PlayerStats.shield == True:
-                PlayerStats.shield = False
-                Player.has_shield = False
 
-            elif PlayerStats.currentHealth <= PlayerStats.maxHealth & PlayerStats.currentHealth > 0:
-                PlayerStats.currentHealth = PlayerStats.currentHealth -1
-                if PlayerStats.currentHealth == 0:
-                    #kill player
-                    #game over
-                    print("Game Over !")
+        else:
+            if PlayerStats.isPlayerHitable == True :
+                if PlayerStats.shield == True:
+                    PlayerStats.shield = False
+                    Player.has_shield = False
+
+                elif PlayerStats.currentHealth <= PlayerStats.maxHealth & PlayerStats.currentHealth > 0:
+                    PlayerStats.currentHealth = PlayerStats.currentHealth -1
+                    if PlayerStats.currentHealth == 0:
+                        #kill player
+                        #gameover.update()
+                        print("Game Over !")
+                    else :
+                        pass
                 else :
                     pass
             else :
