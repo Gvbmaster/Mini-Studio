@@ -22,12 +22,14 @@ class PlayerStats:
 class EnnemieStats:
     currentHealth = 6
     maxHealth = 10
-    speed = 7
+    speed = 5
     maxSpeed = 14
     attackDamage = 1
     maxAttackDamage = 2
     attackSpeed = 1
-    MaxAttackSpeed = 2
+    maxAttackSpeed = 2
+    pattern=[(1000,350),(750,600),(500,350),(750,100)]
+    killCount=0
 
 
 class BossStats:
@@ -40,5 +42,8 @@ class BossStats:
     attackSpeed = 1
     MaxAttackSpeed = 2
 
+class ObstacleStats:
+    speed = 7
+    #maxSpeed = 14
 
 
