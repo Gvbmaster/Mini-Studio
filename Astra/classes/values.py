@@ -22,7 +22,7 @@ class PlayerStats:
 class EnnemieStats:
     currentHealth = 6
     maxHealth = 10
-    speed = 2.5
+    speed = 2
     maxSpeed = 14
     attackDamage = 1
     maxAttackDamage = 2
