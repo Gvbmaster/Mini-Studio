@@ -16,6 +16,8 @@ from classes.laser import *
 
 from classes.enemy import *
 
+from classes.gameover import *
+
 class Game:
     def __init__(self, screen):
         self.screen = screen
@@ -23,6 +25,8 @@ class Game:
         self.clock = pygame.time.Clock()
         self.background = Background()
         self.ath = ATH()
+        self.ls = LifeSystem(self)
+        self.gameover = Gameover(self)
         self.player = Player(0,0)
         self.buff = [Buff(750,450,2),Buff(850,450,2),Buff(950,450,2),Buff(1050,450,2)]
         self.buff1 =[Buff(750,550,1),Buff(850,550,1),Buff(950,550,1),Buff(1050,550,1)]
@@ -157,7 +161,7 @@ class Game:
             if buff.collide_rect(self.player.rect):
                 buff.kill()
                 self.all_sprites_layer_2.remove(buff)
-                LifeSystem.healthPlayerUpdate(self,2)
+                self.ls.healthPlayerUpdate(2)
                 print("Buff catch and del")
                 print(PlayerStats.currentHealth)
 
@@ -165,7 +169,7 @@ class Game:
             if buff.collide_rect(self.player.rect):
                 buff.kill()
                 self.all_sprites_layer_2.remove(buff)
-                LifeSystem.healthPlayerUpdate(self,buff)
+                self.ls.healthPlayerUpdate(buff)
                 Invicibility.update(self)
                 print("Buff catch and del")
                 print(PlayerStats.currentHealth)
@@ -174,7 +178,7 @@ class Game:
             for obstacle in self.obstacles:
                 if obstacle.collide_rect(self.player.rect):
                     Invicibility.update(self)
-                    LifeSystem.healthPlayerUpdate(self, obstacle)
+                    self.ls.healthPlayerUpdate(obstacle)
                     print("Player take hit")
                     print(PlayerStats.currentHealth)
                 if obstacle.rect.x <= 0 - obstacle.imageWidth:
@@ -188,7 +192,7 @@ class Game:
             for laser in self.lasers:
                 if laser.collide_rect(self.player.rect):
                     Invicibility.update(self)
-                    LifeSystem.healthPlayerUpdate(self, laser)
+                    self.ls.healthPlayerUpdate(laser)
                     print("Player take hit")
                     print(PlayerStats.currentHealth)
 
@@ -207,7 +211,7 @@ class Game:
                 self.enemy[i].kill()
                 # print("enemies:" + str(self.all_sprites_layer_2))
                 self.all_sprites_layer_2.remove(self.enemy[i])
-                LifeSystem.healthPlayerUpdate(self,3)
+                self.ls.healthPlayerUpdate(3)
             if self.enemy[i].rect.x <= 200 - self.enemy[i].imageWidth:
                 self.enemy[i].kill()
             else:
@@ -216,15 +220,18 @@ class Game:
     
 
     def display(self):
-        self.background.update()
-        self.screen.fill("black")
-        self.background.draw(self.screen)
-        #pygame.draw.rect(self.screen, self.area_color, self.area)
-        self.all_sprites_layer_1.draw(self.screen)
-        self.all_sprites_layer_2.draw(self.screen)
-        self.player.draw(self.screen)
-        self.ath.draw(self.screen)
-        pygame.display.flip()
+        if PlayerStats.currentHealth > 0:
+            self.background.update()
+            self.screen.fill("black")
+            self.background.draw(self.screen)
+            #pygame.draw.rect(self.screen, self.area_color, self.area)
+            self.all_sprites_layer_1.draw(self.screen)
+            self.all_sprites_layer_2.draw(self.screen)
+            self.player.draw(self.screen)
+            self.ath.draw(self.screen)
+            pygame.display.flip()
+        else:
+            self.gameover.update(self.screen)
 
     def run(self):
         while self.running:
@@ -234,7 +241,7 @@ class Game:
             self.clock.tick(60)
 
 pygame.init()
-screen = pygame.display.set_mode((1080,720))#(0, 0),FULLSCREEN)
+screen = pygame.display.set_mode((0, 0),FULLSCREEN)
 
 game = Game(screen)
 game.run()
