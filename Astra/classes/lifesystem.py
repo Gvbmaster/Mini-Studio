@@ -1,6 +1,7 @@
 import pygame
 from classes.values import *
 from classes.buff import *
+from classes.player import *
 
 class LifeSystem :
     def __init__(self, game):
@@ -14,16 +15,24 @@ class LifeSystem :
                 #update le sprite de vie
             elif PlayerStats.currentHealth == PlayerStats.maxHealth:
                 print("Vie maximale atteinte !")
+
         else:
-            if PlayerStats.currentHealth <= PlayerStats.maxHealth & PlayerStats.currentHealth > 0:
-                PlayerStats.currentHealth = PlayerStats.currentHealth -1
-                if PlayerStats.currentHealth == 0:
-                    #kill player
-                    #game over
-                    print("Game Over !")
+            if PlayerStats.isPlayerHitable == True :
+                if PlayerStats.shield == True:
+                    PlayerStats.shield = False
+                    Player.has_shield = False
+
+                elif PlayerStats.currentHealth <= PlayerStats.maxHealth & PlayerStats.currentHealth > 0:
+                    PlayerStats.currentHealth = PlayerStats.currentHealth -1
+                    if PlayerStats.currentHealth == 0:
+                        #kill player
+                        #gameover.update()
+                        print("Game Over !")
+                    else :
+                        pass
                 else :
                     pass
-            else : 
+            else :
                 pass
 
     def healthEnemyUpdate(self):
