@@ -60,6 +60,7 @@ class Game:
         self.all_sprites_layer_1 = pygame.sprite.Group() #liste de sprite pour les lasers
         self.all_sprites_layer_2 = pygame.sprite.Group() #liste de sprite pour le joueur/ennemis/obstacles/buffs
         self.all_sprites_layer_2.add(self.buff, self.buff1, self.buff2, self.enemy)
+        self.all_sprites_projectilesMC = pygame.sprite.Group() #liste de sprite pour les tir du MC
         self.space_pressed = False # Pour le tir auto
         self.last_shot_time = 0  # Initialiser à 0 pour le tir auto
 
@@ -139,7 +140,7 @@ class Game:
                 if event.key == pygame.K_SPACE:
                     print("Espace relâché")
                     self.space_pressed = False
-        self.all_sprites_layer_2.update()
+        self.all_sprites_projectilesMC.update()
         current_time = pygame.time.get_ticks()  # Obtenir le temps actuel en millisecondes
         if self.space_pressed and current_time - self.last_shot_time >= PlayerStats.attackSpeed:  # Limiter le tir a la class PlayerStats qui est dans values qui est donc 250
             # Créer une instance de Projectile à la position du joueur
