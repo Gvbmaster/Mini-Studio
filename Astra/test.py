@@ -177,8 +177,8 @@ class Game:
         #chaque obstacle provoque des dégâts et disparait une fois sorti de l'écran
             for obstacle in self.obstacles:
                 if obstacle.collide_rect(self.player.rect):
-                    Invicibility.update(self)
                     self.ls.healthPlayerUpdate(obstacle)
+                    Invicibility.update(self)
                     print("Player take hit")
                     print(PlayerStats.currentHealth)
                 if obstacle.rect.x <= 0 - obstacle.imageWidth:
@@ -212,6 +212,7 @@ class Game:
                 # print("enemies:" + str(self.all_sprites_layer_2))
                 self.all_sprites_layer_2.remove(self.enemy[i])
                 self.ls.healthPlayerUpdate(3)
+                Invicibility.update(self)
             if self.enemy[i].rect.x <= 200 - self.enemy[i].imageWidth:
                 self.enemy[i].kill()
             else:
