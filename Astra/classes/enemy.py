@@ -71,5 +71,4 @@ class Enemy(pygame.sprite.Sprite):
         self._kill = True
         EnnemieStats.killCount+=1
         EnnemieStats.enemyAlive-=1
-        print("ok",EnnemieStats.enemyAlive)
         # print(EnnemieStats.killCount)

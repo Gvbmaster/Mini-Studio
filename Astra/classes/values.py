@@ -18,6 +18,7 @@ class PlayerStats:
     MaxAttackSpeed = 2
     attackVelocity = 20 #speed bullet
     shield = False
+    isPlayerHitable = True
 
 class EnnemieStats:
     currentHealth = 6

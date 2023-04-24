@@ -7,6 +7,8 @@ from classes.ath import ATH
 from classes.backgroundPixel import Background
 from classes.projectile import *
 
+from classes.effect.invicibility import *
+
 from classes.obstacle import *
 from classes.values import *
 from classes.warning import *
@@ -103,22 +105,22 @@ class Game:
             if keys[pygame.K_q] :
                 self.player.velocity[0] = -1 
                 PlayerStats.attackSpeed = 75 # Regulation de la cadence de tir par rapport au fait qu'on recul
-                print("left press")
+                # print("left press")
             elif keys[pygame.K_d] : 
                 self.player.velocity[0] = 1
                 PlayerStats.attackSpeed = 175 # Regulation de la cadence de tir par rapport au fait qu'on avance
-                print("right press")
+                # print("right press")
             else:
                 self.player.velocity[0] = 0
                 
                 
             if keys[pygame.K_z] :
                 self.player.velocity[1] = -1
-                print("up press")
+                # print("up press")
                 PlayerStats.attackSpeed = 100
             elif keys[pygame.K_s] :
                 self.player.velocity[1] = 1
-                print("down press")
+                # print("down press")
                 PlayerStats.attackSpeed = 100
             else:
                 self.player.velocity[1] = 0
@@ -164,12 +166,14 @@ class Game:
                 buff.kill()
                 self.all_sprites_layer_2.remove(buff)
                 LifeSystem.healthPlayerUpdate(self,buff)
+                Invicibility.update(self)
                 print("Buff catch and del")
                 print(PlayerStats.currentHealth)
 
         #chaque obstacle provoque des dégâts et disparait une fois sorti de l'écran
             for obstacle in self.obstacles:
                 if obstacle.collide_rect(self.player.rect):
+                    Invicibility.update(self)
                     LifeSystem.healthPlayerUpdate(self, obstacle)
                     print("Player take hit")
                     print(PlayerStats.currentHealth)
@@ -183,6 +187,7 @@ class Game:
         #chaque laser provoque des dégâts
             for laser in self.lasers:
                 if laser.collide_rect(self.player.rect):
+                    Invicibility.update(self)
                     LifeSystem.healthPlayerUpdate(self, laser)
                     print("Player take hit")
                     print(PlayerStats.currentHealth)
@@ -196,15 +201,15 @@ class Game:
                         Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][3][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][3][1])]
             self.all_sprites_layer_2.add(self.enemy)
             EnnemieStats.enemyAlive=len(self.enemy)
-        
+
         for i in range (len(self.enemy)):
             if self.enemy[i].collide_rect(self.player.rect):
                 self.enemy[i].kill()
+                # print("enemies:" + str(self.all_sprites_layer_2))
                 self.all_sprites_layer_2.remove(self.enemy[i])
                 LifeSystem.healthPlayerUpdate(self,3)
             if self.enemy[i].rect.x <= 200 - self.enemy[i].imageWidth:
                 self.enemy[i].kill()
-                self.all_sprites_layer_2.remove(self.enemy[i])
             else:
                 self.enemy[i].move()
             # print(EnnemieStats.enemyAlive)
@@ -229,7 +234,7 @@ class Game:
             self.clock.tick(60)
 
 pygame.init()
-screen = pygame.display.set_mode((0, 0),FULLSCREEN)
+screen = pygame.display.set_mode((1080,720))#(0, 0),FULLSCREEN)
 
 game = Game(screen)
 game.run()
