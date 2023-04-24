@@ -13,17 +13,17 @@ class ATH():
 
     def draw(self, screen):
         if PlayerStats.currentHealth == 1:
-            rectLifePoint1 = self.lifePoint.get_rect(x=70, y=51)
+            rectLifePoint1 = self.lifePoint.get_rect(x=75, y=93)
             screen.blit(self.lifePoint, rectLifePoint1)
         elif PlayerStats.currentHealth == 2:
-            rectLifePoint1 = self.lifePoint.get_rect(x=70, y=51)
-            rectLifePoint2 = self.lifePoint.get_rect(x=150,  y=51)
+            rectLifePoint1 = self.lifePoint.get_rect(x=75, y=93)
+            rectLifePoint2 = self.lifePoint.get_rect(x=158,  y=92)
             screen.blit(self.lifePoint, rectLifePoint1)
             screen.blit(self.lifePoint, rectLifePoint2)
         elif PlayerStats.currentHealth == 3:
-            rectLifePoint1 = self.lifePoint.get_rect(x=70, y=51)
-            rectLifePoint2 = self.lifePoint.get_rect(x=150, y=51)
-            rectLifePoint3 = self.lifePoint.get_rect(x=232, y=51)
+            rectLifePoint1 = self.lifePoint.get_rect(x=75, y=93)
+            rectLifePoint2 = self.lifePoint.get_rect(x=158,  y=92)
+            rectLifePoint3 = self.lifePoint.get_rect(x=240, y=92)
             screen.blit(self.lifePoint, rectLifePoint1)
             screen.blit(self.lifePoint, rectLifePoint2)
             screen.blit(self.lifePoint, rectLifePoint3)

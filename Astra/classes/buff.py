@@ -11,7 +11,6 @@ class Buff(pygame.sprite.Sprite):
         # Redimensionner l'image
         self.image = pygame.transform.scale(self.image, (self.image.get_width() // 3, self.image.get_height() // 3))
         self.rect = self.image.get_rect(x=x, y=y)
-        self.mask = pygame.mask.from_surface(self.image) #masque
         self._kill = False
 
     def get_effect_image(self, idEffect):
@@ -28,7 +27,7 @@ class Buff(pygame.sprite.Sprite):
     def collide_rect(self, rect):
         if self._kill:
             return False
-        return pygame.sprite.collide_mask(self, rect) is not None
+        return self.rect.colliderect(rect)
 
     def kill(self):
         super().kill()
