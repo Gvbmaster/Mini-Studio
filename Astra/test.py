@@ -99,36 +99,35 @@ class Game:
 
 ########################### Touches de mouvement ############################################################################################            
             keys = pygame.key.get_pressed() # Appel de la détection de touche préssé
-            if keys[pygame.K_LEFT] or keys[pygame.K_q]:
+            if keys[pygame.K_q] :
                 self.player.velocity[0] = -1 
                 PlayerStats.attackSpeed = 75 # Regulation de la cadence de tir par rapport au fait qu'on recul
                 print("left press")
-            elif keys[pygame.K_RIGHT] or keys[pygame.K_d]: 
+            elif keys[pygame.K_d] : 
                 self.player.velocity[0] = 1
                 PlayerStats.attackSpeed = 175 # Regulation de la cadence de tir par rapport au fait qu'on avance
                 print("right press")
             else:
                 self.player.velocity[0] = 0
-                PlayerStats.attackSpeed = 100
                 
-            if keys[pygame.K_UP] or keys[pygame.K_z]:
+                
+            if keys[pygame.K_z] :
                 self.player.velocity[1] = -1
-                PlayerStats.attackSpeed = 100 # Regulation de la cadence de tir a la base 10 tirs/s
                 print("up press")
-            elif keys[pygame.K_DOWN] or keys[pygame.K_s]:
+                PlayerStats.attackSpeed = 100
+            elif keys[pygame.K_s] :
                 self.player.velocity[1] = 1
-                PlayerStats.attackSpeed = 100 # Regulation de la cadence de tir a la base 10 tirs/s
                 print("down press")
+                PlayerStats.attackSpeed = 100
             else:
                 self.player.velocity[1] = 0
-                PlayerStats.attackSpeed = 100
             
 ############################ Tir automatique du vaisseau ######################################################################################
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     print("Espace pressé")
                     self.space_pressed = True
-            elif event.type == pygame.KEYUP:
+            if event.type == pygame.KEYUP:
                 if event.key == pygame.K_SPACE:
                     print("Espace relâché")
                     self.space_pressed = False
