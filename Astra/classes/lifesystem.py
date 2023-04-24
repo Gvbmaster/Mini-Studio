@@ -4,7 +4,7 @@ from classes.buff import *
 from classes.player import *
 from classes.gameover import *
 
-class LifeSystem :
+class LifeSystem:
     def __init__(self, game):
         super().__init__()
         self.game = game
@@ -26,7 +26,8 @@ class LifeSystem :
                 if PlayerStats.currentHealth == 0:
                     #kill player
                     #game over
-                    Gameover.update(self)
+                    # gameover = Gameover(self.game.screen)
+                    # gameover.update(self.game.screen)
                     print("Game Over !")
                 else :
                     pass
