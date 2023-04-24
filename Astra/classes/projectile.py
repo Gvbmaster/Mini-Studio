@@ -11,7 +11,7 @@ class Projectile(pygame.sprite.Sprite):
         self.speed = speed
     
     def update(self):
-        self.rect.y -= self.speed
+        self.rect.x += self.speed
 
     def draw(self, screen):
         screen.blit(self.image, self.rect)

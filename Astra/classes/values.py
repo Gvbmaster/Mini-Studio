@@ -10,23 +10,32 @@ class Param:
 class PlayerStats:
     currentHealth = 2
     maxHealth = 3
-    speed = 8
+    speed = 10
     #maxSpeed = 10
     attackDamage = 3
     #maxAttackDamage = 6
-    attackSpeed = 250
-    MaxAttackSpeed = 100
-    
+    attackSpeed = 100 # cadence de tir
+    MaxAttackSpeed = 2
+    attackVelocity = 20 #speed bullet
+    shield = False
+    isPlayerHitable = True
 
 class EnnemieStats:
     currentHealth = 6
     maxHealth = 10
-    speed = 7
+    speed = 2
     maxSpeed = 14
     attackDamage = 1
     maxAttackDamage = 2
     attackSpeed = 1
-    MaxAttackSpeed = 2
+    maxAttackSpeed = 2
+    pattern1=[(1000,350),(750,600),(500,350),(750,100)]
+    pattern2=[(1000,350),(750,600),(500,350),(750,100)]
+    patternSpawn=[pattern1,pattern2]
+    killCount=0
+    enemyAlive=0
+    pattern=0
+    type=None
 
 
 class BossStats:
@@ -38,6 +47,7 @@ class BossStats:
     maxAttackDamage = 2
     attackSpeed = 1
     MaxAttackSpeed = 2
-
-
-
+    
+class ObstacleStats:
+    speed = 7
+    #maxSpeed = 14
