@@ -22,8 +22,8 @@ class Game:
         self.background = Background()
         self.ath = ATH()
         self.ls = LifeSystem(self)
-        self.gameover = Gameover(self)
-        self.player = Player(0,0)
+        self.gameover = GameoverLP(self)
+        self.player = Player(50,500)
         self.buff = [Buff(750,450,2),Buff(850,450,2),Buff(950,450,2),Buff(1050,450,2)]
         self.buff1 =[Buff(750,550,1),Buff(850,550,1),Buff(950,550,1),Buff(1050,550,1)]
         self.buff2=[Buff(750,250,3),Buff(850,250,3),Buff(950,250,3),Buff(1050,250,3)]
