@@ -59,8 +59,9 @@ class Game:
         ###################################
         self.all_sprites_layer_1 = pygame.sprite.Group() #liste de sprite pour les lasers
         self.all_sprites_layer_2 = pygame.sprite.Group() #liste de sprite pour le joueur/ennemis/obstacles/buffs
-        self.all_sprites_layer_2.add(self.buff, self.buff1, self.buff2, self.enemy)
         self.all_sprites_projectilesMC = pygame.sprite.Group() #liste de sprite pour les tir du MC
+        self.all_sprites_layer_2.add(self.buff, self.buff1, self.buff2, self.enemy)
+        
         self.space_pressed = False # Pour le tir auto
         self.last_shot_time = 0  # Initialiser à 0 pour le tir auto
 
@@ -132,19 +133,19 @@ class Game:
                 self.player.velocity[1] = 0
             
 ############################ Tir automatique du vaisseau ######################################################################################
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
+            if event.type == pygame.KEYDOWN and event.key == K_SPACE:
                     print("Espace pressé")
                     self.space_pressed = True
-            if event.type == pygame.KEYUP:
-                if event.key == pygame.K_SPACE:
+            if event.type == pygame.KEYUP and event.key == K_SPACE:
                     print("Espace relâché")
                     self.space_pressed = False
+        self.all_sprites_layer_2.update()
         self.all_sprites_projectilesMC.update()
         current_time = pygame.time.get_ticks()  # Obtenir le temps actuel en millisecondes
         if self.space_pressed and current_time - self.last_shot_time >= PlayerStats.attackSpeed:  # Limiter le tir a la class PlayerStats qui est dans values qui est donc 250
             # Créer une instance de Projectile à la position du joueur
             projectile = Projectile(self.player.rect.centerx, self.player.rect.top, PlayerStats.attackVelocity, "img/laser_beam.png", (100,90))
+            self.all_sprites_projectilesMC.add(projectile)
             self.all_sprites_layer_2.add(projectile)
             self.last_shot_time = current_time  # Mettre à jour le temps du dernier tir
 #################################################################################################################################################
@@ -233,17 +234,14 @@ class Game:
         self.enemy2.move()
         self.enemy3.move()
         self.enemy4.move()
-        # for i in range (len(self.enemy)):
-        #     if self.enemy[i].collide_rect(self.player.rect):
-        #         self.enemy[i].kill()
-        #         # print("enemies:" + str(self.all_sprites_layer_2))
-        #         self.all_sprites_layer_2.remove(self.enemy[i])
-        #         self.ls.healthPlayerUpdate(3)
-        #     if self.enemy[i].rect.x <= 200 - self.enemy[i].imageWidth:
-        #         self.enemy[i].kill()
-        #     else:
-        #     # print(EnnemieStats.enemyAlive)
-    
+
+        for projectile in self.all_sprites_projectilesMC:
+            if projectile.rect.left > 1920:
+                projectile.kill()
+                print("Tir sortie de l'ecran ")
+            elif pygame.sprite.spritecollide(projectile, self.enemy, True):
+                projectile.kill()
+                print("Ennemi Toucher !!!")
 
     def display(self):
         if PlayerStats.currentHealth > 0:
