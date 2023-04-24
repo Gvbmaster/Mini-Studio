@@ -101,7 +101,6 @@ class Game:
                         Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][2][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][2][1]),
                         Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][3][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][3][1])]
             self.all_sprites.add(self.enemy)
-            EnnemieStats.enemyAlive=len(self.enemy)
         
         for i in range (len(self.enemy)):
             if self.enemy[i].collide_rect(self.player.rect):

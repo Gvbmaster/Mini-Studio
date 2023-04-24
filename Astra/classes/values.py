@@ -14,7 +14,7 @@ class PlayerStats:
     #maxSpeed = 10
     attackDamage = 3
     #maxAttackDamage = 6
-    attackSpeed = 1
+    attackSpeed = 100
     MaxAttackSpeed = 2   
     
 
@@ -33,6 +33,7 @@ class EnnemieStats:
     killCount=0
     enemyAlive=0
     pattern=0
+    type=None
 
 
 class BossStats:
