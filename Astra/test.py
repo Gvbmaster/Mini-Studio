@@ -46,14 +46,15 @@ class Game:
         self.laser_spawn_event = pygame.USEREVENT + 2           #|
         pygame.time.set_timer(self.laser_spawn_event, 15000)    #|initialisation des events de laser et de warning
         #####INTEGRATION ENNEMIS###########
+        self.enemy = pygame.sprite.Group()
         if EnnemieStats.enemyAlive==0:
             EnnemieStats.pattern=0
             EnnemieStats.pattern=random.randint(0,1)
-            self.enemy=[Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][0][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][0][1]),
-                        Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][1][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][1][1]),
-                        Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][2][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][2][1]),
-                        Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][3][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][3][1])]
-        
+        self.enemy1=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][0][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][0][1])
+        self.enemy2=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][1][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][1][1])
+        self.enemy3=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][2][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][2][1])
+        self.enemy4=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][3][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][3][1])
+        self.enemy.add(self.enemy1,self.enemy2,self.enemy3,self.enemy4)
         EnnemieStats.enemyAlive=len(self.enemy)
         ###################################
         self.all_sprites_layer_1 = pygame.sprite.Group() #liste de sprite pour les lasers
@@ -175,53 +176,72 @@ class Game:
                 print(PlayerStats.currentHealth)
 
         #chaque obstacle provoque des dégâts et disparait une fois sorti de l'écran
-            for obstacle in self.obstacles:
-                if obstacle.collide_rect(self.player.rect):
-                    Invicibility.update(self)
-                    self.ls.healthPlayerUpdate(obstacle)
-                    print("Player take hit")
-                    print(PlayerStats.currentHealth)
-                if obstacle.rect.x <= 0 - obstacle.imageWidth:
-                    obstacle.kill()
-                    self.all_sprites_layer_2.remove(obstacle)
-                    self.obstacles.remove(obstacle)
-                else:
-                    obstacle.move()
+        for obstacle in self.obstacles:
+            if obstacle.collide_rect(self.player.rect):
+                Invicibility.update(self)
+                self.ls.healthPlayerUpdate(obstacle)
+                print("Player take hit")
+                print(PlayerStats.currentHealth)
+            if obstacle.rect.x <= 0 - obstacle.imageWidth:
+                obstacle.kill()
+                self.all_sprites_layer_2.remove(obstacle)
+                self.obstacles.remove(obstacle)
+            else:
+                obstacle.move()
 
         #chaque laser provoque des dégâts
-            for laser in self.lasers:
-                if laser.collide_rect(self.player.rect):
-                    Invicibility.update(self)
-                    self.ls.healthPlayerUpdate(laser)
-                    print("Player take hit")
-                    print(PlayerStats.currentHealth)
+        for laser in self.lasers:
+            if laser.collide_rect(self.player.rect):
+                Invicibility.update(self)
+                self.ls.healthPlayerUpdate(laser)
+                print("Player take hit")
+                print(PlayerStats.currentHealth)
 
         if EnnemieStats.enemyAlive==0:
             EnnemieStats.pattern=0
             EnnemieStats.pattern=random.randint(0,1)
-            self.enemy=[Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][0][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][0][1]),
-                        Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][1][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][1][1]),
-                        Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][2][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][2][1]),
-                        Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][3][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][3][1])]
-<<<<<<< HEAD
-            self.all_sprites.add(self.enemy)
-        
-=======
+            self.enemy1=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][0][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][0][1])
+            self.enemy2=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][1][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][1][1])
+            self.enemy3=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][2][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][2][1])
+            self.enemy4=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][3][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][3][1])
+            self.enemy.add(self.enemy1,self.enemy2,self.enemy3,self.enemy4)
             self.all_sprites_layer_2.add(self.enemy)
             EnnemieStats.enemyAlive=len(self.enemy)
 
->>>>>>> 4daa68260698be0c6bc0275c461fd27225d26d88
-        for i in range (len(self.enemy)):
-            if self.enemy[i].collide_rect(self.player.rect):
-                self.enemy[i].kill()
-                # print("enemies:" + str(self.all_sprites_layer_2))
-                self.all_sprites_layer_2.remove(self.enemy[i])
-                self.ls.healthPlayerUpdate(3)
-            if self.enemy[i].rect.x <= 200 - self.enemy[i].imageWidth:
-                self.enemy[i].kill()
-            else:
-                self.enemy[i].move()
-            # print(EnnemieStats.enemyAlive)
+        if self.enemy1.collide_rect(self.player.rect):
+            self.enemy1.kill()
+            self.enemy.remove(self.enemy1)
+            self.ls.healthPlayerUpdate(3)
+            
+        if self.enemy2.collide_rect(self.player.rect):
+            self.enemy2.kill()
+            self.enemy.remove(self.enemy2)
+            self.ls.healthPlayerUpdate(3)
+            
+        if self.enemy3.collide_rect(self.player.rect):
+            self.enemy3.kill()
+            self.enemy.remove(self.enemy3)
+            self.ls.healthPlayerUpdate(3)
+            
+        if self.enemy4.collide_rect(self.player.rect):
+            self.enemy4.kill()
+            self.enemy.remove(self.enemy4)
+            self.ls.healthPlayerUpdate(3)
+
+        self.enemy1.move()
+        self.enemy2.move()
+        self.enemy3.move()
+        self.enemy4.move()
+        # for i in range (len(self.enemy)):
+        #     if self.enemy[i].collide_rect(self.player.rect):
+        #         self.enemy[i].kill()
+        #         # print("enemies:" + str(self.all_sprites_layer_2))
+        #         self.all_sprites_layer_2.remove(self.enemy[i])
+        #         self.ls.healthPlayerUpdate(3)
+        #     if self.enemy[i].rect.x <= 200 - self.enemy[i].imageWidth:
+        #         self.enemy[i].kill()
+        #     else:
+        #     # print(EnnemieStats.enemyAlive)
     
 
     def display(self):
