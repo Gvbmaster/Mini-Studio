@@ -50,8 +50,9 @@ class Game:
         
         EnnemieStats.enemyAlive=len(self.enemy)
         ###################################
-        self.all_sprites = pygame.sprite.Group()
-        self.all_sprites.add(self.player, self.buff, self.buff1,self.buff2, self.enemy)
+        self.all_sprites_layer_1 = pygame.sprite.Group() #liste de sprite pour les lasers
+        self.all_sprites_layer_2 = pygame.sprite.Group() #liste de sprite pour le joueur/ennemis/obstacles/buffs
+        self.all_sprites_layer_2.add(self.buff, self.buff1, self.buff2, self.enemy)
         self.space_pressed = False # Pour le tir auto
         self.last_shot_time = 0  # Initialiser à 0 pour le tir auto
 
@@ -63,7 +64,7 @@ class Game:
             if event.type == self.obstacle_spawn_event:
                 obstacle = Obstacle(1920, random.randint(0, 1080))
                 self.obstacles.append(obstacle)
-                self.all_sprites.add(obstacle) 
+                self.all_sprites_layer_2.add(obstacle)
 
 #évènement d'apparition de laser avec warning avant
     #apparition des warnings
@@ -74,25 +75,25 @@ class Game:
                     self.laserPosition2 = random.choice(self.laser_position)
                 self.warning1 = WarningLogo(1825, self.laserPosition1 + 110)
                 self.warning2 = WarningLogo(1825, self.laserPosition2 + 110)
-                self.all_sprites.add(self.warning1, self.warning2)
+                self.all_sprites_layer_1.add(self.warning1, self.warning2)
                 pygame.time.set_timer(pygame.USEREVENT + 3, 2000)
     #disparition des warnings après 2 sec et apparition des laser aux mêmes positions
             if event.type == pygame.USEREVENT + 3:
                 pygame.time.set_timer(pygame.USEREVENT + 3, 0)
                 self.warning1.kill()
                 self.warning2.kill()
-                self.all_sprites.remove(self.warning1)
-                self.all_sprites.remove(self.warning2)
+                self.all_sprites_layer_1.remove(self.warning1)
+                self.all_sprites_layer_1.remove(self.warning2)
                 laser1 = Laser(0, self.laserPosition1)
                 laser2 = Laser(0, self.laserPosition2)
                 self.lasers.append(laser1)
                 self.lasers.append(laser2)
-                self.all_sprites.add(laser1, laser2)
+                self.all_sprites_layer_1.add(laser1, laser2)
                 pygame.time.set_timer(pygame.USEREVENT + 4, 3000)
     #disparition des lasers après 3 sec
             if event.type == pygame.USEREVENT + 4:
                 pygame.time.set_timer(pygame.USEREVENT + 4, 0)
-                for sprite in self.all_sprites:
+                for sprite in self.all_sprites_layer_1:
                     if isinstance(sprite, Laser):
                         sprite.kill()
                         self.lasers.remove(sprite)
@@ -131,12 +132,12 @@ class Game:
                 if event.key == pygame.K_SPACE:
                     print("Espace relâché")
                     self.space_pressed = False
-        self.all_sprites.update()
+        self.all_sprites_layer_2.update()
         current_time = pygame.time.get_ticks()  # Obtenir le temps actuel en millisecondes
         if self.space_pressed and current_time - self.last_shot_time >= PlayerStats.attackSpeed:  # Limiter le tir a la class PlayerStats qui est dans values qui est donc 250
             # Créer une instance de Projectile à la position du joueur
             projectile = Projectile(self.player.rect.centerx, self.player.rect.top, PlayerStats.attackVelocity, "img/laser_beam.png", (100,90))
-            self.all_sprites.add(projectile)
+            self.all_sprites_layer_2.add(projectile)
             self.last_shot_time = current_time  # Mettre à jour le temps du dernier tir
 #################################################################################################################################################
     def update(self):
@@ -145,7 +146,7 @@ class Game:
         for buff in self.buff:
             if buff.collide_rect(self.player.rect):
                 buff.kill()
-                self.all_sprites.remove(buff)
+                self.all_sprites_layer_2.remove(buff)
                 PlayerStats.shield = True
                 print("Buff catch and del")
                 print(PlayerStats.shield)
@@ -153,7 +154,7 @@ class Game:
         for buff in self.buff1:
             if buff.collide_rect(self.player.rect):
                 buff.kill()
-                self.all_sprites.remove(buff)
+                self.all_sprites_layer_2.remove(buff)
                 LifeSystem.healthPlayerUpdate(self,2)
                 print("Buff catch and del")
                 print(PlayerStats.currentHealth)
@@ -161,7 +162,7 @@ class Game:
         for buff in self.buff2:
             if buff.collide_rect(self.player.rect):
                 buff.kill()
-                self.all_sprites.remove(buff)
+                self.all_sprites_layer_2.remove(buff)
                 LifeSystem.healthPlayerUpdate(self,buff)
                 print("Buff catch and del")
                 print(PlayerStats.currentHealth)
@@ -174,7 +175,7 @@ class Game:
                     print(PlayerStats.currentHealth)
                 if obstacle.rect.x <= 0 - obstacle.imageWidth:
                     obstacle.kill()
-                    self.all_sprites.remove(obstacle)
+                    self.all_sprites_layer_2.remove(obstacle)
                     self.obstacles.remove(obstacle)
                 else:
                     obstacle.move()
@@ -193,17 +194,17 @@ class Game:
                         Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][1][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][1][1]),
                         Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][2][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][2][1]),
                         Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][3][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][3][1])]
-            self.all_sprites.add(self.enemy)
+            self.all_sprites_layer_2.add(self.enemy)
             EnnemieStats.enemyAlive=len(self.enemy)
         
         for i in range (len(self.enemy)):
             if self.enemy[i].collide_rect(self.player.rect):
                 self.enemy[i].kill()
-                self.all_sprites.remove(self.enemy[i])
+                self.all_sprites_layer_2.remove(self.enemy[i])
                 LifeSystem.healthPlayerUpdate(self,3)
             if self.enemy[i].rect.x <= 200 - self.enemy[i].imageWidth:
                 self.enemy[i].kill()
-                self.all_sprites.remove(self.enemy[i])
+                self.all_sprites_layer_2.remove(self.enemy[i])
             else:
                 self.enemy[i].move()
             # print(EnnemieStats.enemyAlive)
@@ -214,7 +215,8 @@ class Game:
         self.screen.fill("black")
         self.background.draw(self.screen)
         #pygame.draw.rect(self.screen, self.area_color, self.area)
-        self.all_sprites.draw(self.screen)
+        self.all_sprites_layer_1.draw(self.screen)
+        self.all_sprites_layer_2.draw(self.screen)
         self.player.draw(self.screen)
         self.ath.draw(self.screen)
         pygame.display.flip()
