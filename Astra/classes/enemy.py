@@ -23,9 +23,6 @@ class Enemy(pygame.sprite.Sprite):
                 
         
     def move(self):
-        # if EnnemieStats.enemyAlive==1:
-        #     EnnemieStats.pattern=0
-            # EnnemieStats.pattern=random.randint(1,2)
         if EnnemieStats.pattern==0:
             Enemy.pattern1(self)
         elif EnnemieStats.pattern==1:
@@ -75,4 +72,3 @@ class Enemy(pygame.sprite.Sprite):
         self._kill = True
         EnnemieStats.killCount+=1
         EnnemieStats.enemyAlive-=1
-        # print(EnnemieStats.killCount)

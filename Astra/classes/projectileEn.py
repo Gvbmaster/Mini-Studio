@@ -1,6 +1,6 @@
 import pygame
 
-class ProjectileEn(pygame.sprite.Sprite):
+class Projectile(pygame.sprite.Sprite):
     def __init__(self, x, y, speed, image_path, image_size):
         super().__init__()
         self.image = pygame.image.load(image_path)
