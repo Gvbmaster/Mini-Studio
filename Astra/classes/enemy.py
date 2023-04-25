@@ -22,6 +22,7 @@ class Enemy(pygame.sprite.Sprite):
         # self.image = pygame.transform.scale(self.image,(int(self.imageWidth), int(self.imageHeight)))
         # # self.image = pygame.transform.rotate(self.image,0)
         self.image = imgEnemy.enemy1
+        print(str(self.image))
         self.rect = self.image.get_rect(x=x, y=y)
         self.speed = EnnemieStats.speed
         self.velocity = [0, 0]
