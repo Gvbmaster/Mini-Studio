@@ -53,7 +53,7 @@ class Level2:
                 self.running = False
 #évènement d'apparition d'obtacle à des coordonées y aléatoire toutes les 2 sec
             if event.type == self.obstacle_spawn_event:
-                obstacle = Obstacle(1920, random.randint(0, 1080))
+                obstacle = Obstacle(1920, random.randint(0, 1080),"img/old_cartoon/FOND/astéroide-{}.png".format(random.randint(1, 3)))
                 self.obstacles.append(obstacle)
                 self.all_sprites.add(obstacle) 
 
@@ -201,3 +201,11 @@ class Level2:
             self.update()
             self.display()
             self.clock.tick(60)
+
+pygame.init()
+screen = pygame.display.set_mode((0, 0),FULLSCREEN)
+
+game = Level2(screen)
+game.run()
+
+pygame.quit()
