@@ -66,7 +66,7 @@ class Game:
         self.all_sprites_layer_1 = pygame.sprite.Group() #liste de sprite pour les lasers
         self.all_sprites_layer_2 = pygame.sprite.Group() #liste de sprite pour le joueur/ennemis/obstacles/buffs
         self.all_sprites_projectilesMC = pygame.sprite.Group() #liste de sprite pour les tir du MC
-        self.all_sprites_projectilesEn = pygame.sprite.Group() #liste de sprite pour les tir du MC
+        self.all_sprites_projectilesEn = pygame.sprite.Group() #liste de sprite pour les tir du En
         self.all_sprites_layer_2.add(self.buff, self.buff1, self.buff2, self.enemy)
         
         self.space_pressed = False # Pour le tir auto
@@ -252,6 +252,7 @@ class Game:
             self.enemy7=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][6][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][6][1])
             self.enemy8=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][7][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][7][1])
             self.enemy.add(self.enemy1,self.enemy2,self.enemy3,self.enemy4,self.enemy5,self.enemy6,self.enemy7,self.enemy8)
+            self.all_sprites_layer_2.add(self.enemy)
             EnnemieStats.enemyAlive=len(self.enemy)
 
 
