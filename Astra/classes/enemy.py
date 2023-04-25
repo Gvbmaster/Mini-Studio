@@ -2,6 +2,7 @@ import pygame
 import random
 
 from classes.values import *
+enemies_group = pygame.sprite.Group()
 
 class Enemy(pygame.sprite.Sprite): 
     def __init__(self, x, y):
@@ -19,9 +20,14 @@ class Enemy(pygame.sprite.Sprite):
         self.velocity = [0, 0]
         self._kill = False
         self.has_buff = False
+<<<<<<< Updated upstream
         EnnemieStats.enemyAlive+=1
                 
         
+=======
+        enemies_group.add(self) # Ajouter l'objet au groupe enemies_group
+
+>>>>>>> Stashed changes
     def move(self):
         if EnnemieStats.pattern==0:
             Enemy.pattern1(self)
@@ -59,7 +65,7 @@ class Enemy(pygame.sprite.Sprite):
             self.rect.move_ip(self.velocity[0] * self.speed, self.velocity[1] * self.speed)
             
 
-    def collide_rect(self, rect):
+    def check_collision(self, rect):
         if self._kill:
             return False
         return self.rect.colliderect(rect)
