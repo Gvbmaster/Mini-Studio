@@ -6,17 +6,14 @@ from classes.lifesystem import *
 from classes.ath import ATH
 from classes.backgroundPixel import Background
 from classes.projectile import *
-
 from classes.effect.invicibility import *
-
 from classes.obstacle import *
 from classes.values import *
 from classes.warning import *
 from classes.laser import *
-
 from classes.enemy import *
-
 from classes.gameover import *
+from classes.tuto import *
 
 class Game:
     def __init__(self, screen):
@@ -248,7 +245,6 @@ class Game:
             self.background.update()
             self.screen.fill("black")
             self.background.draw(self.screen)
-            #pygame.draw.rect(self.screen, self.area_color, self.area)
             self.all_sprites_layer_1.draw(self.screen)
             self.all_sprites_layer_2.draw(self.screen)
             self.player.draw(self.screen)
@@ -267,7 +263,7 @@ class Game:
 pygame.init()
 screen = pygame.display.set_mode((0, 0),FULLSCREEN)
 
-game = Game(screen)
+game = Tuto(screen)
 game.run()
 
 pygame.quit()

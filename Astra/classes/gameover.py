@@ -26,7 +26,7 @@ class Gameover():
                 
     def update(self, screen):
         pygame.draw.rect(screen, "black", pygame.Rect(0,0,1920,1080))
-        self.playerAreaRect = pygame.draw.rect(screen, self.area_color, pygame.Rect(200,200,405,480), 5)
+        self.playerAreaRect = pygame.draw.rect(screen, self.area_color, (200,200,405,480), 5)
         screen.blit(self.casePlayer, self.rectPlayer)
         self.textAreaRect = pygame.draw.rect(screen, self.area_color, pygame.Rect(600,200,1120,480), 5)
         
