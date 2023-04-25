@@ -29,9 +29,14 @@ class EnnemieStats:
     maxAttackDamage = 2
     attackSpeed = 1
     maxAttackSpeed = 2
-    pattern1=[(1000,350),(750,600),(500,350),(750,100)]
-    pattern2=[(1000,350),(750,600),(500,350),(750,100)]
-    patternSpawn=[pattern1,pattern2]
+    pattern1=[(1250,350),(1500,100),(1750,350),(1500,600)]
+    meanP1=(int((pattern1[0][0]+pattern1[1][0]+pattern1[2][0]+pattern1[3][0])/4),int((pattern1[0][1]+pattern1[1][1]+pattern1[2][1]+pattern1[3][1])/4))
+    pattern2=[(1500,100),(1750,350),(1500,600),(1250,350)]
+    meanP2=(int((pattern2[0][0]+pattern2[1][0]+pattern2[2][0]+pattern2[3][0])/4),int((pattern2[0][1]+pattern2[1][1]+pattern2[2][1]+pattern2[3][1])/4))
+    pattern3=[(1720,100),(1720,541),(1520,540),(1520,981)]
+    pattern4=[(1720,100),(1500,320),(1720,541),(1500,761)]
+    
+    patternSpawn=[pattern1,pattern2,pattern3,pattern4]
     killCount=0
     enemyAlive=0
     pattern=0

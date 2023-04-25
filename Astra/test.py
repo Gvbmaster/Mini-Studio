@@ -49,7 +49,7 @@ class Game:
         self.enemy = pygame.sprite.Group()
         if EnnemieStats.enemyAlive==0:
             EnnemieStats.pattern=0
-            EnnemieStats.pattern=random.randint(0,1)
+            EnnemieStats.pattern=random.randint(0,len(EnnemieStats.patternSpawn))
         self.enemy1=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][0][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][0][1])
         self.enemy2=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][1][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][1][1])
         self.enemy3=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][2][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][2][1])
@@ -199,7 +199,7 @@ class Game:
 
         if EnnemieStats.enemyAlive==0:
             EnnemieStats.pattern=0
-            EnnemieStats.pattern=random.randint(0,1)
+            EnnemieStats.pattern=random.randint(0,len(EnnemieStats.patternSpawn))
             self.enemy1=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][0][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][0][1])
             self.enemy2=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][1][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][1][1])
             self.enemy3=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][2][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][2][1])
@@ -212,6 +212,7 @@ class Game:
             self.enemy1.kill()
             self.enemy.remove(self.enemy1)
             self.ls.healthPlayerUpdate(3)
+            
             
         if self.enemy2.collide_rect(self.player.rect):
             self.enemy2.kill()
@@ -232,16 +233,6 @@ class Game:
         self.enemy2.move()
         self.enemy3.move()
         self.enemy4.move()
-        # for i in range (len(self.enemy)):
-        #     if self.enemy[i].collide_rect(self.player.rect):
-        #         self.enemy[i].kill()
-        #         # print("enemies:" + str(self.all_sprites_layer_2))
-        #         self.all_sprites_layer_2.remove(self.enemy[i])
-        #         self.ls.healthPlayerUpdate(3)
-        #     if self.enemy[i].rect.x <= 200 - self.enemy[i].imageWidth:
-        #         self.enemy[i].kill()
-        #     else:
-        #     # print(EnnemieStats.enemyAlive)
     
 
     def display(self):
