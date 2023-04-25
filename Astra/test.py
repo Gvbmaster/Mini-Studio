@@ -210,6 +210,7 @@ class Game:
             self.all_sprites_layer_2.add(self.enemy)
             EnnemieStats.enemyAlive=len(self.enemy)
 
+
         if self.enemy1.collide_rect(self.player.rect):
             self.enemy1.kill()
             self.enemy.remove(self.enemy1)
@@ -248,7 +249,6 @@ class Game:
             self.background.update()
             self.screen.fill("black")
             self.background.draw(self.screen)
-            #pygame.draw.rect(self.screen, self.area_color, self.area)
             self.all_sprites_layer_1.draw(self.screen)
             self.all_sprites_layer_2.draw(self.screen)
             self.player.draw(self.screen)
