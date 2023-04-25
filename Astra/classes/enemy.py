@@ -2,14 +2,13 @@ import pygame
 import random
 
 from classes.values import *
-from classes.buff import *
 
 class Enemy(pygame.sprite.Sprite): 
     def __init__(self, x, y):
         super().__init__()
         self.ship=["img/low poly/enemyShip1.png","img/low poly/enemyShip2.png","img/low poly/enemyShip3.png"]
-        if EnnemieStats.enemyAlive == 0:
-            EnnemieStats.type = random.choice(self.ship)
+        if EnnemieStats.enemyAlive==0:
+            EnnemieStats.type=random.choice(self.ship)
         self.image = pygame.image.load(EnnemieStats.type).convert_alpha()
         self.imageWidth = 76
         self.imageHeight = 41
@@ -20,16 +19,10 @@ class Enemy(pygame.sprite.Sprite):
         self.velocity = [0, 0]
         self._kill = False
         self.has_buff = False
-        EnnemieStats.enemyAlive += 1
-
-        self.buff_id = None
-        self.buff = None
+        EnnemieStats.enemyAlive+=1
                 
         
     def move(self):
-        # if EnnemieStats.enemyAlive==1:
-        #     EnnemieStats.pattern=0
-            # EnnemieStats.pattern=random.randint(1,2)
         if EnnemieStats.pattern==0:
             Enemy.pattern1(self)
         elif EnnemieStats.pattern==1:
@@ -38,30 +31,30 @@ class Enemy(pygame.sprite.Sprite):
             
             
     def pattern1(self):
-        if (self.rect.x < 750 and self.rect.y < 350) or (self.rect.x == 500 and self.rect.y == 350):
+        if (self.rect.x < 750 and self.rect.y < 350) or (self.rect.x==500 and self.rect.y==350):
             self.velocity = [1, -1]
             self.rect.move_ip(self.velocity[0] * self.speed, self.velocity[1] * self.speed)
-        elif (self.rect.x > 750 and self.rect.y < 350) or (self.rect.x == 750 and self.rect.y == 100):
+        elif (self.rect.x > 750 and self.rect.y < 350) or (self.rect.x==750 and self.rect.y==100):
             self.velocity = [1, 1]
             self.rect.move_ip(self.velocity[0] * self.speed, self.velocity[1] * self.speed)
-        elif (self.rect.x > 750 and self.rect.y > 350) or (self.rect.x == 1000 and self.rect.y == 350):
+        elif (self.rect.x > 750 and self.rect.y > 350) or (self.rect.x==1000 and self.rect.y==350):
             self.velocity = [-1, 1]
             self.rect.move_ip(self.velocity[0] * self.speed, self.velocity[1] * self.speed)
-        elif (self.rect.x < 750 and self.rect.y > 350) or (self.rect.x == 750 and self.rect.y == 600):
+        elif (self.rect.x < 750 and self.rect.y > 350) or (self.rect.x==750 and self.rect.y==600):
             self.velocity = [-1, -1]
             self.rect.move_ip(self.velocity[0] * self.speed, self.velocity[1] * self.speed)
     
     def pattern2(self):
-        if (self.rect.x < 750 and self.rect.y < 350) or (self.rect.x == 750 and self.rect.y == 100):
+        if (self.rect.x < 750 and self.rect.y < 350) or (self.rect.x==750 and self.rect.y==100):
             self.velocity = [-1, 1]
             self.rect.move_ip(self.velocity[0] * self.speed, self.velocity[1] * self.speed)
-        elif (self.rect.x > 750 and self.rect.y < 350) or (self.rect.x == 1000 and self.rect.y == 350):
+        elif (self.rect.x > 750 and self.rect.y < 350) or (self.rect.x==1000 and self.rect.y==350):
             self.velocity = [-1, -1]
             self.rect.move_ip(self.velocity[0] * self.speed, self.velocity[1] * self.speed)
-        elif (self.rect.x > 750 and self.rect.y > 350) or (self.rect.x == 750 and self.rect.y == 600):
+        elif (self.rect.x > 750 and self.rect.y > 350) or (self.rect.x==750 and self.rect.y==600):
             self.velocity = [1, -1]
             self.rect.move_ip(self.velocity[0] * self.speed, self.velocity[1] * self.speed)
-        elif (self.rect.x < 750 and self.rect.y > 350) or (self.rect.x == 500 and self.rect.y == 350):
+        elif (self.rect.x < 750 and self.rect.y > 350) or (self.rect.x==500 and self.rect.y==350):
             self.velocity = [1, 1]
             self.rect.move_ip(self.velocity[0] * self.speed, self.velocity[1] * self.speed)
             
@@ -75,24 +68,7 @@ class Enemy(pygame.sprite.Sprite):
         screen.blit(self.image, self.rect)
 
     def kill(self):
-        #récupération des dernières coordonées de l'ennemi
-        actual_x = self.rect.x
-        actual_y = self.rect.y
         super().kill()
         self._kill = True
         EnnemieStats.killCount+=1
         EnnemieStats.enemyAlive-=1
-        # print(EnnemieStats.killCount)
-        drop_rate = random.randint(1, 100)  #lance un pourcentage de drop
-        #fait apparaitre un buff aux positions de l'ennemi
-        if drop_rate > 90 :
-            self.buff_id = 2 #drop un shield
-            self.buff = Buff(actual_x, actual_y, self.buff_id)
-            return self.buff_id, self.buff
-        elif drop_rate > 75 and drop_rate <= 90:
-            self.buff_id = 1  #drop un heal
-            self.buff = Buff(self.rect.x, self.rect.y, self.buff_id)
-            return self.buff_id
-        else:
-            self.buff_id = None    #ne drop rien
-            print("drop nothing")
