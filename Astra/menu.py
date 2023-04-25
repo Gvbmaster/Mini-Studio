@@ -1,6 +1,6 @@
 import pygame
 import sys
-from button import *
+from classes.button import *
 from pygame.locals import *
 # from test import Game
 

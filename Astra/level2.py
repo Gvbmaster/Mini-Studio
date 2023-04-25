@@ -20,9 +20,9 @@ class Level2:
         self.screen = screen
         self.running = True
         self.clock = pygame.time.Clock()
-        self.background = Background()
+        self.background = Background(image_path="img/old_cartoon/fond/fond cartoon.png")
         self.ath = ATH()
-        self.player = Player(0,0)
+        self.player = Player(0,500,image_path="img/old_cartoon/vaisseaux1__.png")
         self.buff = [Buff(750,450,2),Buff(850,450,2)]
         self.buff1 =[Buff(750,550,1),Buff(850,550,1)]
         self.buff2=[Buff(750,250,3),Buff(850,250,3)]
@@ -128,7 +128,7 @@ class Level2:
         current_time = pygame.time.get_ticks()  # Obtenir le temps actuel en millisecondes
         if self.space_pressed and current_time - self.last_shot_time >= PlayerStats.attackSpeed:  # Limiter le tir a la class PlayerStats qui est dans values qui est donc 250
             # Créer une instance de Projectile à la position du joueur
-            projectile = Projectile(self.player.rect.centerx, self.player.rect.top, PlayerStats.attackVelocity, "img/laser_beam.png", (100,90))
+            projectile = Projectile(self.player.rect.right, self.player.rect.centery, PlayerStats.attackVelocity, "img/old_cartoon/balle cartoon.png", (90,40))
             self.all_sprites.add(projectile)
             self.last_shot_time = current_time  # Mettre à jour le temps du dernier tir
 #################################################################################################################################################
@@ -136,34 +136,35 @@ class Level2:
         self.player.move()
 
         for buff in self.buff:
-            if buff.collide_rect(self.player.rect):
+            if buff.collide_rect(self.player):
                 buff.kill()
                 self.all_sprites.remove(buff)
                 PlayerStats.shield = True
                 print("Buff catch and del")
                 print(PlayerStats.shield)
-        
+
         for buff in self.buff1:
-            if buff.collide_rect(self.player.rect):
+            if buff.collide_rect(self.player):
                 buff.kill()
                 self.all_sprites.remove(buff)
-                LifeSystem.healthPlayerUpdate(self,2)
+                LifeSystem.healthPlayerUpdate(self, 2)
                 print("Buff catch and del")
                 print(PlayerStats.currentHealth)
 
         for buff in self.buff2:
-            if buff.collide_rect(self.player.rect):
+            if buff.collide_rect(self.player):
                 buff.kill()
                 self.all_sprites.remove(buff)
-                LifeSystem.healthPlayerUpdate(self,buff)
+                LifeSystem.healthPlayerUpdate(self, buff)
                 print("Buff catch and del")
                 print(PlayerStats.currentHealth)
 
         #chaque obstacle provoque des dégâts et disparait une fois sorti de l'écran
             for obstacle in self.obstacles:
-                if obstacle.collide_rect(self.player.rect):
+                if pygame.sprite.collide_mask(obstacle, self.player):
                     LifeSystem.healthPlayerUpdate(self, obstacle)
                     print("Player take hit")
+                    obstacle.kill()
                     print(PlayerStats.currentHealth)
                 if obstacle.rect.x <= 0 - obstacle.imageWidth:
                     obstacle.kill()

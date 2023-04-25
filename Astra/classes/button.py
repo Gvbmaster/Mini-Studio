@@ -4,6 +4,7 @@ class Button():
     def init(self, image, x, y):
         self.image = image
         self.rect = self.image.get_rect(center=(x, y))
+        pass
 
     def update(self, screen):
         screen.blit(self.image, self.rect)
@@ -13,3 +14,4 @@ class Button():
             print("Passed Successfully !")
             return True
         return False
+        

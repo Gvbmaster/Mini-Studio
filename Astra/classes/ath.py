@@ -2,11 +2,12 @@ import pygame
 from classes.values import *
 
 class ATH():
-    def __init__(self):
-        self.healthBar = pygame.image.load("img/healthBarLowPoly.png").convert_alpha()
+    def __init__(self, healthBar_image_path="img/healthBarLowPoly.png", lifePoint_image_path="img/lifePointLowPoly.png"):
+        self.healthBar = pygame.image.load(healthBar_image_path).convert_alpha()
         self.rectHealthBar = self.healthBar.get_rect(x=25, y=25)
-        self.lifePoint = pygame.image.load("img/lifePointLowPoly.png").convert_alpha()
+        self.lifePoint = pygame.image.load(lifePoint_image_path).convert_alpha()
         self.lifePoint = pygame.transform.scale(self.lifePoint,(169,124))
+
 
     def update(self):
         pass
