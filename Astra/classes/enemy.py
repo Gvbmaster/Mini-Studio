@@ -3,7 +3,7 @@ import random
 
 from classes.values import *
 
-class Enemy(pygame.sprite.Sprite): 
+class Enemy(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
         self.ship=["img/low poly/enemyShip1.png","img/low poly/enemyShip2.png","img/low poly/enemyShip3.png"]
@@ -14,6 +14,8 @@ class Enemy(pygame.sprite.Sprite):
         self.imageHeight = 41
         self.image = pygame.transform.scale(self.image,(int(self.imageWidth), int(self.imageHeight)))
         self.image = pygame.transform.rotate(self.image,0)
+        # image1=image().image
+        # self.image = image1
         self.rect = self.image.get_rect(x=x, y=y)
         self.speed = EnnemieStats.speed
         self.velocity = [0, 0]
@@ -22,7 +24,7 @@ class Enemy(pygame.sprite.Sprite):
         self.up=False
         self.left=False
         EnnemieStats.enemyAlive+=1
-                
+        
         
     def move(self):
         if EnnemieStats.pattern==0:
@@ -36,16 +38,16 @@ class Enemy(pygame.sprite.Sprite):
             
             
     def pattern1(self):
-        if (self.rect.x < EnnemieStats.meanP1[0] and self.rect.y < EnnemieStats.meanP1[1]) or (self.rect.x==EnnemieStats.pattern1[0][0] and self.rect.y==EnnemieStats.pattern1[0][1]):
+        if (self.rect.x < EnnemieStats.meanP1[0][0] and self.rect.y < EnnemieStats.meanP1[0][1]) or (self.rect.x==EnnemieStats.pattern1[0][0] and self.rect.y==EnnemieStats.pattern1[0][1]):
             self.velocity = [1, -1]
             self.rect.move_ip(self.velocity[0] * self.speed, self.velocity[1] * self.speed)
-        elif (self.rect.x > EnnemieStats.meanP1[0] and self.rect.y < EnnemieStats.meanP1[1]) or (self.rect.x==EnnemieStats.pattern1[1][0] and self.rect.y==EnnemieStats.pattern1[1][1]):
+        elif (self.rect.x > EnnemieStats.meanP1[0][0] and self.rect.y < EnnemieStats.meanP1[0][1]) or (self.rect.x==EnnemieStats.pattern1[1][0] and self.rect.y==EnnemieStats.pattern1[1][1]):
             self.velocity = [1, 1]
             self.rect.move_ip(self.velocity[0] * self.speed, self.velocity[1] * self.speed)
-        elif (self.rect.x > EnnemieStats.meanP1[0] and self.rect.y > EnnemieStats.meanP1[1]) or (self.rect.x==EnnemieStats.pattern1[2][0] and self.rect.y==EnnemieStats.pattern1[2][1]):
+        elif (self.rect.x > EnnemieStats.meanP1[0][0] and self.rect.y > EnnemieStats.meanP1[0][1]) or (self.rect.x==EnnemieStats.pattern1[2][0] and self.rect.y==EnnemieStats.pattern1[2][1]):
             self.velocity = [-1, 1]
             self.rect.move_ip(self.velocity[0] * self.speed, self.velocity[1] * self.speed)
-        elif (self.rect.x < EnnemieStats.meanP1[0] and self.rect.y > EnnemieStats.meanP1[1]) or (self.rect.x==EnnemieStats.pattern1[3][0] and self.rect.y==EnnemieStats.pattern1[3][1]):
+        elif (self.rect.x < EnnemieStats.meanP1[0][0] and self.rect.y > EnnemieStats.meanP1[0][1]) or (self.rect.x==EnnemieStats.pattern1[3][0] and self.rect.y==EnnemieStats.pattern1[3][1]):
             self.velocity = [-1, -1]
             self.rect.move_ip(self.velocity[0] * self.speed, self.velocity[1] * self.speed)
     
