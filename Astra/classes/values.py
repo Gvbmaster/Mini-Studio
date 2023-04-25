@@ -23,15 +23,6 @@ class PlayerStats:
     isPlayerHitable = True
 
 
-class image():
-    def __init__(self):
-        self.image = pygame.image.load("img/low poly/enemyShip1.png").convert_alpha()
-        self.imageWidth = 76
-        self.imageHeight = 41
-        self.image = pygame.transform.scale(self.image,(int(self.imageWidth), int(self.imageHeight)))
-
-
-
 class EnnemieStats:
     currentHealth = 6
     maxHealth = 10
@@ -41,12 +32,10 @@ class EnnemieStats:
     maxAttackDamage = 2
     attackSpeed = 1
     maxAttackSpeed = 2
-    pattern1=[(1250,350),(1500,100),(1750,350),(1500,600),(1250,950),(1500,700),(1750,950),(1500,1200)]
-    meanP1=((int((pattern1[0][0]+pattern1[1][0]+pattern1[2][0]+pattern1[3][0])/4),int((pattern1[0][1]+pattern1[1][1]+pattern1[2][1]+pattern1[3][1])/4)),(int((pattern1[4][0]+pattern1[5][0]+pattern1[6][0]+pattern1[7][0])/4),int((pattern1[4][1]+pattern1[5][1]+pattern1[6][1]+pattern1[7][1])/4)))
-    pattern2=[(1500,100),(1750,350),(1500,600),(1250,350)]
-    meanP2=(int((pattern2[0][0]+pattern2[1][0]+pattern2[2][0]+pattern2[3][0])/4),int((pattern2[0][1]+pattern2[1][1]+pattern2[2][1]+pattern2[3][1])/4))
-    pattern3=[(1720,100),(1720,541),(1520,540),(1520,981)]
-    pattern4=[(1720,100),(1500,320),(1720,541),(1500,761)]
+    pattern1=[(1250,250),(1500,0),(1750,250),(1500,500),(1250,760),(1500,510),(1750,760),(1500,1010)]
+    pattern2=[(1500,0),(1750,250),(1500,500),(1250,250),(1500,510),(1750,760),(1500,1010),(1250,760)]
+    pattern3=[(1720,100),(1720,541),(1520,540),(1520,981),(1320,100),(1320,541),(1120,540),(1120,981)]
+    pattern4=[(1720,100),(1500,320),(1720,541),(1500,761),(1220,100),(1000,320),(1220,541),(1000,761)]
     patternSpawn=[pattern1,pattern2,pattern3,pattern4]
     killCount=0
     enemyAlive=0

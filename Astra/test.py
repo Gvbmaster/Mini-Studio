@@ -49,18 +49,18 @@ class Game:
         #####INTEGRATION ENNEMIS###########
         self.enemy = pygame.sprite.Group()
         if EnnemieStats.enemyAlive==0:
-            EnnemieStats.pattern=0
-            EnnemieStats.pattern=0#random.randint(0,len(EnnemieStats.patternSpawn)-1)
-        self.enemy1=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][0][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][0][1])
-        self.enemy2=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][1][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][1][1])
-        self.enemy3=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][2][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][2][1])
-        self.enemy4=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][3][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][3][1])
-        self.enemy5=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][0][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][4][1])
-        self.enemy6=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][1][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][5][1])
-        self.enemy7=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][2][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][6][1])
-        self.enemy8=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][3][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][7][1])
-        self.enemy.add(self.enemy1,self.enemy2,self.enemy3,self.enemy4,self.enemy5,self.enemy6,self.enemy7,self.enemy8)
-        EnnemieStats.enemyAlive=len(self.enemy)
+            EnnemieStats.pattern=3
+            # EnnemieStats.pattern=random.randint(0,len(EnnemieStats.patternSpawn)-1)
+            self.enemy1=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][0][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][0][1])
+            self.enemy2=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][1][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][1][1])
+            self.enemy3=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][2][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][2][1])
+            self.enemy4=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][3][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][3][1])
+            self.enemy5=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][4][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][4][1])
+            self.enemy6=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][5][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][5][1])
+            self.enemy7=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][6][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][6][1])
+            self.enemy8=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][7][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][7][1])
+            self.enemy.add(self.enemy1,self.enemy2,self.enemy3,self.enemy4,self.enemy5,self.enemy6,self.enemy7,self.enemy8)
+            EnnemieStats.enemyAlive=len(self.enemy)
         ###################################
         self.all_sprites_layer_1 = pygame.sprite.Group() #liste de sprite pour les lasers
         self.all_sprites_layer_2 = pygame.sprite.Group() #liste de sprite pour le joueur/ennemis/obstacles/buffs
@@ -138,11 +138,9 @@ class Game:
 ############################ Tir automatique du vaisseau ######################################################################################
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
-                    print("Espace pressé")
                     self.space_pressed = True
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_SPACE:
-                    print("Espace relâché")
                     self.space_pressed = False
         self.all_sprites_layer_2.update()
         current_time = pygame.time.get_ticks()  # Obtenir le temps actuel en millisecondes
@@ -160,16 +158,12 @@ class Game:
                 buff.kill()
                 self.all_sprites_layer_2.remove(buff)
                 PlayerStats.shield = True
-                print("Buff catch and del")
-                print(PlayerStats.shield)
         
         for buff in self.buff1:
             if buff.collide_rect(self.player.rect):
                 buff.kill()
                 self.all_sprites_layer_2.remove(buff)
                 self.ls.healthPlayerUpdate(2)
-                print("Buff catch and del")
-                print(PlayerStats.currentHealth)
 
         for buff in self.buff2:
             if buff.collide_rect(self.player.rect):
@@ -177,16 +171,12 @@ class Game:
                 self.all_sprites_layer_2.remove(buff)
                 self.ls.healthPlayerUpdate(buff)
                 Invicibility.update(self)
-                print("Buff catch and del")
-                print(PlayerStats.currentHealth)
 
         #chaque obstacle provoque des dégâts et disparait une fois sorti de l'écran
         for obstacle in self.obstacles:
             if obstacle.collide_rect(self.player.rect):
                 Invicibility.update(self)
                 self.ls.healthPlayerUpdate(obstacle)
-                print("Player take hit")
-                print(PlayerStats.currentHealth)
             if obstacle.rect.x <= 0 - obstacle.imageWidth:
                 obstacle.kill()
                 self.all_sprites_layer_2.remove(obstacle)
@@ -199,64 +189,61 @@ class Game:
             if laser.collide_rect(self.player.rect):
                 Invicibility.update(self)
                 self.ls.healthPlayerUpdate(laser)
-                print("Player take hit")
-                print(PlayerStats.currentHealth)
-
+        
         if EnnemieStats.enemyAlive==0:
-            EnnemieStats.pattern=0
-            EnnemieStats.pattern=0#random.randint(0,len(EnnemieStats.patternSpawn)-1)
-        self.enemy1=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][0][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][0][1])
-        self.enemy2=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][1][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][1][1])
-        self.enemy3=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][2][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][2][1])
-        self.enemy4=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][3][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][3][1])
-        self.enemy5=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][4][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][4][1])
-        self.enemy6=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][5][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][5][1])
-        self.enemy7=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][6][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][6][1])
-        self.enemy8=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][7][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][7][1])
-        self.enemy.add(self.enemy1,self.enemy2,self.enemy3,self.enemy4,self.enemy5,self.enemy6,self.enemy7,self.enemy8)
-        EnnemieStats.enemyAlive=len(self.enemy)
-
+            EnnemieStats.pattern=3
+            # EnnemieStats.pattern=random.randint(0,len(EnnemieStats.patternSpawn)-1)
+            self.enemy1=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][0][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][0][1])
+            self.enemy2=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][1][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][1][1])
+            self.enemy3=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][2][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][2][1])
+            self.enemy4=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][3][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][3][1])
+            self.enemy5=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][4][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][4][1])
+            self.enemy6=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][5][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][5][1])
+            self.enemy7=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][6][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][6][1])
+            self.enemy8=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][7][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][7][1])
+            self.enemy.add(self.enemy1,self.enemy2,self.enemy3,self.enemy4,self.enemy5,self.enemy6,self.enemy7,self.enemy8)
+            EnnemieStats.enemyAlive=len(self.enemy)
 
         if self.enemy1.collide_rect(self.player.rect):
             self.enemy1.kill()
             self.enemy.remove(self.enemy1)
-            self.ls.healthPlayerUpdate(3)
+            # self.ls.healthPlayerUpdate(3)
             
         if self.enemy2.collide_rect(self.player.rect):
             self.enemy2.kill()
             self.enemy.remove(self.enemy2)
-            self.ls.healthPlayerUpdate(3)
+            # self.ls.healthPlayerUpdate(3)
             
         if self.enemy3.collide_rect(self.player.rect):
             self.enemy3.kill()
             self.enemy.remove(self.enemy3)
-            self.ls.healthPlayerUpdate(3)
+            # self.ls.healthPlayerUpdate(3)
             
         if self.enemy4.collide_rect(self.player.rect):
             self.enemy4.kill()
             self.enemy.remove(self.enemy4)
-            self.ls.healthPlayerUpdate(3)
+            # self.ls.healthPlayerUpdate(3)
             
         if self.enemy5.collide_rect(self.player.rect):
             self.enemy5.kill()
             self.enemy.remove(self.enemy5)
-            self.ls.healthPlayerUpdate(3)
+            # self.ls.healthPlayerUpdate(3)
             
             
         if self.enemy6.collide_rect(self.player.rect):
             self.enemy6.kill()
             self.enemy.remove(self.enemy6)
-            self.ls.healthPlayerUpdate(3)
+            # self.ls.healthPlayerUpdate(3)
             
         if self.enemy7.collide_rect(self.player.rect):
             self.enemy7.kill()
             self.enemy.remove(self.enemy7)
-            self.ls.healthPlayerUpdate(3)
+            # self.ls.healthPlayerUpdate(3)
             
         if self.enemy8.collide_rect(self.player.rect):
             self.enemy8.kill()
             self.enemy.remove(self.enemy8)
-            self.ls.healthPlayerUpdate(3)
+            # self.ls.healthPlayerUpdate(3)
 
         self.enemy1.move()
         self.enemy2.move()
@@ -294,6 +281,7 @@ pygame.init()
 screen = pygame.display.set_mode((0, 0),FULLSCREEN)
 
 imgshield.Init()
+imgEnemy.Init()
 game = Game(screen)
 game.run()
 
