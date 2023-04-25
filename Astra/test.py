@@ -6,12 +6,16 @@ from classes.lifesystem import *
 from classes.ath import ATH
 from classes.backgroundPixel import Background
 from classes.projectile import *
+from classes.boss import *
 from classes.effect.invicibility import *
+
 from classes.obstacle import *
 from classes.values import *
 from classes.warning import *
 from classes.laser import *
+
 from classes.enemy import *
+
 from classes.gameover import *
 
 class Game:
@@ -46,28 +50,20 @@ class Game:
         if EnnemieStats.enemyAlive==0:
             EnnemieStats.pattern=0
             EnnemieStats.pattern=random.randint(0,1)
-<<<<<<< Updated upstream
         self.enemy1=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][0][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][0][1])
         self.enemy2=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][1][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][1][1])
         self.enemy3=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][2][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][2][1])
         self.enemy4=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][3][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][3][1])
         self.enemy.add(self.enemy1,self.enemy2,self.enemy3,self.enemy4)
-=======
-            self.enemy=[Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][0][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][0][1]),
-                        Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][1][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][1][1]),
-                        Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][2][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][2][1]),
-                        Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][3][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][3][1])]
->>>>>>> Stashed changes
         EnnemieStats.enemyAlive=len(self.enemy)
         ###################################
+        self.boss = Boss("Big Boss", 100, 20)
         self.all_sprites_layer_1 = pygame.sprite.Group() #liste de sprite pour les lasers
         self.all_sprites_layer_2 = pygame.sprite.Group() #liste de sprite pour le joueur/ennemis/obstacles/buffs
         self.all_sprites_projectilesMC = pygame.sprite.Group() #liste de sprite pour les tir du MC
         self.all_sprites_layer_2.add(self.buff, self.buff1, self.buff2, self.enemy)
-        
         self.space_pressed = False # Pour le tir auto
         self.last_shot_time = 0  # Initialiser à 0 pour le tir auto
-
     def handling_events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -152,14 +148,8 @@ class Game:
             self.all_sprites_layer_2.add(projectile)
             self.last_shot_time = current_time  # Mettre à jour le temps du dernier tir
 #################################################################################################################################################
-        # Détecter les collisions entre les projectiles et les ennemis
-        collisions = pygame.sprite.spritecollide(self.enemy[0], projectiles_group, True) # True pour supprimer les projectiles en cas de collision
-        for projectile in collisions:
-    # Faire quelque chose lorsque les objets entrent en collision, par exemple, appeler la méthode kill() de l'objet Projectile pour le détruire
-            projectile.kill()
     def update(self):
         self.player.move()
-
 
         for buff in self.buff:
             if buff.collide_rect(self.player.rect):
@@ -219,8 +209,6 @@ class Game:
             self.all_sprites_layer_2.add(self.enemy)
             EnnemieStats.enemyAlive=len(self.enemy)
 
-<<<<<<< Updated upstream
-
         if self.enemy1.collide_rect(self.player.rect):
             self.enemy1.kill()
             self.enemy.remove(self.enemy1)
@@ -246,37 +234,32 @@ class Game:
         self.enemy3.move()
         self.enemy4.move()
 
-        for projectile in self.all_sprites_projectilesMC:
+        for projectile in self.all_sprites_projectilesMC :
             if projectile.rect.left > 1920:
                 projectile.kill()
                 print("Tir sortie de l'ecran ")
             elif pygame.sprite.spritecollide(projectile, self.enemy, True):
                 projectile.kill()
                 print("Ennemi Toucher !!!")
-=======
-        for i in range (len(self.enemy)):
-            if self.enemy[i].collide_rect(self.player.rect):
-                self.enemy[i].kill()
-                # print("enemies:" + str(self.all_sprites_layer_2))
-                self.all_sprites_layer_2.remove(self.enemy[i])
-                self.ls.healthPlayerUpdate(3)
-            if self.enemy[i].rect.x <= 200 - self.enemy[i].imageWidth:
-                self.enemy[i].kill()
-            else:
-                self.enemy[i].move()
-            # print(EnnemieStats.enemyAlive)
-
->>>>>>> Stashed changes
+            elif pygame.sprite.spritecollide(self.boss, self.all_sprites_projectilesMC, True):
+                self.boss.take_damage(10)
+                print(self.boss.health)
+                if self.boss.health == 0:
+                    print("Le boss", self.boss.name, "a été vaincu !")
+                    self.boss.kill()
 
     def display(self):
         if PlayerStats.currentHealth > 0:
             self.background.update()
             self.screen.fill("black")
             self.background.draw(self.screen)
+            #pygame.draw.rect(self.screen, self.area_color, self.area)
             self.all_sprites_layer_1.draw(self.screen)
             self.all_sprites_layer_2.draw(self.screen)
             self.player.draw(self.screen)
             self.ath.draw(self.screen)
+            self.boss.update()
+            self.boss.draw(screen)
             pygame.display.flip()
         else:
             self.gameover.update(self.screen)

@@ -11,7 +11,9 @@ class PlayerStats:
     currentHealth = 2
     maxHealth = 3
     speed = 10
+    #maxSpeed = 10
     attackDamage = 3
+    #maxAttackDamage = 6
     attackSpeed = 100 # cadence de tir
     MaxAttackSpeed = 2
     attackVelocity = 20 #speed bullet
@@ -33,7 +35,6 @@ class EnnemieStats:
     killCount=0
     enemyAlive=0
     pattern=0
-    
 
 
 class BossStats:
@@ -48,3 +49,4 @@ class BossStats:
     
 class ObstacleStats:
     speed = 7
+    #maxSpeed = 14

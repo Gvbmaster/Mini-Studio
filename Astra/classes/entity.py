@@ -1,8 +1,10 @@
 import pygame
+from pygame.locals import *
 
-class Projectile(pygame.sprite.Sprite):
+from classes.projectile import *
+
+class Entity:
     def __init__(self, x, y, speed, image_path, image_size):
-        super().__init__()
         self.image = pygame.image.load(image_path)
         self.image = pygame.transform.scale(self.image, image_size)
         self.rect = self.image.get_rect()
@@ -11,7 +13,9 @@ class Projectile(pygame.sprite.Sprite):
         self.speed = speed
     
     def update(self):
-        self.rect.y -= self.speed
-
+        pass
+    
     def draw(self, screen):
         screen.blit(self.image, self.rect)
+
+    
