@@ -31,6 +31,7 @@ class Enemy(pygame.sprite.Sprite):
         self.up=False
         self.left=False
         EnnemieStats.enemyAlive+=1
+        self.lifepoint = EnnemieStats.currentHealth
         
         
     def move(self):
@@ -142,6 +143,11 @@ class Enemy(pygame.sprite.Sprite):
         if self._kill:
             return False
         return self.rect.colliderect(rect)
+    
+    def hp(self):
+        self.lifepoint -=2
+
+
 
     def draw(self, screen):
         screen.blit(self.image, self.rect)

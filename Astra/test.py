@@ -63,11 +63,15 @@ class Game:
             self.enemy.add(self.enemy1,self.enemy2,self.enemy3,self.enemy4,self.enemy5,self.enemy6,self.enemy7,self.enemy8)
             EnnemieStats.enemyAlive=len(self.enemy)
         ###################################
+        self.sprite_player = pygame.sprite.Group()
         self.all_sprites_layer_1 = pygame.sprite.Group() #liste de sprite pour les lasers
         self.all_sprites_layer_2 = pygame.sprite.Group() #liste de sprite pour le joueur/ennemis/obstacles/buffs
+        self.sprite_player.add(self.player)
         self.all_sprites_projectilesMC = pygame.sprite.Group() #liste de sprite pour les tir du MC
         self.all_sprites_projectilesEn = pygame.sprite.Group() #liste de sprite pour les tir du En
         self.all_sprites_layer_2.add(self.buff, self.buff1, self.buff2, self.enemy)
+        
+        
         
         self.space_pressed = False # Pour le tir auto
         self.last_shot_time = 0  # Initialiser à 0 pour le tir auto
@@ -257,44 +261,36 @@ class Game:
 
 
         if self.enemy1.collide_rect(self.player.rect):
-            self.enemy1.kill()
-            self.enemy.remove(self.enemy1)
             self.ls.healthPlayerUpdate(3)
+            Invicibility.update(self)
             
         if self.enemy2.collide_rect(self.player.rect):
-            self.enemy2.kill()
-            self.enemy.remove(self.enemy2)
             self.ls.healthPlayerUpdate(3)
+            Invicibility.update(self)
             
         if self.enemy3.collide_rect(self.player.rect):
-            self.enemy3.kill()
-            self.enemy.remove(self.enemy3)
             self.ls.healthPlayerUpdate(3)
+            Invicibility.update(self)
             
         if self.enemy4.collide_rect(self.player.rect):
-            self.enemy.remove(self.enemy4)
-            self.enemy4.kill()
             self.ls.healthPlayerUpdate(3)
+            Invicibility.update(self)
 
         if self.enemy5.collide_rect(self.player.rect):
-            self.enemy5.kill()
-            self.enemy.remove(self.enemy5)
             self.ls.healthPlayerUpdate(3)
+            Invicibility.update(self)
             
         if self.enemy6.collide_rect(self.player.rect):
-            self.enemy6.kill()
-            self.enemy.remove(self.enemy6)
             self.ls.healthPlayerUpdate(3)
+            Invicibility.update(self)
             
         if self.enemy7.collide_rect(self.player.rect):
-            self.enemy7.kill()
-            self.enemy.remove(self.enemy7)
             self.ls.healthPlayerUpdate(3)
+            Invicibility.update(self)
             
         if self.enemy8.collide_rect(self.player.rect):
-            self.enemy8.kill()
-            self.enemy.remove(self.enemy8)
             self.ls.healthPlayerUpdate(3)
+            Invicibility.update(self)
 
         self.enemy1.move()
         self.enemy2.move()
@@ -317,6 +313,11 @@ class Game:
             if projectileEn1.rect.left < 0:
                 projectileEn1.kill()
                 print("Tir sortie de l'ecran ")
+            elif pygame.sprite.spritecollide(projectileEn1, self.sprite_player, False):
+                projectileEn1.kill()
+                self.ls.healthPlayerUpdate(3)
+                Invicibility.update(self)
+                print("Allier Toucher !!!")
             
 
     def display(self):
@@ -326,7 +327,7 @@ class Game:
             self.background.draw(self.screen)
             self.all_sprites_layer_1.draw(self.screen)
             self.all_sprites_layer_2.draw(self.screen)
-            self.player.draw(self.screen)
+            self.sprite_player.draw(self.screen)
             self.ath.draw(self.screen)
             pygame.display.flip()
         else:
