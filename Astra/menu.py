@@ -24,10 +24,9 @@ class menu :
     def options(self):
         while True:
             optionsMousePos = pygame.mouse.get_pos()
-            screen.fill("red")
 
-            returnMainMenuIMG = pygame.image.load("img/ShipTest.png")
-            returnMainMenu = Button(returnMainMenuIMG, 500, 500)
+            returnMainMenuIMG = pygame.image.load("img/option.png")
+            returnMainMenu = Button(returnMainMenuIMG, 960,540)
             returnMainMenu.update(screen)
 
             for event in pygame.event.get():
