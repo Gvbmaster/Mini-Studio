@@ -25,23 +25,28 @@ class Game:
         self.ls = LifeSystem(self)
         self.gameover = Gameover(self)
         self.player = Player(0,0)
+
+        ################INTEGRATION BUFF#####################
         self.buff = [Buff(750,450,2),Buff(850,450,2),Buff(950,450,2),Buff(1050,450,2)]
         self.buff1 =[Buff(750,550,1),Buff(850,550,1),Buff(950,550,1),Buff(1050,550,1)]
         self.buff2=[Buff(750,250,3),Buff(850,250,3),Buff(950,250,3),Buff(1050,250,3)]
+
         #####INTEGRATION LASER ET OBSTACLES###########
-        self.obstacle = None                                    #|
-        self.obstacles = []                                     #|
-        self.obstacle_spawn_event = pygame.USEREVENT + 1        #|
-        pygame.time.set_timer(self.obstacle_spawn_event, 2000)  #|innitialisation des obstacle et de leur event d'apparition
-        self.laser_position = [10, 280, 550, 820]               #|
-        self.laserPosition1 = None                              #|
-        self.laserPosition2 = None                              #|
-        self.laser = None                                       #|
-        self.warning1 = None                                    #|
-        self.warning2 = None                                    #|
-        self.lasers = []                                        #|
-        self.laser_spawn_event = pygame.USEREVENT + 2           #|
-        pygame.time.set_timer(self.laser_spawn_event, 15000)    #|initialisation des events de laser et de warning
+        self.obstacle = None                                  
+        self.obstacles = []                                    
+        self.obstacle_spawn_event = pygame.USEREVENT + 1       
+        pygame.time.set_timer(self.obstacle_spawn_event, 2000) 
+        
+        self.laser_position = [10, 280, 550, 820]             
+        self.laserPosition1 = None                          
+        self.laserPosition2 = None                         
+        self.laser = None                                  
+        self.warning1 = None                                 
+        self.warning2 = None                                  
+        self.lasers = []                                       
+        self.laser_spawn_event = pygame.USEREVENT + 2          
+        pygame.time.set_timer(self.laser_spawn_event, 15000) 
+
         #####INTEGRATION ENNEMIS###########
         self.enemy = pygame.sprite.Group()
         if EnnemieStats.enemyAlive==0:
@@ -54,6 +59,7 @@ class Game:
         self.enemy.add(self.enemy1,self.enemy2,self.enemy3,self.enemy4)
         EnnemieStats.enemyAlive=len(self.enemy)
         ###################################
+
         self.all_sprites_layer_1 = pygame.sprite.Group() #liste de sprite pour les lasers
         self.all_sprites_layer_2 = pygame.sprite.Group() #liste de sprite pour le joueur/ennemis/obstacles/buffs
         self.all_sprites_projectilesMC = pygame.sprite.Group() #liste de sprite pour les tir du MC
@@ -188,7 +194,7 @@ class Game:
             else:
                 obstacle.move()
 
-        #chaque laser provoque des dégâts
+        #chaque laser provoque des dégâtss
         for laser in self.lasers:
             if laser.collide_rect(self.player.rect):
                 Invicibility.update(self)

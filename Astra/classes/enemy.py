@@ -59,8 +59,7 @@ class Enemy(pygame.sprite.Sprite):
             self.rect.move_ip(self.velocity[0] * self.speed, self.velocity[1] * self.speed)
         elif (self.rect.x < 750 and self.rect.y > 350) or (self.rect.x==500 and self.rect.y==350):
             self.velocity = [1, 1]
-            self.rect.move_ip(self.velocity[0] * self.speed, self.velocity[1] * self.speed)
-            
+            self.rect.move_ip(self.velocity[0] * self.speed, self.velocity[1] * self.speed)            
 
     def collide_rect(self, rect):
         if self._kill:
