@@ -18,6 +18,8 @@ from classes.enemy import *
 
 from classes.projectileEn import *
 
+from classes.tuto import *
+
 import gameover
 
 class Game:
@@ -344,7 +346,7 @@ class Game:
 pygame.init()
 screen = pygame.display.set_mode((0, 0),FULLSCREEN)
 imgEnemy.Init()
-game = Game(screen)
+game = Tuto(screen)
 game.run()
 
 pygame.quit()

@@ -43,6 +43,8 @@ class Enemy(pygame.sprite.Sprite):
             Enemy.pattern3(self)
         elif EnnemieStats.pattern==3:
             Enemy.pattern4(self)
+        elif EnnemieStats.pattern==4:
+            Enemy.pattern5(self)
         
             
             
@@ -136,6 +138,13 @@ class Enemy(pygame.sprite.Sprite):
             self.velocity[1] = -1
         else:
             self.velocity[1] = 1
+        self.rect.move_ip(self.velocity[0] * self.speed, self.velocity[1] * self.speed)
+            
+    def pattern5(self):
+        if self.rect.x>1400:
+            self.velocity[0] = -2
+        else:
+            self.velocity[0]=0
         self.rect.move_ip(self.velocity[0] * self.speed, self.velocity[1] * self.speed)
             
 
