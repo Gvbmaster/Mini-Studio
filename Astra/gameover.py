@@ -1,4 +1,4 @@
-import pygame
+import pygame,sys
 import random
 import level1
 from classes.button import *
@@ -46,6 +46,8 @@ class GameoverLP():
                     PlayerStats.currentHealth = 3
                     lvl1 = level1.Level1(screen)
                     lvl1.run()
+                    pygame.quit()
+                    sys.exit()
                     print("Passed Successfully !")
         pygame.display.update()
 

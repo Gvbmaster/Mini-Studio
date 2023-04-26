@@ -4,9 +4,11 @@ from pygame.locals import *
 from level1 import Level1
 from classes.pyvidplayer import *
 from classes.enemy import *
+from classes.enemy2 import *
 
 screen = pygame.display.set_mode((0, 0),FULLSCREEN)
 imgEnemy.Init()
+imgEnemy2.Init()
 
 class menu : 
     def play(self):
@@ -116,6 +118,8 @@ class menu :
                         pygame.font.init()
                         lvl1 = Level1(screen)
                         lvl1.run()
+                        pygame.quit()
+                        sys.exit()
                     elif optionsButton.checkingInput(menuMousePos):
                         print("Bouton cliqué ! Les options s'affichent!")
                         menu.options(self)

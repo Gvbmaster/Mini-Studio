@@ -40,6 +40,11 @@ class EnnemieStats:
 class fontCombo:
     oldCartoon=["img/combo old cartoon/x.png","img/combo old cartoon/1.png","img/combo old cartoon/2.png","img/combo old cartoon/3.png","img/combo old cartoon/4.png","img/combo old cartoon/5.png","img/combo old cartoon/6.png","img/combo old cartoon/7.png","img/combo old cartoon/8.png","img/combo old cartoon/9.png"]
 
+# class EnergyBar:
+#     def energy_bar(self):
+#         energy=0
+
+
 class BossStats:
     currentHealth = 500
     maxHealth = 500

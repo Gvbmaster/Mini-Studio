@@ -3,15 +3,14 @@ import random
 
 from classes.values import *
 
-class imgEnemy():
+class imgEnemy2():
    def Init():
-    imgEnemy.enemy1 = pygame.image.load("img/low poly/enemyShip1.png").convert_alpha()
-    imageWidth = 76
-    imageHeight = 41
-    imgEnemy.enemy1 = pygame.transform.scale(imgEnemy.enemy1,(int(imageWidth), int(imageHeight)))
-    print("ok")
+    imgEnemy2.enemy1 = pygame.image.load("img/old_cartoon/vaisseaux2.png").convert_alpha()
+    imageWidth = 126
+    imageHeight = 119
+    imgEnemy2.enemy1 = pygame.transform.scale(imgEnemy2.enemy1,(int(imageWidth), int(imageHeight)))
 
-class Enemy(pygame.sprite.Sprite):
+class Enemy2(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
         # self.ship=["img/low poly/enemyShip1.png","img/low poly/enemyShip2.png","img/low poly/enemyShip3.png"]
@@ -22,7 +21,7 @@ class Enemy(pygame.sprite.Sprite):
         # self.imageHeight = 41
         # self.image = pygame.transform.scale(self.image,(int(self.imageWidth), int(self.imageHeight)))
         # # self.image = pygame.transform.rotate(self.image,0)
-        self.image = imgEnemy.enemy1
+        self.image = imgEnemy2.enemy1
         print(str(self.image))
         self.rect = self.image.get_rect(x=x, y=y)
         self.speed = EnnemieStats.speed
@@ -37,13 +36,13 @@ class Enemy(pygame.sprite.Sprite):
         
     def move(self):
         if EnnemieStats.pattern==0:
-            Enemy.pattern1(self)
+            Enemy2.pattern1(self)
         elif EnnemieStats.pattern==1:
-            Enemy.pattern2(self)
+            Enemy2.pattern2(self)
         elif EnnemieStats.pattern==2:
-            Enemy.pattern3(self)
+            Enemy2.pattern3(self)
         elif EnnemieStats.pattern==3:
-            Enemy.pattern4(self)
+            Enemy2.pattern4(self)
         
             
             
@@ -140,6 +139,11 @@ class Enemy(pygame.sprite.Sprite):
         self.rect.move_ip(self.velocity[0] * self.speed, self.velocity[1] * self.speed)
             
 
+    def collide_rect(self, rect):
+        if self._kill:
+            return False
+        return self.rect.colliderect(rect)
+    
     def healthEnemyUpdate(self):
         if self.currentHealth <= EnnemieStats.maxHealth:
             self.currentHealth = self.currentHealth - PlayerStats.attackDamage
@@ -151,11 +155,6 @@ class Enemy(pygame.sprite.Sprite):
                 
                 #print("Enemy killed !")
 
-    def collide_rect(self, rect):
-        if self._kill:
-            return False
-        return self.rect.colliderect(rect)
-    
     def hp(self):
         self.lifepoint -=2
 
