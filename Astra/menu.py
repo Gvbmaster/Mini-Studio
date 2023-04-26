@@ -1,27 +1,23 @@
-import pygame
-import sys
-from classes.button import *
+import pygame, sys
+from classes.button import Button
 from pygame.locals import *
-# from test import Game
+from level1 import Level1
+from classes.pyvidplayer import *
+from classes.enemy import *
+from classes.enemy2 import *
+
 
 screen = pygame.display.set_mode((0, 0),FULLSCREEN)
+imgEnemy.Init()
+imgEnemy2.Init()
 
 class menu : 
     def play(self):
         while True:
-            playMousePos = pygame.mouse.get_pos()
-            # game = Game(screen)
-            # game.run()
-
+            Level1.run(screen)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
-                # if event.type == pygame.MOUSEBUTTONDOWN:
-                    # if returnMainMenu.checkingInput(playMousePos):
-                    #     print("Passed Successfully !")
-                    #     menu.mainMenu(self)
-                    pass
-        
             pygame.display.update()
 
     def options(self):
@@ -43,8 +39,30 @@ class menu :
         
             pygame.display.update()
 
+    
+
+
     def showCredits(self):
-        pass
+        vid = Video("video/outro1.mp4")
+        vid.set_size((1920, 1080))
+        end_video_event = pygame.USEREVENT + 1
+        pygame.time.set_timer(end_video_event, 62000)
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    
+                if event.type == end_video_event:
+                    vid.close()
+                    menu.mainMenu(self)
+
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    print("la vidéo viens d'être skip")
+                    vid.close()
+                    menu.mainMenu(self)
+                    
+            vid.draw(screen, (0,0))
+            pygame.display.update()
 
     def mainMenu(self):
         while True:
@@ -90,7 +108,6 @@ class menu :
                 quitButton = Button(quitButtonIMGHover, 175, 670)
                 quitButton.update(screen)
             quitButton.update(screen)
-            #quitGame
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -99,12 +116,15 @@ class menu :
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if playButton.checkingInput(menuMousePos):
                         print("Bouton cliqué ! Le jeu se lance !")
-                        menu.play(self)
+                        pygame.font.init()
+                        lvl1 = Level1(screen)
+                        lvl1.run()
                     elif optionsButton.checkingInput(menuMousePos):
                         print("Bouton cliqué ! Les options s'affichent!")
                         menu.options(self)
                     elif showCreditsButton.checkingInput(menuMousePos):
                         print("Bouton cliqué ! Les crédits s'affichent !")
+                        # pygame.display.set_mode((0, 0), FULLSCREEN)
                         menu.showCredits(self)
                     elif quitButton.checkingInput(menuMousePos):
                         print("Bouton cliqué ! Le jeu se ferme !")
@@ -112,6 +132,5 @@ class menu :
                     else :
                         pass
             pygame.display.update()
-
 menu.instance = menu()
 menu.instance.mainMenu()

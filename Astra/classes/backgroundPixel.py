@@ -1,7 +1,7 @@
 import pygame
 
 class Background:
-    def __init__(self, image_path="img/Group 20.png"):
+    def __init__(self, image_path="img/Group24.png"):
         self.image = pygame.image.load(image_path).convert_alpha()
         self.rect = self.image.get_rect()
         self.width = self.rect.width
