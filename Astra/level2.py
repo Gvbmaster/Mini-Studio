@@ -19,6 +19,8 @@ from classes.enemy2 import *
 
 import gameover
 
+from level3 import *
+
 class Level2:
     def __init__(self, screen):
         self.screen = screen
@@ -388,7 +390,7 @@ class Level2:
                 pygame.time.delay(1)
 
             
-            level3 = Level2(self.screen)
+            level3 = Level3(self.screen)
             level3.run()
             pygame.quit()
             sys.exit()

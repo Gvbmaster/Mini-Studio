@@ -38,9 +38,6 @@ class menu :
         
             pygame.display.update()
 
-    
-
-
     def showCredits(self):
         vid = Video("video/outro1.mp4")
         vid.set_size((1920, 1080))
