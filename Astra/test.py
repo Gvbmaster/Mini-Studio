@@ -16,9 +16,9 @@ from classes.laser import *
 
 from classes.enemy import *
 
-from classes.gameover import *
-
 from classes.projectileEn import *
+
+import gameover
 
 class Game:
     def __init__(self, screen):
@@ -28,7 +28,7 @@ class Game:
         self.background = Background()
         self.ath = ATH()
         self.ls = LifeSystem(self)
-        self.gameover = Gameover(self)
+        self.gameover = gameover.GameoverLP(self)
         self.player = Player(0,0)
         self.buff = [Buff(750,450,2),Buff(850,450,2),Buff(950,450,2),Buff(1050,450,2)]
         self.buff1 =[Buff(750,550,1),Buff(850,550,1),Buff(950,550,1),Buff(1050,550,1)]
