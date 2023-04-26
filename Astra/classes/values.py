@@ -25,8 +25,8 @@ class EnnemieStats:
     maxSpeed = 14
     attackDamage = 1
     maxAttackDamage = 2
-    attackVelocity = 6 #speed bullet
-    attackSpeed = 1000
+    attackVelocity = 3 #speed bullet
+    attackSpeed = 2000
     maxAttackSpeed = 2000
     pattern1=[(1250,250),(1500,0),(1750,250),(1500,500),(1250,760),(1500,510),(1750,760),(1500,1010)]
     pattern2=[(1500,0),(1750,250),(1500,500),(1250,250),(1500,510),(1750,760),(1500,1010),(1250,760)]
