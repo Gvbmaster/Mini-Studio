@@ -31,7 +31,7 @@ class Enemy(pygame.sprite.Sprite):
         self.up=False
         self.left=False
         EnnemieStats.enemyAlive+=1
-        self.lifepoint = EnnemieStats.currentHealth
+        self.currentHealth = EnnemieStats.maxHealth
         
         
     def move(self):
@@ -138,6 +138,16 @@ class Enemy(pygame.sprite.Sprite):
             self.velocity[1] = 1
         self.rect.move_ip(self.velocity[0] * self.speed, self.velocity[1] * self.speed)
             
+
+    def healthEnemyUpdate(self):
+        if self.currentHealth <= EnnemieStats.maxHealth:
+            self.currentHealth = self.currentHealth - PlayerStats.attackDamage
+            #print("degats",PlayerStats.attackDamage)
+            #print("enemy health",self.currentHealth)
+            if self.currentHealth <= 0:
+                # kill enemy
+                self.kill()
+                #print("Enemy killed !")
 
     def collide_rect(self, rect):
         if self._kill:

@@ -37,7 +37,8 @@ class EnnemieStats:
     enemyAlive=0
     pattern=0
     
-
+class fontCombo:
+    oldCartoon=["img/combo old cartoon/x.png","img/combo old cartoon/1.png","img/combo old cartoon/2.png","img/combo old cartoon/3.png","img/combo old cartoon/4.png","img/combo old cartoon/5.png","img/combo old cartoon/6.png","img/combo old cartoon/7.png","img/combo old cartoon/8.png","img/combo old cartoon/9.png"]
 
 class BossStats:
     currentHealth = 500

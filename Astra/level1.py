@@ -76,7 +76,7 @@ class Level1:
         self.space_pressed = False # Pour le tir auto
         self.last_shot_time = 0  # Initialiser à 0 pour le tir auto
         self.last_shot_timeEn = 0  # Initialiser à 0 pour le tir auto
-
+        self.combo=0
     def handling_events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -229,6 +229,7 @@ class Level1:
             if obstacle.collide_rect(self.player.rect):
                 Invicibility.update()
                 self.ls.healthPlayerUpdate(obstacle)
+                self.combo=0
                 #print("Player take hit")
                 #print(PlayerStats.currentHealth)
             if obstacle.rect.x <= 0 - obstacle.imageWidth:
@@ -261,38 +262,11 @@ class Level1:
             self.all_sprites_layer_2.add(self.enemy)
             EnnemieStats.enemyAlive=len(self.enemy)
 
-
-        if self.enemy1.collide_rect(self.player.rect):
-            self.ls.healthPlayerUpdate(3)
-            Invicibility.update()
-            
-        if self.enemy2.collide_rect(self.player.rect):
-            self.ls.healthPlayerUpdate(3)
-            Invicibility.update()
-            
-        if self.enemy3.collide_rect(self.player.rect):
-            self.ls.healthPlayerUpdate(3)
-            Invicibility.update()
-            
-        if self.enemy4.collide_rect(self.player.rect):
-            self.ls.healthPlayerUpdate(3)
-            Invicibility.update()
-
-        if self.enemy5.collide_rect(self.player.rect):
-            self.ls.healthPlayerUpdate(3)
-            Invicibility.update()
-            
-        if self.enemy6.collide_rect(self.player.rect):
-            self.ls.healthPlayerUpdate(3)
-            Invicibility.update()
-            
-        if self.enemy7.collide_rect(self.player.rect):
-            self.ls.healthPlayerUpdate(3)
-            Invicibility.update()
-            
-        if self.enemy8.collide_rect(self.player.rect):
-            self.ls.healthPlayerUpdate(3)
-            Invicibility.update()
+        for enemy in self.enemy:
+            if enemy.collide_rect(self.player.rect):
+                self.ls.healthPlayerUpdate(3)
+                Invicibility.update()
+                self.combo=0
 
         self.enemy1.move()
         self.enemy2.move()
@@ -306,22 +280,75 @@ class Level1:
         for projectile in self.all_sprites_projectilesMC:
             if projectile.rect.left > 1920:
                 projectile.kill()
-                #print("Tir sortie de l'ecran ")
-            elif pygame.sprite.spritecollide(projectile, self.enemy, True):
+                # #print("Tir sortie de l'ecran ")
+            elif self.enemy1.collide_rect(projectile):
                 projectile.kill()
-                #print("Ennemi Toucher !!!")
-
+                if self.combo<10:
+                    self.combo+=1
+                print(self.combo)
+                Enemy.healthEnemyUpdate(self.enemy1)
+                # #print("Ennemi Toucher !!!")
+            elif self.enemy2.collide_rect(projectile):
+                projectile.kill()
+                if self.combo<10:
+                    self.combo+=1
+                print(self.combo)
+                Enemy.healthEnemyUpdate(self.enemy2)
+            elif self.enemy3.collide_rect(projectile):
+                projectile.kill()
+                if self.combo<10:
+                    self.combo+=1
+                print(self.combo)
+                Enemy.healthEnemyUpdate(self.enemy3)
+            elif self.enemy4.collide_rect(projectile):
+                projectile.kill()
+                if self.combo<10:
+                    self.combo+=1
+                print(self.combo)
+                Enemy.healthEnemyUpdate(self.enemy4)
+            elif self.enemy5.collide_rect(projectile):
+                projectile.kill()
+                if self.combo<10:
+                    self.combo+=1
+                print(self.combo)
+                Enemy.healthEnemyUpdate(self.enemy5)
+            elif self.enemy6.collide_rect(projectile):
+                projectile.kill()
+                if self.combo<10:
+                    self.combo+=1
+                print(self.combo)
+                Enemy.healthEnemyUpdate(self.enemy6)
+            elif self.enemy7.collide_rect(projectile):
+                projectile.kill()
+                if self.combo<10:
+                    self.combo+=1
+                print(self.combo)
+                Enemy.healthEnemyUpdate(self.enemy7)
+            elif self.enemy8.collide_rect(projectile):
+                projectile.kill()
+                if self.combo<10:
+                    self.combo+=1
+                print(self.combo)
+                Enemy.healthEnemyUpdate(self.enemy8)
+                
         for projectileEn1 in self.all_sprites_projectilesEn:
             if projectileEn1.rect.left < 0:
                 projectileEn1.kill()
                 #print("Tir sortie de l'ecran ")
             elif pygame.sprite.spritecollide(projectileEn1, self.sprite_player, False):
                 projectileEn1.kill()
+                self.combo=0
                 self.ls.healthPlayerUpdate(3)
                 Invicibility.update()
                 #print("Allier Toucher !!!")
             
-
+        if self.combo>0 and self.combo<10:
+            self.textX=pygame.image.load(fontCombo.oldCartoon[0]).convert_alpha()
+            self.textCombo=pygame.image.load(fontCombo.oldCartoon[self.combo]).convert_alpha()
+            self.textX=pygame.transform.scale(self.textX,(50,100))
+            self.textCombo=pygame.transform.scale(self.textCombo,(50,100))
+            self.rectX = self.textX.get_rect(x=60, y=960)
+            self.rectCombo = self.textCombo.get_rect(x=120, y=960)
     def display(self):
         if PlayerStats.currentHealth > 0:
             self.background.update()
@@ -331,6 +358,9 @@ class Level1:
             self.all_sprites_layer_2.draw(self.screen)
             self.sprite_player.draw(self.screen)
             self.ath.draw(self.screen)
+            if self.combo>0:
+                self.screen.blit(self.textX, self.rectX)
+                self.screen.blit(self.textCombo, self.rectCombo)
             pygame.display.flip()
         else:
             self.gameover.update(self.screen)
