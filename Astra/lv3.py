@@ -29,10 +29,6 @@ class Level3:
         self.gameover = Gameover(self)
         self.player = Player(900,800)
         #####INTEGRATION LASER ET OBSTACLES###########
-        self.obstacle = None                                    #|
-        self.obstacles = []                                     #|
-        self.obstacle_spawn_event = pygame.USEREVENT + 1        #|
-        pygame.time.set_timer(self.obstacle_spawn_event, 2000)  #|innitialisation des obstacle et de leur event d'apparition
         self.laser_position = [10, 240, 480, 720, 960, 1200 ,1440, 1680 ]               #|
         self.laserPosition1 = None                              #|
         self.laserPosition2 = None                              #|
@@ -57,11 +53,6 @@ class Level3:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
-#évènement d'apparition d'obtacle à des coordonées y aléatoire toutes les 2 sec
-            if event.type == self.obstacle_spawn_event:
-                obstacle = Obstacle(1920, random.randint(0, 1080))
-                self.obstacles.append(obstacle)
-                self.all_sprites_layer_2.add(obstacle)
 
 #évènement d'apparition de laser avec warning avant
     #apparition des warnings

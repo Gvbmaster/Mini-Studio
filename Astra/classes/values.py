@@ -8,7 +8,7 @@ class Param:
     fxVolume = 100
 
 class PlayerStats:
-    currentHealth = 2
+    currentHealth = 3
     maxHealth = 3
     speed = 10
     #maxSpeed = 10
