@@ -105,7 +105,6 @@ class menu :
                 quitButton = Button(quitButtonIMGHover, 175, 670)
                 quitButton.update(screen)
             quitButton.update(screen)
-            #quitGame
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -122,6 +121,7 @@ class menu :
                         menu.options(self)
                     elif showCreditsButton.checkingInput(menuMousePos):
                         print("Bouton cliqué ! Les crédits s'affichent !")
+                        # pygame.display.set_mode((0, 0), FULLSCREEN)
                         menu.showCredits(self)
                     elif quitButton.checkingInput(menuMousePos):
                         print("Bouton cliqué ! Le jeu se ferme !")
