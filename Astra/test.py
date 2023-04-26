@@ -222,6 +222,7 @@ class Game:
                 print("Buff catch and del")
                 print(PlayerStats.currentHealth)
 
+
         #chaque obstacle provoque des dégâts et disparait une fois sorti de l'écran
         for obstacle in self.obstacles:
             if obstacle.collide_rect(self.player.rect):

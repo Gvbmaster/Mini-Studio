@@ -2,7 +2,7 @@ import pygame
 from classes.values import *
 
 class Player(pygame.sprite.Sprite): 
-    def __init__(self, x, y,):
+    def __init__(self, x, y):
         super().__init__()
         self.image = pygame.image.load("img/spaceshipTest.png").convert_alpha()
         self.imageWidth = 101.25
