@@ -11,12 +11,10 @@ class PlayerStats:
     currentHealth = 2
     maxHealth = 3
     speed = 10
-    #maxSpeed = 10
     attackDamage = 3
-    #maxAttackDamage = 6
-    attackSpeed = 100 # cadence de tir
+    attackSpeed = 20 # cadence de tir
     MaxAttackSpeed = 2
-    attackVelocity = 20 #speed bullet
+    attackVelocity = 10 #speed bullet
     shield = False
     isPlayerHitable = True
 
@@ -27,14 +25,18 @@ class EnnemieStats:
     maxSpeed = 14
     attackDamage = 1
     maxAttackDamage = 2
-    attackSpeed = 1
-    maxAttackSpeed = 2
-    pattern1=[(1000,350),(750,600),(500,350),(750,100)]
-    pattern2=[(1000,350),(750,600),(500,350),(750,100)]
-    patternSpawn=[pattern1,pattern2]
+    attackVelocity = 6 #speed bullet
+    attackSpeed = 1000
+    maxAttackSpeed = 2000
+    pattern1=[(1250,250),(1500,0),(1750,250),(1500,500),(1250,760),(1500,510),(1750,760),(1500,1010)]
+    pattern2=[(1500,0),(1750,250),(1500,500),(1250,250),(1500,510),(1750,760),(1500,1010),(1250,760)]
+    pattern3=[(1720,100),(1720,541),(1520,540),(1520,981),(1320,100),(1320,541),(1120,540),(1120,981)]
+    pattern4=[(1720,100),(1500,320),(1720,541),(1500,761),(1220,100),(1000,320),(1220,541),(1000,761)]
+    patternSpawn=[pattern1,pattern2,pattern3,pattern4]
     killCount=0
     enemyAlive=0
     pattern=0
+    
 
 
 class BossStats:
@@ -49,4 +51,3 @@ class BossStats:
     
 class ObstacleStats:
     speed = 7
-    #maxSpeed = 14

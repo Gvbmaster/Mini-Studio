@@ -6,14 +6,19 @@ from classes.lifesystem import *
 from classes.ath import ATH
 from classes.backgroundPixel import Background
 from classes.projectile import *
+
 from classes.effect.invicibility import *
+
 from classes.obstacle import *
 from classes.values import *
 from classes.warning import *
 from classes.laser import *
+
 from classes.enemy import *
-from classes.gameover import *
-from classes.tuto import *
+
+from classes.projectileEn import *
+
+import gameover
 
 class Game:
     def __init__(self, screen):
@@ -23,50 +28,54 @@ class Game:
         self.background = Background()
         self.ath = ATH()
         self.ls = LifeSystem(self)
-        self.gameover = Gameover(self)
+        self.gameover = gameover.GameoverLP(self)
         self.player = Player(0,0)
-
-        ################INTEGRATION BUFF#####################
         self.buff = [Buff(750,450,2),Buff(850,450,2),Buff(950,450,2),Buff(1050,450,2)]
         self.buff1 =[Buff(750,550,1),Buff(850,550,1),Buff(950,550,1),Buff(1050,550,1)]
         self.buff2=[Buff(750,250,3),Buff(850,250,3),Buff(950,250,3),Buff(1050,250,3)]
-
         #####INTEGRATION LASER ET OBSTACLES###########
-        self.obstacle = None                                  
-        self.obstacles = []                                    
-        self.obstacle_spawn_event = pygame.USEREVENT + 1       
-        pygame.time.set_timer(self.obstacle_spawn_event, 2000) 
-        
-        self.laser_position = [10, 280, 550, 820]             
-        self.laserPosition1 = None                          
-        self.laserPosition2 = None                         
-        self.laser = None                                  
-        self.warning1 = None                                 
-        self.warning2 = None                                  
-        self.lasers = []                                       
-        self.laser_spawn_event = pygame.USEREVENT + 2          
-        pygame.time.set_timer(self.laser_spawn_event, 15000) 
-
+        self.obstacle = None                                    #|
+        self.obstacles = []                                     #|
+        self.obstacle_spawn_event = pygame.USEREVENT + 1        #|
+        pygame.time.set_timer(self.obstacle_spawn_event, 2000)  #|innitialisation des obstacle et de leur event d'apparition
+        self.laser_position = [10, 280, 550, 820]               #|
+        self.laserPosition1 = None                              #|
+        self.laserPosition2 = None                              #|
+        self.laser = None                                       #|
+        self.warning1 = None                                    #|
+        self.warning2 = None                                    #|
+        self.lasers = []                                        #|
+        self.laser_spawn_event = pygame.USEREVENT + 2           #|
+        pygame.time.set_timer(self.laser_spawn_event, 15000)    #|initialisation des events de laser et de warning
         #####INTEGRATION ENNEMIS###########
         self.enemy = pygame.sprite.Group()
         if EnnemieStats.enemyAlive==0:
             EnnemieStats.pattern=0
-            EnnemieStats.pattern=random.randint(0,1)
-        self.enemy1=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][0][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][0][1])
-        self.enemy2=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][1][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][1][1])
-        self.enemy3=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][2][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][2][1])
-        self.enemy4=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][3][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][3][1])
-        self.enemy.add(self.enemy1,self.enemy2,self.enemy3,self.enemy4)
-        EnnemieStats.enemyAlive=len(self.enemy)
+            EnnemieStats.pattern=random.randint(0,len(EnnemieStats.patternSpawn)-1)
+            self.enemy1=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][0][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][0][1])
+            self.enemy2=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][1][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][1][1])
+            self.enemy3=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][2][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][2][1])
+            self.enemy4=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][3][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][3][1])
+            self.enemy5=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][4][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][4][1])
+            self.enemy6=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][5][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][5][1])
+            self.enemy7=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][6][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][6][1])
+            self.enemy8=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][7][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][7][1])
+            self.enemy.add(self.enemy1,self.enemy2,self.enemy3,self.enemy4,self.enemy5,self.enemy6,self.enemy7,self.enemy8)
+            EnnemieStats.enemyAlive=len(self.enemy)
         ###################################
-
+        self.sprite_player = pygame.sprite.Group()
         self.all_sprites_layer_1 = pygame.sprite.Group() #liste de sprite pour les lasers
         self.all_sprites_layer_2 = pygame.sprite.Group() #liste de sprite pour le joueur/ennemis/obstacles/buffs
+        self.sprite_player.add(self.player)
         self.all_sprites_projectilesMC = pygame.sprite.Group() #liste de sprite pour les tir du MC
+        self.all_sprites_projectilesEn = pygame.sprite.Group() #liste de sprite pour les tir du En
         self.all_sprites_layer_2.add(self.buff, self.buff1, self.buff2, self.enemy)
+        
+        
         
         self.space_pressed = False # Pour le tir auto
         self.last_shot_time = 0  # Initialiser à 0 pour le tir auto
+        self.last_shot_timeEn = 0  # Initialiser à 0 pour le tir auto
 
     def handling_events(self):
         for event in pygame.event.get():
@@ -152,6 +161,39 @@ class Game:
             self.all_sprites_layer_2.add(projectile)
             self.last_shot_time = current_time  # Mettre à jour le temps du dernier tir
 #################################################################################################################################################
+############################ Tir automatique du vaisseau ######################################################################################
+        self.all_sprites_layer_2.update()
+        self.all_sprites_projectilesEn.update() 
+        current_timeEn = pygame.time.get_ticks()  # Obtenir le temps actuel en millisecondes
+        if current_timeEn - self.last_shot_timeEn >= EnnemieStats.attackSpeed:  # Limiter le tir a la class EnnemieStats qui est dans values qui est donc 250
+            # Créer une instance de Projectile à la position de l'ennemi
+            if self.enemy1 in self.enemy:
+                projectileEn1 = ProjectileEn(self.enemy1.rect.centerx, self.enemy1.rect.bottom , EnnemieStats.attackVelocity, "img/low poly/bullet.png", (100,90))
+                self.all_sprites_projectilesEn.add(projectileEn1)
+            if self.enemy2 in self.enemy:
+                projectileEn2 = ProjectileEn(self.enemy2.rect.centerx, self.enemy2.rect.bottom, EnnemieStats.attackVelocity, "img/low poly/bullet.png", (100,90))
+                self.all_sprites_projectilesEn.add(projectileEn2)
+            if self.enemy3 in self.enemy:
+                projectileEn3 = ProjectileEn(self.enemy3.rect.centerx, self.enemy3.rect.bottom, EnnemieStats.attackVelocity, "img/low poly/bullet.png", (100,90))
+                self.all_sprites_projectilesEn.add(projectileEn3)
+            if self.enemy4 in self.enemy:
+                projectileEn4 = ProjectileEn(self.enemy4.rect.centerx, self.enemy4.rect.bottom, EnnemieStats.attackVelocity, "img/low poly/bullet.png", (100,90))
+                self.all_sprites_projectilesEn.add(projectileEn4)
+            if self.enemy5 in self.enemy:
+                projectileEn5 = ProjectileEn(self.enemy5.rect.centerx, self.enemy5.rect.bottom , EnnemieStats.attackVelocity, "img/low poly/bullet.png", (100,90))
+                self.all_sprites_projectilesEn.add(projectileEn5)
+            if self.enemy6 in self.enemy:
+                projectileEn6 = ProjectileEn(self.enemy6.rect.centerx, self.enemy6.rect.bottom, EnnemieStats.attackVelocity, "img/low poly/bullet.png", (100,90))
+                self.all_sprites_projectilesEn.add(projectileEn6)
+            if self.enemy7 in self.enemy:
+                projectileEn7 = ProjectileEn(self.enemy7.rect.centerx, self.enemy7.rect.bottom, EnnemieStats.attackVelocity, "img/low poly/bullet.png", (100,90))
+                self.all_sprites_projectilesEn.add(projectileEn7)
+            if self.enemy8 in self.enemy:
+                projectileEn8 = ProjectileEn(self.enemy8.rect.centerx, self.enemy8.rect.bottom, EnnemieStats.attackVelocity, "img/low poly/bullet.png", (100,90))
+                self.all_sprites_projectilesEn.add(projectileEn8)
+            self.all_sprites_layer_2.add(self.all_sprites_projectilesEn)#projectileEn1,projectileEn2,projectileEn3,projectileEn4)
+            self.last_shot_timeEn = current_timeEn  # Mettre à jour le temps du dernier tir
+#################################################################################################################################################
     def update(self):
         self.player.move()
 
@@ -180,6 +222,7 @@ class Game:
                 print("Buff catch and del")
                 print(PlayerStats.currentHealth)
 
+
         #chaque obstacle provoque des dégâts et disparait une fois sorti de l'écran
         for obstacle in self.obstacles:
             if obstacle.collide_rect(self.player.rect):
@@ -194,7 +237,7 @@ class Game:
             else:
                 obstacle.move()
 
-        #chaque laser provoque des dégâtss
+        #chaque laser provoque des dégâts
         for laser in self.lasers:
             if laser.collide_rect(self.player.rect):
                 Invicibility.update(self)
@@ -204,39 +247,60 @@ class Game:
 
         if EnnemieStats.enemyAlive==0:
             EnnemieStats.pattern=0
-            EnnemieStats.pattern=random.randint(0,1)
+            EnnemieStats.pattern=random.randint(0,len(EnnemieStats.patternSpawn)-1)
             self.enemy1=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][0][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][0][1])
             self.enemy2=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][1][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][1][1])
             self.enemy3=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][2][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][2][1])
             self.enemy4=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][3][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][3][1])
-            self.enemy.add(self.enemy1,self.enemy2,self.enemy3,self.enemy4)
+            self.enemy5=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][4][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][4][1])
+            self.enemy6=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][5][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][5][1])
+            self.enemy7=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][6][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][6][1])
+            self.enemy8=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][7][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][7][1])
+            self.enemy.add(self.enemy1,self.enemy2,self.enemy3,self.enemy4,self.enemy5,self.enemy6,self.enemy7,self.enemy8)
             self.all_sprites_layer_2.add(self.enemy)
             EnnemieStats.enemyAlive=len(self.enemy)
 
+
         if self.enemy1.collide_rect(self.player.rect):
-            self.enemy1.kill()
-            self.enemy.remove(self.enemy1)
             self.ls.healthPlayerUpdate(3)
+            Invicibility.update(self)
             
         if self.enemy2.collide_rect(self.player.rect):
-            self.enemy2.kill()
-            self.enemy.remove(self.enemy2)
             self.ls.healthPlayerUpdate(3)
+            Invicibility.update(self)
             
         if self.enemy3.collide_rect(self.player.rect):
-            self.enemy3.kill()
-            self.enemy.remove(self.enemy3)
             self.ls.healthPlayerUpdate(3)
+            Invicibility.update(self)
             
         if self.enemy4.collide_rect(self.player.rect):
-            self.enemy4.kill()
-            self.enemy.remove(self.enemy4)
             self.ls.healthPlayerUpdate(3)
+            Invicibility.update(self)
+
+        if self.enemy5.collide_rect(self.player.rect):
+            self.ls.healthPlayerUpdate(3)
+            Invicibility.update(self)
+            
+        if self.enemy6.collide_rect(self.player.rect):
+            self.ls.healthPlayerUpdate(3)
+            Invicibility.update(self)
+            
+        if self.enemy7.collide_rect(self.player.rect):
+            self.ls.healthPlayerUpdate(3)
+            Invicibility.update(self)
+            
+        if self.enemy8.collide_rect(self.player.rect):
+            self.ls.healthPlayerUpdate(3)
+            Invicibility.update(self)
 
         self.enemy1.move()
         self.enemy2.move()
         self.enemy3.move()
         self.enemy4.move()
+        self.enemy5.move()
+        self.enemy6.move()
+        self.enemy7.move()
+        self.enemy8.move()
 
         for projectile in self.all_sprites_projectilesMC:
             if projectile.rect.left > 1920:
@@ -246,6 +310,17 @@ class Game:
                 projectile.kill()
                 print("Ennemi Toucher !!!")
 
+        for projectileEn1 in self.all_sprites_projectilesEn:
+            if projectileEn1.rect.left < 0:
+                projectileEn1.kill()
+                print("Tir sortie de l'ecran ")
+            elif pygame.sprite.spritecollide(projectileEn1, self.sprite_player, False):
+                projectileEn1.kill()
+                self.ls.healthPlayerUpdate(3)
+                Invicibility.update(self)
+                print("Allier Toucher !!!")
+            
+
     def display(self):
         if PlayerStats.currentHealth > 0:
             self.background.update()
@@ -253,7 +328,7 @@ class Game:
             self.background.draw(self.screen)
             self.all_sprites_layer_1.draw(self.screen)
             self.all_sprites_layer_2.draw(self.screen)
-            self.player.draw(self.screen)
+            self.sprite_player.draw(self.screen)
             self.ath.draw(self.screen)
             pygame.display.flip()
         else:
@@ -268,8 +343,8 @@ class Game:
 
 pygame.init()
 screen = pygame.display.set_mode((0, 0),FULLSCREEN)
-
-game = Tuto(screen)
+imgEnemy.Init()
+game = Game(screen)
 game.run()
 
 pygame.quit()
