@@ -125,32 +125,7 @@ class Level1:
                         sprite.kill()
                         self.lasers.remove(sprite)
 
-########################### Touches de mouvement ############################################################################################            
-            keys = pygame.key.get_pressed() # Appel de la détection de touche préssé
 
-            if keys[pygame.K_q] :
-                self.player.velocity[0] = -1 
-                PlayerStats.attackSpeed = 75 # Regulation de la cadence de tir par rapport au fait qu'on recul
-                # #print("left press")
-            elif keys[pygame.K_d] : 
-                self.player.velocity[0] = 1
-                PlayerStats.attackSpeed = 175 # Regulation de la cadence de tir par rapport au fait qu'on avance
-                # #print("right press")
-            else:
-                self.player.velocity[0] = 0
-                
-                
-            if keys[pygame.K_z] :
-                self.player.velocity[1] = -1
-                # #print("up press")
-                PlayerStats.attackSpeed = 100
-            elif keys[pygame.K_s] :
-                self.player.velocity[1] = 1
-                # #print("down press")
-                PlayerStats.attackSpeed = 100
-            else:
-                self.player.velocity[1] = 0
-            
 ############################ Tir automatique du vaisseau ######################################################################################
             if event.type == pygame.KEYDOWN and event.key == K_SPACE:
                     #print("Espace pressé")
@@ -202,6 +177,44 @@ class Level1:
             self.last_shot_timeEn = current_timeEn  # Mettre à jour le temps du dernier tir
 #################################################################################################################################################
     def update(self):
+        keys = pygame.key.get_pressed() # Appel de la détection de touche préssé
+
+        if keys[pygame.K_q] :
+            if self.player.rect.x>0:
+                self.player.velocity[0] = -1 
+                PlayerStats.attackSpeed = 75 # Regulation de la cadence de tir par rapport au fait qu'on recul
+                # #print("left press")
+            else:
+                PlayerStats.attackSpeed = 100
+                self.player.velocity[0]=0
+        elif keys[pygame.K_d] :
+            if self.player.rect.x<1750:
+                self.player.velocity[0] = 1
+                PlayerStats.attackSpeed = 175 # Regulation de la cadence de tir par rapport au fait qu'on avance
+                # #print("right press")
+            else:
+                PlayerStats.attackSpeed = 100
+                self.player.velocity[0]=0
+        else:
+            self.player.velocity[0] = 0
+            
+            
+        if keys[pygame.K_z] :
+            if self.player.rect.y>0:
+                self.player.velocity[1] = -1
+                # #print("up press")
+                PlayerStats.attackSpeed = 100
+            else:
+                self.player.velocity[1] = 0
+        elif keys[pygame.K_s] :
+            if self.player.rect.y<1000:
+                self.player.velocity[1] = 1
+                # #print("down press")
+                PlayerStats.attackSpeed = 100
+            else:
+                self.player.velocity[1] = 0
+        else:
+            self.player.velocity[1] = 0
         self.player.move()
 
         for buff in self.buff:
