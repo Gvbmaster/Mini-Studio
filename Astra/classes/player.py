@@ -4,10 +4,10 @@ from classes.values import *
 class Player(pygame.sprite.Sprite): 
     def __init__(self, x, y,):
         super().__init__()
-        self.image = pygame.image.load("img/spaceshipTest.png").convert_alpha()
+        self.image = pygame.image.load("img/pixel_art/mainShip.png").convert_alpha()
         self.imageWidth = 101.25
         self.imageHeight = 105.5
-        #self.image = pygame.transform.scale(self.image,(int(self.imageWidth), int(self.imageHeight)))
+        self.image = pygame.transform.scale(self.image,(int(self.imageWidth), int(self.imageHeight)))
         self.rect = self.image.get_rect(x=x, y=y)
         self.currentHealth = PlayerStats.currentHealth
         self.speed = PlayerStats.speed
