@@ -3,9 +3,9 @@ from classes.values import *
 
 class ATH():
     def __init__(self):
-        self.healthBar = pygame.image.load("img/healthBarLowPoly.png").convert_alpha()
+        self.healthBar = pygame.image.load("img/pixel_art/ath_boss.png").convert_alpha()
         self.rectHealthBar = self.healthBar.get_rect(x=25, y=25)
-        self.lifePoint = pygame.image.load("img/lifePointLowPoly.png").convert_alpha()
+        self.lifePoint = pygame.image.load("img/pixel_art/hp.png").convert_alpha()
         self.lifePoint = pygame.transform.scale(self.lifePoint,(169,124))
 
     def update(self):

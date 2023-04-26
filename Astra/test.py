@@ -57,7 +57,7 @@ class Game:
         self.enemy.add(self.enemy1,self.enemy2,self.enemy3,self.enemy4)
         EnnemieStats.enemyAlive=len(self.enemy)
         ###################################
-        self.boss = Boss("Big Boss", 100, 20)
+        self.boss = Boss("Big Boss", 20)
         self.all_sprites_layer_1 = pygame.sprite.Group() #liste de sprite pour les lasers
         self.all_sprites_layer_2 = pygame.sprite.Group() #liste de sprite pour le joueur/ennemis/obstacles/buffs
         self.all_sprites_projectilesMC = pygame.sprite.Group() #liste de sprite pour les tir du MC
