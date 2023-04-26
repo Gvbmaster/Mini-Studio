@@ -3,22 +3,36 @@ from pygame.locals import *
 from classes.player import Player
 from classes.buff import Buff
 from classes.lifesystem import *
+<<<<<<< HEAD
 from classes.ath_boss import ATH
 from classes.backgroundPixel_boss import Background
 from classes.projectile_boss import *
+=======
+from classes.ath import ATH
+from classes.backgroundPixel import Background
+from classes.projectile import *
+>>>>>>> b8ac95a69d2859da793dec1c3ba3d5bef6a6261b
 from classes.boss import *
 from classes.effect.invicibility import *
 
 from classes.obstacle import *
 from classes.values import *
 from classes.warning import *
+<<<<<<< HEAD
 from classes.laser_boss import *
+=======
+from classes.laser import *
+>>>>>>> b8ac95a69d2859da793dec1c3ba3d5bef6a6261b
 
 from classes.enemy import *
 
 from classes.gameover import *
 
+<<<<<<< HEAD
 class Level3:
+=======
+class Game:
+>>>>>>> b8ac95a69d2859da793dec1c3ba3d5bef6a6261b
     def __init__(self, screen):
         self.screen = screen
         self.running = True
@@ -27,16 +41,27 @@ class Level3:
         self.ath = ATH()
         self.ls = LifeSystem(self)
         self.gameover = Gameover(self)
+<<<<<<< HEAD
         self.player = Player(900,800)
         # self.buff = [Buff(750,450,2),Buff(850,450,2),Buff(950,450,2),Buff(1050,450,2)]
         # self.buff1 =[Buff(750,550,1),Buff(850,550,1),Buff(950,550,1),Buff(1050,550,1)]
         # self.buff2=[Buff(750,250,3),Buff(850,250,3),Buff(950,250,3),Buff(1050,250,3)]
+=======
+        self.player = Player(0,0)
+        self.buff = [Buff(750,450,2),Buff(850,450,2),Buff(950,450,2),Buff(1050,450,2)]
+        self.buff1 =[Buff(750,550,1),Buff(850,550,1),Buff(950,550,1),Buff(1050,550,1)]
+        self.buff2=[Buff(750,250,3),Buff(850,250,3),Buff(950,250,3),Buff(1050,250,3)]
+>>>>>>> b8ac95a69d2859da793dec1c3ba3d5bef6a6261b
         #####INTEGRATION LASER ET OBSTACLES###########
         self.obstacle = None                                    #|
         self.obstacles = []                                     #|
         self.obstacle_spawn_event = pygame.USEREVENT + 1        #|
         pygame.time.set_timer(self.obstacle_spawn_event, 2000)  #|innitialisation des obstacle et de leur event d'apparition
+<<<<<<< HEAD
         self.laser_position = [10, 240, 480, 720, 960, 1200 ,1440, 1680 ]               #|
+=======
+        self.laser_position = [10, 280, 550, 820]               #|
+>>>>>>> b8ac95a69d2859da793dec1c3ba3d5bef6a6261b
         self.laserPosition1 = None                              #|
         self.laserPosition2 = None                              #|
         self.laser = None                                       #|
@@ -44,6 +69,7 @@ class Level3:
         self.warning2 = None                                    #|
         self.lasers = []                                        #|
         self.laser_spawn_event = pygame.USEREVENT + 2           #|
+<<<<<<< HEAD
         pygame.time.set_timer(self.laser_spawn_event, 4000)    #|initialisation des events de laser et de warning
         #####INTEGRATION ENNEMIS###########
         # self.enemy = pygame.sprite.Group()
@@ -56,6 +82,20 @@ class Level3:
         # self.enemy4=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][3][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][3][1])
         # self.enemy.add(self.enemy1,self.enemy2,self.enemy3,self.enemy4)
         # EnnemieStats.enemyAlive=len(self.enemy)
+=======
+        pygame.time.set_timer(self.laser_spawn_event, 15000)    #|initialisation des events de laser et de warning
+        #####INTEGRATION ENNEMIS###########
+        self.enemy = pygame.sprite.Group()
+        if EnnemieStats.enemyAlive==0:
+            EnnemieStats.pattern=0
+            EnnemieStats.pattern=random.randint(0,1)
+        self.enemy1=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][0][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][0][1])
+        self.enemy2=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][1][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][1][1])
+        self.enemy3=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][2][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][2][1])
+        self.enemy4=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][3][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][3][1])
+        self.enemy.add(self.enemy1,self.enemy2,self.enemy3,self.enemy4)
+        EnnemieStats.enemyAlive=len(self.enemy)
+>>>>>>> b8ac95a69d2859da793dec1c3ba3d5bef6a6261b
         ###################################
         self.boss = Boss("Big Boss", 20)
         self.all_sprites_layer_1 = pygame.sprite.Group() #liste de sprite pour les lasers
@@ -63,7 +103,11 @@ class Level3:
         self.all_sprites_projectilesMC = pygame.sprite.Group() #liste de sprite pour les tir du MC
         self.all_sprites_boss = pygame.sprite.Group() 
         self.all_sprites_boss.add(self.boss)
+<<<<<<< HEAD
         self.all_sprites_layer_2.add()#self.buff, self.buff1, self.buff2)#, self.enemy)
+=======
+        self.all_sprites_layer_2.add(self.buff, self.buff1, self.buff2, self.enemy)
+>>>>>>> b8ac95a69d2859da793dec1c3ba3d5bef6a6261b
         self.space_pressed = False # Pour le tir auto
         self.last_shot_time = 0  # Initialiser à 0 pour le tir auto
         self.boss_health_bar_rect = pygame.Rect(500, 1000, 800, 30) # Rectangle qui représente la barre de vie
@@ -81,6 +125,7 @@ class Level3:
     #apparition des warnings
             if event.type == self.laser_spawn_event:
                 self.laserPosition1 = random.choice(self.laser_position)
+<<<<<<< HEAD
                 self.laserPosition2 = random.choice(self.laser_position)
                 self.laserPosition3 = random.choice(self.laser_position) 
                 self.laserPosition4 = random.choice(self.laser_position)  
@@ -91,12 +136,21 @@ class Level3:
                 self.warning3 = WarningLogo(self.laserPosition3 , 0+ 310)
                 self.warning4 = WarningLogo(self.laserPosition4 , 0+ 310)
                 self.all_sprites_layer_1.add(self.warning1, self.warning2,self.warning3,self.warning4)
+=======
+                self.laserPosition2 = random.choice(self.laser_position) 
+                while self.laserPosition2 == self.laserPosition1:
+                    self.laserPosition2 = random.choice(self.laser_position)
+                self.warning1 = WarningLogo(1825, self.laserPosition1 + 110)
+                self.warning2 = WarningLogo(1825, self.laserPosition2 + 110)
+                self.all_sprites_layer_1.add(self.warning1, self.warning2)
+>>>>>>> b8ac95a69d2859da793dec1c3ba3d5bef6a6261b
                 pygame.time.set_timer(pygame.USEREVENT + 3, 2000)
     #disparition des warnings après 2 sec et apparition des laser aux mêmes positions
             if event.type == pygame.USEREVENT + 3:
                 pygame.time.set_timer(pygame.USEREVENT + 3, 0)
                 self.warning1.kill()
                 self.warning2.kill()
+<<<<<<< HEAD
                 self.warning3.kill()
                 self.warning4.kill()
                 self.all_sprites_layer_1.remove(self.warning1)
@@ -114,6 +168,17 @@ class Level3:
                 self.all_sprites_layer_1.add(laser1, laser2, laser3, laser4)
                 pygame.time.set_timer(pygame.USEREVENT + 4, 2000)
     #disparition des lasers après 2 sec
+=======
+                self.all_sprites_layer_1.remove(self.warning1)
+                self.all_sprites_layer_1.remove(self.warning2)
+                laser1 = Laser(0, self.laserPosition1)
+                laser2 = Laser(0, self.laserPosition2)
+                self.lasers.append(laser1)
+                self.lasers.append(laser2)
+                self.all_sprites_layer_1.add(laser1, laser2)
+                pygame.time.set_timer(pygame.USEREVENT + 4, 3000)
+    #disparition des lasers après 3 sec
+>>>>>>> b8ac95a69d2859da793dec1c3ba3d5bef6a6261b
             if event.type == pygame.USEREVENT + 4:
                 pygame.time.set_timer(pygame.USEREVENT + 4, 0)
                 for sprite in self.all_sprites_layer_1:
@@ -166,6 +231,7 @@ class Level3:
     def update(self):
         self.player.move()
 
+<<<<<<< HEAD
         # for buff in self.buff:
         #     if buff.collide_rect(self.player.rect):
         #         buff.kill()
@@ -204,6 +270,46 @@ class Level3:
         #         self.obstacles.remove(obstacle)
         #     else:
         #         obstacle.move()
+=======
+        for buff in self.buff:
+            if buff.collide_rect(self.player.rect):
+                buff.kill()
+                self.all_sprites_layer_2.remove(buff)
+                PlayerStats.shield = True
+                print("Buff catch and del")
+                print(PlayerStats.shield)
+        
+        for buff in self.buff1:
+            if buff.collide_rect(self.player.rect):
+                buff.kill()
+                self.all_sprites_layer_2.remove(buff)
+                self.ls.healthPlayerUpdate(2)
+                print("Buff catch and del")
+                print(PlayerStats.currentHealth)
+
+        for buff in self.buff2:
+            if buff.collide_rect(self.player.rect):
+                buff.kill()
+                self.all_sprites_layer_2.remove(buff)
+                self.ls.healthPlayerUpdate(buff)
+                Invicibility.update(self)
+                print("Buff catch and del")
+                print(PlayerStats.currentHealth)
+
+        #chaque obstacle provoque des dégâts et disparait une fois sorti de l'écran
+        for obstacle in self.obstacles:
+            if obstacle.collide_rect(self.player.rect):
+                Invicibility.update(self)
+                self.ls.healthPlayerUpdate(obstacle)
+                print("Player take hit")
+                print(PlayerStats.currentHealth)
+            if obstacle.rect.x <= 0 - obstacle.imageWidth:
+                obstacle.kill()
+                self.all_sprites_layer_2.remove(obstacle)
+                self.obstacles.remove(obstacle)
+            else:
+                obstacle.move()
+>>>>>>> b8ac95a69d2859da793dec1c3ba3d5bef6a6261b
 
         #chaque laser provoque des dégâts
         for laser in self.lasers:
@@ -213,6 +319,7 @@ class Level3:
                 print("Player take hit")
                 print(PlayerStats.currentHealth)
 
+<<<<<<< HEAD
         # if EnnemieStats.enemyAlive==0:
         #     EnnemieStats.pattern=0
         #     EnnemieStats.pattern=random.randint(0,1)
@@ -257,6 +364,52 @@ class Level3:
             #     projectile.kill()
             #     print("Ennemi Toucher !!!")
             if pygame.sprite.spritecollide(self.boss, self.all_sprites_projectilesMC, True):
+=======
+        if EnnemieStats.enemyAlive==0:
+            EnnemieStats.pattern=0
+            EnnemieStats.pattern=random.randint(0,1)
+            self.enemy1=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][0][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][0][1])
+            self.enemy2=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][1][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][1][1])
+            self.enemy3=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][2][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][2][1])
+            self.enemy4=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][3][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][3][1])
+            self.enemy.add(self.enemy1,self.enemy2,self.enemy3,self.enemy4)
+            self.all_sprites_layer_2.add(self.enemy)
+            EnnemieStats.enemyAlive=len(self.enemy)
+
+        if self.enemy1.collide_rect(self.player.rect):
+            self.enemy1.kill()
+            self.enemy.remove(self.enemy1)
+            self.ls.healthPlayerUpdate(3)
+            
+        if self.enemy2.collide_rect(self.player.rect):
+            self.enemy2.kill()
+            self.enemy.remove(self.enemy2)
+            self.ls.healthPlayerUpdate(3)
+            
+        if self.enemy3.collide_rect(self.player.rect):
+            self.enemy3.kill()
+            self.enemy.remove(self.enemy3)
+            self.ls.healthPlayerUpdate(3)
+            
+        if self.enemy4.collide_rect(self.player.rect):
+            self.enemy4.kill()
+            self.enemy.remove(self.enemy4)
+            self.ls.healthPlayerUpdate(3)
+
+        self.enemy1.move()
+        self.enemy2.move()
+        self.enemy3.move()
+        self.enemy4.move()
+
+        for projectile in self.all_sprites_projectilesMC :
+            if projectile.rect.left > 1920:
+                projectile.kill()
+                print("Tir sortie de l'ecran ")
+            elif pygame.sprite.spritecollide(projectile, self.enemy, True):
+                projectile.kill()
+                print("Ennemi Toucher !!!")
+            elif pygame.sprite.spritecollide(self.boss, self.all_sprites_projectilesMC, True):
+>>>>>>> b8ac95a69d2859da793dec1c3ba3d5bef6a6261b
                 self.boss.take_damage(10)
                 print(self.boss.health)
             if self.boss.health == 0:
@@ -278,7 +431,11 @@ class Level3:
             self.all_sprites_boss.update()
             self.all_sprites_boss.draw(screen)
             if self.boss.health > 0:
+<<<<<<< HEAD
                 boss_health_bar_width = int(self.boss.health / 2000 * self.boss_health_bar_rect.width)
+=======
+                boss_health_bar_width = int(self.boss.health / 1000 * self.boss_health_bar_rect.width)
+>>>>>>> b8ac95a69d2859da793dec1c3ba3d5bef6a6261b
                 boss_health_bar_green_rect = pygame.Rect(self.boss_health_bar_rect.left, self.boss_health_bar_rect.top, boss_health_bar_width, self.boss_health_bar_rect.height)
                 boss_health_bar_red_rect = pygame.Rect(self.boss_health_bar_rect.left + boss_health_bar_width, self.boss_health_bar_rect.top, self.boss_health_bar_rect.width - boss_health_bar_width, self.boss_health_bar_rect.height)
                 pygame.draw.rect(self.screen, (0, 255, 0), boss_health_bar_green_rect)
@@ -297,7 +454,11 @@ class Level3:
 pygame.init()
 screen = pygame.display.set_mode((0, 0),FULLSCREEN)
 
+<<<<<<< HEAD
 game = Level3(screen)
+=======
+game = Game(screen)
+>>>>>>> b8ac95a69d2859da793dec1c3ba3d5bef6a6261b
 game.run()
 
 pygame.quit()

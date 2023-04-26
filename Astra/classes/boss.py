@@ -6,7 +6,11 @@ class Boss(pygame.sprite.Sprite):
     def __init__(self, name, damage):
         super().__init__()
         self.name = name
+<<<<<<< HEAD
         self.health = 2000
+=======
+        self.health = 1000
+>>>>>>> b8ac95a69d2859da793dec1c3ba3d5bef6a6261b
         self.damage = damage
         self.image = pygame.image.load("img/boss.png")
         self.image = pygame.transform.scale(self.image, (1500, 300))
