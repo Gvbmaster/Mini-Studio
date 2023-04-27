@@ -2,9 +2,9 @@ import pygame
 from classes.values import *
 
 class Player(pygame.sprite.Sprite): 
-    def __init__(self, x, y,):
+    def __init__(self, x, y, image_path="img/spaceshipTest.png"):
         super().__init__()
-        self.image = pygame.image.load("img/spaceshipTest.png").convert_alpha()
+        self.image = pygame.image.load(image_path).convert_alpha()
         self.imageWidth = 101.25
         self.imageHeight = 105.5
         #self.image = pygame.transform.scale(self.image,(int(self.imageWidth), int(self.imageHeight)))
@@ -18,13 +18,12 @@ class Player(pygame.sprite.Sprite):
         self.has_shield = False
         self.shield_images = []
 
+
     def move(self):
         self.rect.move_ip(self.velocity[0] * self.speed, self.velocity[1] * self.speed)
-
+        
     def draw(self, screen):
         screen.blit(self.image, self.rect)
-        
-
 
         if PlayerStats.shield == True:
             shield_image = pygame.image.load("img/Shield.png").convert_alpha()
@@ -36,4 +35,6 @@ class Player(pygame.sprite.Sprite):
             if self.shield_images and not PlayerStats.shield:
                 for image in self.shield_images:
                     self.shield_images.remove(image)
+
+    
        

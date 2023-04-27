@@ -25,8 +25,8 @@ class EnnemieStats:
     maxSpeed = 14
     attackDamage = 1
     maxAttackDamage = 2
-    attackVelocity = 6 #speed bullet
-    attackSpeed = 1000
+    attackVelocity = 3 #speed bullet
+    attackSpeed = 2000
     maxAttackSpeed = 2000
     pattern1=[(1250,250),(1500,0),(1750,250),(1500,500),(1250,760),(1500,510),(1750,760),(1500,1010)]
     pattern2=[(1500,0),(1750,250),(1500,500),(1250,250),(1500,510),(1750,760),(1500,1010),(1250,760)]
@@ -37,6 +37,12 @@ class EnnemieStats:
     enemyAlive=0
     pattern=0
     
+class fontCombo:
+    oldCartoon=["img/combo old cartoon/x.png","img/combo old cartoon/1.png","img/combo old cartoon/2.png","img/combo old cartoon/3.png","img/combo old cartoon/4.png","img/combo old cartoon/5.png","img/combo old cartoon/6.png","img/combo old cartoon/7.png","img/combo old cartoon/8.png","img/combo old cartoon/9.png"]
+
+# class EnergyBar:
+#     def energy_bar(self):
+#         energy=0
 
 
 class BossStats:

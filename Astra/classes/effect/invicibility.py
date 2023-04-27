@@ -3,17 +3,16 @@ import time
 from classes.values import PlayerStats
 
 class Invicibility:
-    def __init__(self):
-        self.end_invincibility_time = None
+    end_invincibility_time = None
 
-    def update(self):
+    def update():
         if PlayerStats.isPlayerHitable == True:
-            self.end_invincibility_time = time.monotonic() + 3.0
+            Invicibility.end_invincibility_time = time.monotonic() + 2
             PlayerStats.isPlayerHitable = False
             print("Le joueur n'est désormais plus touchable !")
-        elif PlayerStats.isPlayerHitable == False and self.end_invincibility_time is not None:
-            if time.monotonic() >= self.end_invincibility_time:
+        elif PlayerStats.isPlayerHitable == False and Invicibility.end_invincibility_time is not None:
+            if time.monotonic() >= Invicibility.end_invincibility_time:
                 PlayerStats.isPlayerHitable = True
-                self.end_invincibility_time = None
+                Invicibility.end_invincibility_time = None
                 print("Le joueur est désormais touchable !")
 
