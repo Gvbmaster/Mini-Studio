@@ -9,6 +9,7 @@ from classes.backgroundPixel_boss import Background3
 from classes.projectile_boss import *
 from classes.boss import *
 from classes.effect.invicibility import *
+from classes.pyvidplayer import *
 
 from classes.obstacle import *
 from classes.values import *
@@ -173,6 +174,7 @@ class Level3:
         if self.boss.health == 0:
             print("Le boss", self.boss.name, "a été vaincu !")
             self.boss.kill()
+            pygame.quit()
         if not self.boss.alive():
             print("Le boss", self.boss.name, "est mort !")
             self.all_sprites_boss.remove(self.boss)

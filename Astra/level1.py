@@ -1,7 +1,7 @@
 import pygame
 from pygame.locals import *
 from classes.player import Player
-from classes.buff import Buff
+# from classes.buff import Buff
 from classes.lifesystem import *
 from classes.ath import ATH
 from classes.backgroundPixel import Background
@@ -32,9 +32,9 @@ class Level1:
         self.ls = LifeSystem(self)
         self.gameover = gameover.GameoverLP(self)
         self.player = Player(100,540)
-        self.buff = [Buff(750,450,2),Buff(850,450,2),Buff(950,450,2),Buff(1050,450,2)]
-        self.buff1 =[Buff(750,550,1),Buff(850,550,1),Buff(950,550,1),Buff(1050,550,1)]
-        self.buff2=[Buff(750,250,3),Buff(850,250,3),Buff(950,250,3),Buff(1050,250,3)]
+        # self.buff = [Buff(750,450,2),Buff(850,450,2),Buff(950,450,2),Buff(1050,450,2)]
+        # self.buff1 =[Buff(750,550,1),Buff(850,550,1),Buff(950,550,1),Buff(1050,550,1)]
+        # self.buff2=[Buff(750,250,3),Buff(850,250,3),Buff(950,250,3),Buff(1050,250,3)]
         #####INTEGRATION LASER ET OBSTACLES###########
         self.obstacle = None                                    #|
         self.obstacles = []                                     #|
@@ -73,7 +73,7 @@ class Level1:
         self.sprite_player.add(self.player)
         self.all_sprites_projectilesMC = pygame.sprite.Group() #liste de sprite pour les tir du MC
         self.all_sprites_projectilesEn = pygame.sprite.Group() #liste de sprite pour les tir du En
-        self.all_sprites_layer_2.add(self.buff, self.buff1, self.buff2, self.enemy)
+        self.all_sprites_layer_2.add(self.enemy)#,self.buff, self.buff1, self.buff2)
         
         
         
@@ -217,28 +217,28 @@ class Level1:
             self.player.velocity[1] = 0
         self.player.move()
 
-        for buff in self.buff:
-            if buff.collide_rect(self.player.rect):
-                buff.kill()
-                self.all_sprites_layer_2.remove(buff)
-                PlayerStats.shield = True
-                #print("Buff catch and del")
-                #print(PlayerStats.shield)
+        # for buff in self.buff:
+        #     if buff.collide_rect(self.player.rect):
+        #         buff.kill()
+        #         self.all_sprites_layer_2.remove(buff)
+        #         PlayerStats.shield = True
+        #         #print("Buff catch and del")
+        #         #print(PlayerStats.shield)
         
-        for buff in self.buff1:
-            if buff.collide_rect(self.player.rect):
-                buff.kill()
-                self.all_sprites_layer_2.remove(buff)
-                self.ls.healthPlayerUpdate(2)
-                #print("Buff catch and del")
-                #print(PlayerStats.currentHealth)
+        # for buff in self.buff1:
+        #     if buff.collide_rect(self.player.rect):
+        #         buff.kill()
+        #         self.all_sprites_layer_2.remove(buff)
+        #         self.ls.healthPlayerUpdate(2)
+        #         #print("Buff catch and del")
+        #         #print(PlayerStats.currentHealth)
 
-        for buff in self.buff2:
-            if buff.collide_rect(self.player.rect):
-                buff.kill()
-                self.all_sprites_layer_2.remove(buff)
-                self.ls.healthPlayerUpdate(buff)
-                Invicibility.update()
+        # for buff in self.buff2:
+        #     if buff.collide_rect(self.player.rect):
+        #         buff.kill()
+        #         self.all_sprites_layer_2.remove(buff)
+        #         self.ls.healthPlayerUpdate(buff)
+        #         Invicibility.update()
                 #print("Buff catch and del")
                 #print(PlayerStats.currentHealth)
 
