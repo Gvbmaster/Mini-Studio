@@ -16,6 +16,7 @@ from level1 import Level1
 from classes.rectangle import *
 from classes.text import *
 from level1 import Level1
+import sys
 
 class Tuto:
     def __init__(self, screen):
@@ -28,7 +29,7 @@ class Tuto:
         self.ls = LifeSystem(self)
         self.player = Player(50,500)
         self.all_sprites_layer_2 = pygame.sprite.Group()
-        self.tuto_fini = False#pygame.USEREVENT + 1000
+        self.tuto_fini = pygame.USEREVENT + 1000
 ###########################################################        
 
 ############## OBSTACLE INIT ###############
@@ -84,6 +85,7 @@ class Tuto:
         self.last_shot_time = 0
         self.last_shot_timeEn = 0
 #########################################################
+        self.obstacleMort=False
 
     def handling_events(self):
         for event in pygame.event.get():
@@ -102,16 +104,17 @@ class Tuto:
 
         #event d'apparition d'un ennemi
             if event.type == self.enemy_tuto_event :
+                pygame.time.set_timer(self.enemy_tuto_event, 0)      
                 self.enemyTuto=Enemy(EnnemieStats.patternSpawn[EnnemieStats.pattern][0][0],EnnemieStats.patternSpawn[EnnemieStats.pattern][0][1])
                 self.enemy.add(self.enemyTuto)
-                self.all_sprites_layer_2.add(self.enemy)
-                pygame.time.set_timer(self.enemy_tuto_event, 0)                
+                self.all_sprites_layer_2.add(self.enemy)          
             
         #event d'apparition de la zone de texte n°03
             if event.type == self.text_tuto_event_03 :
                 pygame.time.set_timer(self.text_tuto_event_03, 0)
                 self.is_rect_drawable_03 = True
                 pygame.time.set_timer(self.text_tuto_event_03_depop, 2000)
+                pygame.time.set_timer(self.obstacle_tuto_event, 2000)
 
         #event de disparition de la zone de texte n°03
             if event.type == self.text_tuto_event_03_depop :
@@ -120,7 +123,10 @@ class Tuto:
 
         #event d'apparition des obstacles
             if event.type == self.obstacle_tuto_event :
+                pygame.time.set_timer(self.text_tuto_event_04, 5000)
+                # pygame.time.set_timer(self.text_tuto_event_03,0)
                 pygame.time.set_timer(self.obstacle_tuto_event, 0)
+                # self.is_rect_drawable_03 = False
                 self.obstacle_y = 0
                 while self.obstacle_y < 1080:
                     obstacle = Obstacle(1920, self.obstacle_y)
@@ -130,17 +136,37 @@ class Tuto:
 
         #event d'apparition de la zone de texte n°04
             if event.type == self.text_tuto_event_04 :
-                pygame.time.set_timer(self.text_tuto_event_04, 2000)
+                pygame.time.set_timer(self.text_tuto_event_04, 0)
                 self.is_rect_drawable_04 = True
+                pygame.time.set_timer(self.tuto_fini, 3000)
 
         #event de disparition de la zone de texte n°04
             if event.type == self.text_tuto_event_04_depop :
+                print("blabla")
                 pygame.time.set_timer(self.text_tuto_event_04_depop, 0)
                 self.is_rect_drawable_04 = False
-                self.tuto_fini=True
+                pygame.time.set_timer(self.tuto_fini, 3000)
 
         #event de lancement du niveau 1
             if event.type == self.tuto_fini :
+                # pygame.time.set_timer(self.tuto_fini, 0)
+                # print("blabla")
+                BLACK = (0, 0, 0)
+                alpha = 0
+
+                # # Augmente l'opacité de l'écran noir progressivement
+                for i in range(255):
+                    alpha += 0.1
+                    black_screen = pygame.Surface(self.screen.get_size())
+                    black_screen.set_alpha(alpha)
+                    self.screen.blit(black_screen, (0, 0))
+                    black_screen.fill(BLACK)
+                    pygame.display.update()
+                    pygame.time.delay(1)
+                level1 = Level1(self.screen)
+                level1.run()
+                pygame.quit()
+                sys.exit()
                 pass
 
         #touches de déplacement
@@ -198,37 +224,21 @@ class Tuto:
             if pygame.sprite.spritecollide(obstacle, self.sprite_player, False):
                 self.ls.healthPlayerUpdate(obstacle)
                 Invicibility.update()
-                obstacle.kill()
-            if obstacle.rect.x <= 0 - obstacle.imageWidth:
+                # obstacle.kill()
+            if obstacle.rect.x <= 0:# - obstacle.imageWidth:
                 obstacle.kill()
                 self.obstacle_group.remove(obstacle)
                 self.obstacles.remove(obstacle)
-                pygame.time.set_timer(self.text_tuto_event_04, 2000)
             else:
                 obstacle.move()
                 
                 
-        if self.tuto_fini:
-            BLACK = (0, 0, 0)
-            alpha = 0
-            print('zrazdaz')
-
-            # Augmente l'opacité de l'écran noir progressivement
-            for i in range(255):
-                alpha += 0.1
-                black_screen = pygame.Surface(self.screen.get_size())
-                black_screen.set_alpha(alpha)
-                self.screen.blit(black_screen, (0, 0))
-                black_screen.fill(BLACK)
-                pygame.display.update()
-                pygame.time.delay(1)
+        # if self.tuto_fini:
+            
 
             # Appel de la classe Level2 pour le niveau suivant
             # Warning
-            level1 = Level1(self.screen)
-            level1.run()
-            pygame.quit()
-            sys.exit()
+            
         if self.enemyTuto!=None:
             self.enemyTuto.move()
 
@@ -251,10 +261,11 @@ class Tuto:
             if self.spacePress == True:
                 self.is_rect_drawable_02 = False
         if self.is_rect_drawable_03 == True:
+            # pygame.time.set_timer(self.text_tuto_event_03, 0)
             self.textDraw = Text(self.font, self.text03, 800)
             Rectangle.draw(self)
             self.textDraw.drawText(self.screen, 550, 180)
-            pygame.time.set_timer(self.obstacle_tuto_event, 2000)
+            # pygame.time.set_timer(self.obstacle_tuto_event, 2000)
         if self.is_rect_drawable_04 == True:
             self.textDraw = Text(self.font, self.text04, 800)
             Rectangle.draw(self)

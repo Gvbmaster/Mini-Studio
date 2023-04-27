@@ -114,8 +114,8 @@ class menu :
                     if playButton.checkingInput(menuMousePos):
                         print("Bouton cliqué ! Le jeu se lance !")
                         pygame.font.init()
-                        lvl1 = Level1(screen)
-                        lvl1.run()
+                        tuto = Tuto(screen)
+                        tuto.run()
                         pygame.quit()
                         sys.exit()
                     elif optionsButton.checkingInput(menuMousePos):
